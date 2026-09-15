@@ -1,50 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Create Account | Smart Commute</title>
 
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
-<body class="auth-page">
+<body class="auth-body">
 
-    <header class="navbar">
+<div class="auth-layout">
 
-        <div class="nav-container">
+    <section class="auth-brand-panel">
 
-            <a href="index.html" class="logo">
-                <span class="logo-icon">SC</span>
-                <span>Smart Commute</span>
-            </a>
+        <a href="index.html" class="auth-brand">
+            <div class="brand-icon">SC</div>
 
-            <a href="index.html" class="back-link">
-                ← Home
-            </a>
+            <div>
+                <strong>Smart Commute</strong>
+                <span>Hyperlocal Route Matching</span>
+            </div>
+        </a>
+
+
+        <div class="auth-intro">
+
+            <span class="eyebrow">GET STARTED</span>
+
+            <h1>
+                One account.<br>
+                <span>Multiple journeys.</span>
+            </h1>
+
+            <p>
+                Create your account once. Later, you can choose
+                whether you want to find a ride or offer a ride.
+            </p>
 
         </div>
 
-    </header>
+
+        <div class="auth-points">
+
+            <div>
+                <div class="check">✓</div>
+                <span>Simple account setup</span>
+            </div>
+
+            <div>
+                <div class="check">✓</div>
+                <span>Choose your journey after login</span>
+            </div>
+
+            <div>
+                <div class="check">✓</div>
+                <span>Vehicle details only when offering a ride</span>
+            </div>
+
+        </div>
+
+    </section>
 
 
-    <main class="auth-container register-container">
+    <section class="auth-form-panel">
 
-        <div class="auth-card">
+        <div class="auth-form-container">
 
-            <div class="auth-heading">
+            <div class="mobile-brand">
+                <div class="brand-icon">SC</div>
+                <strong>Smart Commute</strong>
+            </div>
 
-                <div class="auth-icon">+</div>
 
-                <span class="section-label">GET STARTED</span>
+            <div class="form-heading">
 
-                <h1>Create your account</h1>
+                <span class="form-label">CREATE ACCOUNT</span>
+
+                <h2>Welcome to Smart Commute</h2>
 
                 <p>
-                    Set up your profile to find or offer a ride.
+                    Enter your basic details to create your account.
                 </p>
 
             </div>
@@ -52,7 +89,7 @@
 
             <form id="registerForm" class="auth-form">
 
-                <div class="form-group">
+                <div class="input-group">
 
                     <label for="fullName">
                         Full Name
@@ -62,6 +99,43 @@
                         type="text"
                         id="fullName"
                         placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="mobile">
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        placeholder="10-digit mobile number"
+                        maxlength="10"
+                        inputmode="numeric"
+                        autocomplete="tel"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
                         required
                     >
 
@@ -70,179 +144,58 @@
 
                 <div class="form-row">
 
-                    <div class="form-group">
+                    <div class="input-group">
 
-                        <label for="mobileNumber">
-                            Mobile Number
+                        <label for="password">
+                            Password
                         </label>
 
-                        <input
-                            type="tel"
-                            id="mobileNumber"
-                            placeholder="10-digit mobile number"
-                            maxlength="10"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="registerEmail">
-                            Email Address
-                        </label>
-
-                        <input
-                            type="email"
-                            id="registerEmail"
-                            placeholder="you@example.com"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        How will you use Smart Commute?
-                    </label>
-
-                    <div class="role-options">
-
-                        <label class="role-option">
+                        <div class="password-wrapper">
 
                             <input
-                                type="radio"
-                                name="userRole"
-                                value="requester"
-                                checked
+                                type="password"
+                                id="password"
+                                placeholder="Create password"
+                                autocomplete="new-password"
+                                required
                             >
 
-                            <span>
-                                <strong>Find a Ride</strong>
-                                <small>I need a ride</small>
-                            </span>
-
-                        </label>
-
-
-                        <label class="role-option">
-
-                            <input
-                                type="radio"
-                                name="userRole"
-                                value="provider"
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="password"
                             >
-
-                            <span>
-                                <strong>Offer a Ride</strong>
-                                <small>I can provide a ride</small>
-                            </span>
-
-                        </label>
-
-
-                        <label class="role-option">
-
-                            <input
-                                type="radio"
-                                name="userRole"
-                                value="both"
-                            >
-
-                            <span>
-                                <strong>Both</strong>
-                                <small>I may need or offer rides</small>
-                            </span>
-
-                        </label>
-
-                    </div>
-
-                </div>
-
-
-                <div id="vehicleFields" class="vehicle-fields hidden">
-
-                    <div class="form-row">
-
-                        <div class="form-group">
-
-                            <label for="vehicleType">
-                                Vehicle Type
-                            </label>
-
-                            <select id="vehicleType">
-
-                                <option value="">
-                                    Select vehicle
-                                </option>
-
-                                <option value="bike">
-                                    Motorcycle / Scooter
-                                </option>
-
-                                <option value="car">
-                                    Car
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="vehicleModel">
-                                Vehicle Model
-                            </label>
-
-                            <input
-                                type="text"
-                                id="vehicleModel"
-                                placeholder="e.g. Honda Activa 6G"
-                            >
+                                Show
+                            </button>
 
                         </div>
 
                     </div>
 
 
-                    <div class="form-row">
+                    <div class="input-group">
 
-                        <div class="form-group">
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
 
-                            <label for="vehicleNumber">
-                                Vehicle Number
-                            </label>
+                        <div class="password-wrapper">
 
                             <input
-                                type="text"
-                                id="vehicleNumber"
-                                placeholder="e.g. MH-15-AB-1234"
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Repeat password"
+                                autocomplete="new-password"
+                                required
                             >
 
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="availableSeats">
-                                Available Seats
-                            </label>
-
-                            <select id="availableSeats">
-
-                                <option value="1">1 seat</option>
-                                <option value="2">2 seats</option>
-                                <option value="3">3 seats</option>
-                                <option value="4">4 seats</option>
-
-                            </select>
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="confirmPassword"
+                            >
+                                Show
+                            </button>
 
                         </div>
 
@@ -251,68 +204,36 @@
                 </div>
 
 
-                <div class="form-group">
-
-                    <label for="registerPassword">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="registerPassword"
-                        placeholder="Create a password"
-                        minlength="6"
-                        required
-                    >
-
-                </div>
+                <div id="registerMessage" class="form-message"></div>
 
 
-                <label class="terms-label">
-
-                    <input
-                        type="checkbox"
-                        id="acceptTerms"
-                        required
-                    >
-
-                    <span>
-                        I agree to use Smart Commute responsibly and provide
-                        accurate information.
-                    </span>
-
-                </label>
-
-
-                <button
-                    type="submit"
-                    class="btn btn-primary btn-full"
-                >
+                <button type="submit" class="submit-btn">
                     Create Account
+                    <span>→</span>
                 </button>
-
-
-                <p id="registerMessage" class="form-message"></p>
 
             </form>
 
 
-            <p class="auth-footer">
-
+            <p class="auth-switch">
                 Already have an account?
+                <a href="login.html">Log in</a>
+            </p>
 
-                <a href="login.html">
-                    Login
-                </a>
 
+            <p class="auth-note">
+                By creating an account, you agree to use the
+                platform responsibly.
             </p>
 
         </div>
 
-    </main>
+    </section>
+
+</div>
 
 
-    <script src="js/app.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
