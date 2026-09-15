@@ -1,515 +1,386 @@
 /* =========================================================
    SMART COMMUTE
-   Stage 1 JavaScript
+   Stage 1 - Authentication + Dashboard
    ========================================================= */
 
 
-/* ================= HELPER FUNCTIONS ================= */
+/* ---------------------------------------------------------
+   Helper: Show message
+   --------------------------------------------------------- */
 
-function getStoredUser() {
-    const user = localStorage.getItem("smartCommuteUser");
+function showMessage(elementId, message, type = "error") {
 
-    if (!user) {
-        return null;
-    }
+    const element = document.getElementById(elementId);
 
-    try {
-        return JSON.parse(user);
-    } catch (error) {
-        console.error("Unable to read stored user:", error);
-        return null;
-    }
-}
-
-
-function saveUser(user) {
-    localStorage.setItem(
-        "smartCommuteUser",
-        JSON.stringify(user)
-    );
-}
-
-
-function showMessage(element, message, type = "") {
-
-    if (!element) {
-        return;
-    }
+    if (!element) return;
 
     element.textContent = message;
-
-    element.className = "form-message";
-
-    if (type) {
-        element.classList.add(type);
-    }
+    element.className = `form-message ${type}`;
 }
 
 
-/* ================= REGISTER PAGE ================= */
+/* ---------------------------------------------------------
+   Password Show / Hide
+   --------------------------------------------------------- */
+
+document.querySelectorAll(".password-toggle").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const targetId = button.dataset.target;
+        const input = document.getElementById(targetId);
+
+        if (!input) return;
+
+        if (input.type === "password") {
+
+            input.type = "text";
+            button.textContent = "Hide";
+
+        } else {
+
+            input.type = "password";
+            button.textContent = "Show";
+
+        }
+
+    });
+
+});
+
+
+/* ---------------------------------------------------------
+   REGISTER
+   --------------------------------------------------------- */
 
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
 
-    const roleInputs = document.querySelectorAll(
-        'input[name="userRole"]'
-    );
+    registerForm.addEventListener("submit", function (event) {
 
-    const vehicleFields =
-        document.getElementById("vehicleFields");
+        event.preventDefault();
 
 
-    function updateVehicleFields() {
+        const fullName =
+            document.getElementById("fullName").value.trim();
 
-        const selectedRole =
-            document.querySelector(
-                'input[name="userRole"]:checked'
+        const mobile =
+            document.getElementById("mobile").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim().toLowerCase();
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+
+        /* Basic validation */
+
+        if (fullName.length < 2) {
+
+            showMessage(
+                "registerMessage",
+                "Please enter your full name."
             );
 
-        if (!selectedRole) {
             return;
         }
 
-        const needsVehicle =
-            selectedRole.value === "provider" ||
-            selectedRole.value === "both";
 
-        if (vehicleFields) {
-            vehicleFields.classList.toggle(
-                "hidden",
-                !needsVehicle
+        if (!/^[0-9]{10}$/.test(mobile)) {
+
+            showMessage(
+                "registerMessage",
+                "Please enter a valid 10-digit mobile number."
             );
+
+            return;
         }
-    }
 
 
-    roleInputs.forEach((input) => {
+        if (password.length < 6) {
 
-        input.addEventListener(
-            "change",
-            updateVehicleFields
+            showMessage(
+                "registerMessage",
+                "Password must contain at least 6 characters."
+            );
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            showMessage(
+                "registerMessage",
+                "Passwords do not match."
+            );
+
+            return;
+        }
+
+
+        /* Get existing users */
+
+        const users =
+            JSON.parse(localStorage.getItem("smartCommuteUsers")) || [];
+
+
+        /* Check duplicate email */
+
+        const existingUser =
+            users.find(user => user.email === email);
+
+
+        if (existingUser) {
+
+            showMessage(
+                "registerMessage",
+                "An account with this email already exists."
+            );
+
+            return;
+        }
+
+
+        /* Create account */
+
+        const newUser = {
+
+            id: Date.now(),
+
+            fullName: fullName,
+
+            mobile: mobile,
+
+            email: email,
+
+            password: password
+
+        };
+
+
+        users.push(newUser);
+
+        localStorage.setItem(
+            "smartCommuteUsers",
+            JSON.stringify(users)
         );
+
+
+        /* Automatically log in */
+
+        localStorage.setItem(
+            "smartCommuteCurrentUser",
+            JSON.stringify({
+                id: newUser.id,
+                fullName: newUser.fullName,
+                mobile: newUser.mobile,
+                email: newUser.email
+            })
+        );
+
+
+        showMessage(
+            "registerMessage",
+            "Account created successfully. Redirecting...",
+            "success"
+        );
+
+
+        setTimeout(() => {
+
+            window.location.href = "dashboard.html";
+
+        }, 700);
 
     });
 
-
-    updateVehicleFields();
-
-
-    registerForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            const fullName =
-                document.getElementById("fullName").value.trim();
-
-            const mobileNumber =
-                document.getElementById("mobileNumber").value.trim();
-
-            const email =
-                document.getElementById("registerEmail").value.trim();
-
-            const password =
-                document.getElementById("registerPassword").value;
-
-            const role =
-                document.querySelector(
-                    'input[name="userRole"]:checked'
-                ).value;
-
-            const acceptTerms =
-                document.getElementById("acceptTerms").checked;
-
-
-            const message =
-                document.getElementById("registerMessage");
-
-
-            if (fullName.length < 2) {
-
-                showMessage(
-                    message,
-                    "Please enter your full name.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            if (!/^[0-9]{10}$/.test(mobileNumber)) {
-
-                showMessage(
-                    message,
-                    "Please enter a valid 10-digit mobile number.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            if (password.length < 6) {
-
-                showMessage(
-                    message,
-                    "Password must contain at least 6 characters.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            if (!acceptTerms) {
-
-                showMessage(
-                    message,
-                    "Please accept the terms to continue.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            const existingUsers =
-                JSON.parse(
-                    localStorage.getItem("smartCommuteUsers") || "[]"
-                );
-
-
-            const emailExists =
-                existingUsers.some(
-                    (user) =>
-                        user.email.toLowerCase() ===
-                        email.toLowerCase()
-                );
-
-
-            if (emailExists) {
-
-                showMessage(
-                    message,
-                    "An account with this email already exists.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            const user = {
-
-                id:
-                    "user_" +
-                    Date.now(),
-
-                name: fullName,
-
-                mobile: mobileNumber,
-
-                email: email,
-
-                password: password,
-
-                role: role,
-
-                verified: false,
-
-                vehicle:
-                    role === "provider" ||
-                    role === "both"
-                        ? {
-                            type:
-                                document.getElementById(
-                                    "vehicleType"
-                                ).value,
-
-                            model:
-                                document.getElementById(
-                                    "vehicleModel"
-                                ).value.trim(),
-
-                            number:
-                                document.getElementById(
-                                    "vehicleNumber"
-                                ).value.trim(),
-
-                            seats:
-                                document.getElementById(
-                                    "availableSeats"
-                                ).value
-                        }
-                        : null
-
-            };
-
-
-            existingUsers.push(user);
-
-
-            localStorage.setItem(
-                "smartCommuteUsers",
-                JSON.stringify(existingUsers)
-            );
-
-
-            saveUser(user);
-
-
-            showMessage(
-                message,
-                "Account created successfully. Redirecting...",
-                "success"
-            );
-
-
-            setTimeout(() => {
-
-                window.location.href =
-                    "dashboard.html";
-
-            }, 900);
-
-        }
-    );
 }
 
 
-/* ================= LOGIN PAGE ================= */
+/* ---------------------------------------------------------
+   LOGIN
+   --------------------------------------------------------- */
 
-const loginForm =
-    document.getElementById("loginForm");
-
+const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener(
-        "submit",
-        function (event) {
+    loginForm.addEventListener("submit", function (event) {
 
-            event.preventDefault();
+        event.preventDefault();
 
 
-            const email =
-                document
-                    .getElementById("loginEmail")
-                    .value
-                    .trim();
+        const email =
+            document.getElementById("loginEmail").value.trim().toLowerCase();
 
-            const password =
-                document.getElementById(
-                    "loginPassword"
-                ).value;
+        const password =
+            document.getElementById("loginPassword").value;
 
 
-            const message =
-                document.getElementById(
-                    "loginMessage"
-                );
+        const users =
+            JSON.parse(localStorage.getItem("smartCommuteUsers")) || [];
 
 
-            const users =
-                JSON.parse(
-                    localStorage.getItem(
-                        "smartCommuteUsers"
-                    ) || "[]"
-                );
-
-
-            const user =
-                users.find(
-                    (item) =>
-                        item.email.toLowerCase() ===
-                            email.toLowerCase() &&
-                        item.password === password
-                );
-
-
-            if (!user) {
-
-                showMessage(
-                    message,
-                    "Invalid email or password.",
-                    "error"
-                );
-
-                return;
-            }
-
-
-            saveUser(user);
-
-
-            showMessage(
-                message,
-                "Login successful. Redirecting...",
-                "success"
+        const user =
+            users.find(
+                account =>
+                    account.email === email &&
+                    account.password === password
             );
 
 
-            setTimeout(() => {
+        if (!user) {
 
-                window.location.href =
-                    "dashboard.html";
+            showMessage(
+                "loginMessage",
+                "Incorrect email or password."
+            );
 
-            }, 600);
-
+            return;
         }
-    );
 
 
-    const forgotPassword =
-        document.getElementById(
-            "forgotPassword"
+        /* Store current logged-in user */
+
+        localStorage.setItem(
+            "smartCommuteCurrentUser",
+            JSON.stringify({
+                id: user.id,
+                fullName: user.fullName,
+                mobile: user.mobile,
+                email: user.email
+            })
         );
 
 
-    if (forgotPassword) {
-
-        forgotPassword.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                alert(
-                    "Password recovery will be connected through Firebase Authentication in the next stage."
-                );
-
-            }
+        showMessage(
+            "loginMessage",
+            "Login successful. Redirecting...",
+            "success"
         );
 
-    }
+
+        setTimeout(() => {
+
+            window.location.href = "dashboard.html";
+
+        }, 500);
+
+    });
 
 }
 
 
-/* ================= DASHBOARD ================= */
+/* ---------------------------------------------------------
+   DASHBOARD AUTH CHECK
+   --------------------------------------------------------- */
+
+function getCurrentUser() {
+
+    return JSON.parse(
+        localStorage.getItem("smartCommuteCurrentUser")
+    );
+
+}
+
 
 const dashboardName =
-    document.getElementById(
-        "dashboardName"
-    );
+    document.getElementById("dashboardUserName");
 
 
 if (dashboardName) {
 
-    const user =
-        getStoredUser();
+    const currentUser = getCurrentUser();
 
 
-    if (!user) {
+    if (!currentUser) {
 
-        window.location.href =
-            "login.html";
+        window.location.href = "login.html";
 
     } else {
 
         dashboardName.textContent =
-            user.name.split(" ")[0];
+            currentUser.fullName;
 
-        const welcomeUser =
-            document.getElementById(
-                "welcomeUser"
-            );
 
-        if (welcomeUser) {
+        const emailElement =
+            document.getElementById("dashboardEmail");
 
-            welcomeUser.textContent =
-                "Hi, " +
-                user.name.split(" ")[0];
+        if (emailElement) {
+
+            emailElement.textContent =
+                currentUser.email;
 
         }
 
-        const profileStatus =
-            document.getElementById(
-                "profileStatus"
-            );
 
-        if (profileStatus) {
-            profileStatus.textContent =
-                "Ready";
+        const avatar =
+            document.getElementById("userAvatar");
+
+        if (avatar) {
+
+            avatar.textContent =
+                currentUser.fullName
+                    .charAt(0)
+                    .toUpperCase();
+
         }
 
     }
 
+}
 
-    const logoutButton =
-        document.getElementById(
-            "logoutButton"
+
+/* ---------------------------------------------------------
+   DASHBOARD OPTIONS
+   --------------------------------------------------------- */
+
+function goToFindRide() {
+
+    /*
+       This page will be created in the next stage.
+    */
+
+    window.location.href = "find-ride.html";
+
+}
+
+
+function goToOfferRide() {
+
+    /*
+       Vehicle information will be collected ONLY here.
+    */
+
+    window.location.href = "offer-ride.html";
+
+}
+
+
+/* ---------------------------------------------------------
+   LOGOUT
+   --------------------------------------------------------- */
+
+const logoutButton =
+    document.getElementById("logoutBtn");
+
+
+if (logoutButton) {
+
+    logoutButton.addEventListener("click", () => {
+
+        localStorage.removeItem(
+            "smartCommuteCurrentUser"
         );
 
+        window.location.href = "index.html";
 
-    if (logoutButton) {
-
-        logoutButton.addEventListener(
-            "click",
-            function () {
-
-                localStorage.removeItem(
-                    "smartCommuteUser"
-                );
-
-                window.location.href =
-                    "index.html";
-
-            }
-        );
-
-    }
-
-
-    const findRideButton =
-        document.getElementById(
-            "findRideButton"
-        );
-
-
-    if (findRideButton) {
-
-        findRideButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                alert(
-                    "Find a Ride will be connected in the next stage."
-                );
-
-            }
-        );
-
-    }
-
-
-    const offerRideButton =
-        document.getElementById(
-            "offerRideButton"
-        );
-
-
-    if (offerRideButton) {
-
-        offerRideButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                alert(
-                    "Offer a Ride will be connected in the next stage."
-                );
-
-            }
-        );
-
-    }
+    });
 
 }
