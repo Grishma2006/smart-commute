@@ -1,245 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard | Smart Commute</title>
 
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
-<body class="dashboard-page">
+<body class="dashboard-body">
 
-    <header class="navbar">
+<header class="app-navbar">
 
-        <div class="nav-container">
+    <a href="dashboard.html" class="app-brand">
 
-            <a href="index.html" class="logo">
-                <span class="logo-icon">SC</span>
-                <span>Smart Commute</span>
-            </a>
+        <div class="brand-icon">SC</div>
 
-            <div class="dashboard-nav">
+        <div>
+            <strong>Smart Commute</strong>
+            <span>Hyperlocal Route Matching</span>
+        </div>
 
-                <span id="welcomeUser">
-                    Welcome
-                </span>
+    </a>
 
-                <button
-                    id="logoutButton"
-                    class="logout-button"
-                >
-                    Logout
-                </button>
 
-            </div>
+    <div class="app-user">
+
+        <div class="user-avatar" id="userAvatar">
+            U
+        </div>
+
+        <div class="user-info">
+
+            <strong id="dashboardUserName">
+                User
+            </strong>
+
+            <span>Account</span>
 
         </div>
 
-    </header>
+        <button id="logoutBtn" class="logout-btn">
+            Log out
+        </button>
+
+    </div>
+
+</header>
 
 
-    <main class="dashboard-container">
+<main class="dashboard-main">
 
-        <!-- Welcome -->
+    <section class="dashboard-welcome">
 
-        <section class="dashboard-welcome">
+        <div>
 
-            <div>
+            <span class="eyebrow">
+                DASHBOARD
+            </span>
 
-                <span class="section-label">
-                    DASHBOARD
-                </span>
+            <h1>
+                What would you like
+                to do today?
+            </h1>
 
-                <h1>
-                    Welcome back, <span id="dashboardName">Commuter</span> 👋
-                </h1>
+            <p>
+                Choose how you want to use Smart Commute.
+                You can find a ride or offer your own journey.
+            </p>
 
-                <p>
-                    What would you like to do today?
-                </p>
+        </div>
 
-            </div>
+        <div class="dashboard-date">
+            <span>YOUR ACCOUNT</span>
+            <strong id="dashboardEmail">
+                —
+            </strong>
+        </div>
 
-        </section>
-
-
-        <!-- Main actions -->
-
-        <section class="dashboard-actions">
-
-            <a
-                href="#"
-                id="findRideButton"
-                class="dashboard-action action-primary"
-            >
-
-                <div class="action-icon">
-                    🔎
-                </div>
-
-                <div>
-
-                    <span class="action-label">
-                        REQUESTER
-                    </span>
-
-                    <h2>Find a Ride</h2>
-
-                    <p>
-                        Find commuters travelling on a similar route.
-                    </p>
-
-                </div>
-
-                <span class="action-arrow">
-                    →
-                </span>
-
-            </a>
+    </section>
 
 
-            <a
-                href="#"
-                id="offerRideButton"
-                class="dashboard-action"
-            >
+    <section class="choice-grid">
 
-                <div class="action-icon">
-                    🚗
-                </div>
 
-                <div>
+        <!-- FIND A RIDE -->
 
-                    <span class="action-label">
-                        RIDE PROVIDER
-                    </span>
+        <button
+            class="action-card find-card"
+            onclick="goToFindRide()"
+        >
 
-                    <h2>Offer a Ride</h2>
+            <div class="action-card-top">
 
-                    <p>
-                        Create a journey and allow others to request a seat.
-                    </p>
-
+                <div class="large-action-icon">
+                    ⌕
                 </div>
 
                 <span class="action-arrow">
                     →
                 </span>
 
-            </a>
-
-        </section>
-
-
-        <!-- Information -->
-
-        <section class="dashboard-grid">
-
-            <div class="dashboard-card">
-
-                <div class="card-heading">
-
-                    <h3>Active Journey</h3>
-
-                    <span class="status-badge">
-                        No active ride
-                    </span>
-
-                </div>
-
-                <div class="empty-state">
-
-                    <div class="empty-icon">
-                        🗺️
-                    </div>
-
-                    <p>
-                        Your active journey will appear here.
-                    </p>
-
-                </div>
-
             </div>
 
 
-            <div class="dashboard-card">
+            <div class="action-card-content">
 
-                <div class="card-heading">
+                <span class="action-label">
+                    FOR COMMUTERS
+                </span>
 
-                    <h3>Quick Information</h3>
-
-                </div>
-
-                <div class="info-list">
-
-                    <div class="info-item">
-
-                        <span>Profile</span>
-
-                        <strong id="profileStatus">
-                            Ready
-                        </strong>
-
-                    </div>
-
-                    <div class="info-item">
-
-                        <span>Verification</span>
-
-                        <strong class="verified-text">
-                            Pending
-                        </strong>
-
-                    </div>
-
-                    <div class="info-item">
-
-                        <span>Ride History</span>
-
-                        <strong>
-                            0 rides
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- Prototype notice -->
-
-        <section class="prototype-notice">
-
-            <div class="notice-icon">
-                ℹ
-            </div>
-
-            <div>
-
-                <strong>
-                    Prototype Demonstration
-                </strong>
+                <h2>
+                    Find a Ride
+                </h2>
 
                 <p>
-                    Route matching, authentication and real-user ride requests
-                    will be connected in the next development stages.
+                    Find people travelling on a similar
+                    route at a similar time.
                 </p>
 
             </div>
 
-        </section>
 
-    </main>
+            <div class="action-features">
+
+                <span>Route matching</span>
+                <span>Time matching</span>
+                <span>Match score</span>
+
+            </div>
+
+        </button>
 
 
-    <script src="js/app.js"></script>
+        <!-- OFFER A RIDE -->
+
+        <button
+            class="action-card offer-card"
+            onclick="goToOfferRide()"
+        >
+
+            <div class="action-card-top">
+
+                <div class="large-action-icon">
+                    ↗
+                </div>
+
+                <span class="action-arrow">
+                    →
+                </span>
+
+            </div>
+
+
+            <div class="action-card-content">
+
+                <span class="action-label">
+                    FOR RIDE PROVIDERS
+                </span>
+
+                <h2>
+                    Offer a Ride
+                </h2>
+
+                <p>
+                    Share your journey with commuters
+                    travelling along a similar route.
+                </p>
+
+            </div>
+
+
+            <div class="action-features">
+
+                <span>Vehicle details</span>
+                <span>Available seats</span>
+                <span>Cost sharing</span>
+
+            </div>
+
+        </button>
+
+    </section>
+
+
+    <section class="dashboard-info">
+
+        <div class="info-icon">i</div>
+
+        <div>
+            <strong>
+                Your account works for both options
+            </strong>
+
+            <p>
+                You don't need to select a permanent role.
+                Choose <b>Find a Ride</b> or <b>Offer a Ride</b>
+                whenever you need it.
+            </p>
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/app.js"></script>
 
 </body>
 </html>
