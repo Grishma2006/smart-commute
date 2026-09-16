@@ -1,778 +1,952 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>Dashboard | SmartCommute</title>
 
-    <title>Dashboard | SmartCommute</title>
+<link rel="stylesheet" href="style.css">
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+<style>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+/* =====================================================
+   DASHBOARD PAGE
+   ===================================================== */
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+.dashboard-page{
+    min-height:calc(100vh - 78px);
+    background:#f6f8f6;
+    padding:28px 0 50px;
+}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+.dashboard-container{
+    width:min(1200px,94%);
+    margin:auto;
+}
+
+/* HEADER */
+
+.dashboard-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.dashboard-title h1{
+    font-size:28px;
+    margin-bottom:4px;
+}
+
+.dashboard-title p{
+    color:#6c7872;
+    font-size:13px;
+}
+
+.logout-btn{
+    border:1px solid #087a52;
+    background:white;
+    color:#087a52;
+    padding:10px 17px;
+    border-radius:9px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.logout-btn:hover{
+    background:#e5f4ed;
+}
+
+/* MAIN GRID */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:205px 1fr;
+    gap:20px;
+}
+
+/* SIDEBAR */
+
+.dashboard-sidebar{
+    background:white;
+    border:1px solid #e1e8e4;
+    border-radius:18px;
+    padding:12px;
+    height:max-content;
+}
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px;
+    border-radius:10px;
+    color:#59665f;
+    font-size:13px;
+    margin-bottom:4px;
+    text-decoration:none;
+}
+
+.sidebar-link:hover{
+    background:#f0f7f4;
+    color:#087a52;
+}
+
+.sidebar-link.active{
+    background:#e5f4ed;
+    color:#087a52;
+    font-weight:700;
+}
+
+.sidebar-icon{
+    width:24px;
+    text-align:center;
+}
+
+/* CONTENT */
+
+.dashboard-content{
+    min-width:0;
+}
+
+/* WELCOME */
+
+.welcome-card{
+    background:linear-gradient(
+        135deg,
+        #e7f5ee,
+        #f7fbf9
+    );
+    border:1px solid #d6ebe1;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:18px;
+}
+
+.welcome-card h2{
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.welcome-card p{
+    color:#5f7169;
+    font-size:13px;
+}
+
+/* ACTION CARDS */
+
+.action-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-bottom:18px;
+}
+
+.action-card{
+    background:white;
+    border:1px solid #e1e8e4;
+    border-radius:17px;
+    padding:20px;
+    transition:.2s;
+}
+
+.action-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(20,45,35,.08);
+}
+
+.action-icon{
+    width:46px;
+    height:46px;
+    background:#e5f4ed;
+    color:#087a52;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    margin-bottom:15px;
+}
+
+.action-card h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.action-card p{
+    color:#69766f;
+    font-size:12px;
+    min-height:38px;
+    margin-bottom:15px;
+}
+
+.action-btn{
+    display:block;
+    text-align:center;
+    background:#087a52;
+    color:white;
+    padding:10px;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.action-btn:hover{
+    background:#075d40;
+}
+
+/* INFO ROW */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+/* JOURNEY CARD */
+
+.journey-card{
+    background:white;
+    border:1px solid #e1e8e4;
+    border-radius:17px;
+    padding:21px;
+}
+
+.card-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.card-heading h3{
+    font-size:16px;
+}
+
+.view-link{
+    color:#087a52;
+    font-size:11px;
+    font-weight:700;
+}
+
+.empty-state{
+    text-align:center;
+    padding:24px 10px;
+    color:#7a8580;
+}
+
+.empty-icon{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.empty-state h4{
+    color:#394740;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.empty-state p{
+    font-size:11px;
+}
+
+/* PROFILE */
+
+.profile-mini{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.profile-avatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#e5f4ed;
+    color:#087a52;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:800;
+}
+
+.profile-info h4{
+    font-size:14px;
+}
+
+.profile-info p{
+    color:#738078;
+    font-size:11px;
+    margin-top:2px;
+}
+
+.profile-details{
+    border-top:1px solid #e4e9e6;
+    margin-top:18px;
+    padding-top:14px;
+}
+
+.profile-row{
+    display:flex;
+    justify-content:space-between;
+    padding:7px 0;
+    font-size:11px;
+}
+
+.profile-row span:first-child{
+    color:#7b8580;
+}
+
+.profile-row span:last-child{
+    font-weight:600;
+}
+
+/* ECO CARD */
+
+.eco-card{
+    margin-top:15px;
+    padding:17px 20px;
+    border-radius:15px;
+    background:#e8f6ef;
+    border:1px solid #d3e9df;
+    color:#416b5b;
+    font-size:12px;
+}
+
+.eco-card strong{
+    color:#087a52;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-sidebar{
+        display:flex;
+        overflow-x:auto;
+        gap:4px;
+    }
+
+    .sidebar-link{
+        white-space:nowrap;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .action-grid{
+        grid-template-columns:1fr;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-top{
+        align-items:flex-start;
+        gap:15px;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .dashboard-page{
+        padding-top:18px;
+    }
+
+    .dashboard-title h1{
+        font-size:23px;
+    }
+
+    .dashboard-top{
+        flex-direction:column;
+    }
+
+    .logout-btn{
+        width:100%;
+    }
+
+}
+
+</style>
 
 </head>
 
 
-<body class="dashboard-page">
+<body>
 
 
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+<!-- =====================================================
+     NAVBAR
+     ===================================================== -->
 
-    <header class="navbar">
+<header class="navbar">
 
-        <a
-            href="dashboard.html"
-            class="brand"
-        >
+    <div class="nav-inner">
 
-            <div class="brand-icon">
+        <a href="dashboard.html" class="logo-area">
+
+            <div class="logo">
                 SC
             </div>
 
-            <div class="brand-text">
+            <div class="brand">
 
-                <strong>
-                    SmartCommute
-                </strong>
+                <h2>SmartCommute</h2>
 
-                <span>
+                <p>
                     Hyperlocal Travel Matching
-                </span>
+                </p>
 
             </div>
 
         </a>
 
 
-        <nav class="nav-links">
+        <div class="user-menu">
 
-            <a
-                href="dashboard.html"
-                class="active"
-            >
-                Dashboard
-            </a>
-
+            <span id="navUserName" class="user-name">
+                Commuter
+            </span>
 
             <button
-                type="button"
-                id="logoutButton"
-                class="nav-logout"
-            >
+                id="logoutBtn"
+                class="logout-btn">
+
                 Logout
+
             </button>
 
-        </nav>
+        </div>
 
-    </header>
+    </div>
+
+</header>
 
 
+<!-- =====================================================
+     DASHBOARD
+     ===================================================== -->
 
-    <!-- =====================================================
-         MAIN DASHBOARD
-    ====================================================== -->
+<main class="dashboard-page">
 
-    <main class="dashboard-main">
+<div class="dashboard-container">
+
+
+    <!-- TOP -->
+
+    <div class="dashboard-top">
+
+        <div class="dashboard-title">
+
+            <h1>
+                Welcome back, <span id="welcomeName">Commuter</span>!
+            </h1>
+
+            <p>
+                Let's make your daily commute smarter and more convenient.
+            </p>
+
+        </div>
+
+        <button
+            id="logoutBtnTop"
+            class="logout-btn">
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+    <div class="dashboard-grid">
 
 
         <!-- =================================================
-             WELCOME SECTION
-        ================================================== -->
+             SIDEBAR
+             ================================================= -->
 
-        <section class="dashboard-welcome">
+        <aside class="dashboard-sidebar">
 
-            <div>
+            <a
+                href="dashboard.html"
+                class="sidebar-link active">
 
-                <span class="section-label">
-                    YOUR DASHBOARD
-                </span>
+                <span class="sidebar-icon">🏠</span>
+
+                Dashboard
+
+            </a>
 
 
-                <h1>
-                    Hello,
-                    <span id="userName">
-                        Commuter
-                    </span>
-                    👋
-                </h1>
+            <a
+                href="find-ride.html"
+                class="sidebar-link">
 
+                <span class="sidebar-icon">🔍</span>
+
+                Find a Ride
+
+            </a>
+
+
+            <a
+                href="offer-ride.html"
+                class="sidebar-link">
+
+                <span class="sidebar-icon">🚗</span>
+
+                Offer a Ride
+
+            </a>
+
+
+            <a
+                href="#journeys"
+                class="sidebar-link">
+
+                <span class="sidebar-icon">📅</span>
+
+                My Journeys
+
+            </a>
+
+
+            <a
+                href="#profile"
+                class="sidebar-link">
+
+                <span class="sidebar-icon">👤</span>
+
+                Profile
+
+            </a>
+
+        </aside>
+
+
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
+
+        <section class="dashboard-content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome-card">
+
+                <h2>
+                    Your commute, made smarter.
+                </h2>
 
                 <p>
-                    What would you like to do today?
+                    Find people travelling on similar routes
+                    and at similar times within your local area.
                 </p>
 
             </div>
 
 
-            <div class="account-status">
+            <!-- ACTION CARDS -->
 
-                <span class="status-dot"></span>
-
-                <span>
-                    Account active
-                </span>
-
-            </div>
-
-        </section>
+            <div class="action-grid">
 
 
+                <!-- FIND -->
 
-        <!-- =================================================
-             LOADING MESSAGE
-        ================================================== -->
+                <div class="action-card">
 
-        <div
-            id="dashboardLoading"
-            class="dashboard-loading"
-        >
-
-            <div class="loading-spinner"></div>
-
-            <span>
-                Loading your profile...
-            </span>
-
-        </div>
-
-
-
-        <!-- =================================================
-             ERROR MESSAGE
-        ================================================== -->
-
-        <div
-            id="dashboardError"
-            class="form-message error-message"
-            style="display:none;"
-        ></div>
-
-
-
-        <!-- =================================================
-             MAIN ACTION CARDS
-        ================================================== -->
-
-        <section
-            id="dashboardContent"
-            class="dashboard-content"
-            style="display:none;"
-        >
-
-
-            <div class="dashboard-actions">
-
-
-                <!-- =================================================
-                     FIND A RIDE
-                ================================================== -->
-
-                <article class="dashboard-action-card find-card">
-
-                    <div class="action-card-top">
-
-                        <div class="action-icon">
-                            🔎
-                        </div>
-
-
-                        <span class="action-badge">
-                            REQUEST
-                        </span>
-
+                    <div class="action-icon">
+                        🔍
                     </div>
 
-
-                    <h2>
-                        Need a Ride?
-                    </h2>
-
+                    <h3>
+                        Find a Ride
+                    </h3>
 
                     <p>
-                        Enter your pickup location, destination
-                        and departure time to find commuters
-                        travelling on a similar route.
+                        Look for commuters travelling
+                        on similar routes.
                     </p>
-
-
-                    <div class="action-features">
-
-                        <div>
-                            <span>✓</span>
-                            Route similarity
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Time matching
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Nearby commuters
-                        </div>
-
-                    </div>
-
 
                     <a
                         href="find-ride.html"
-                        class="btn btn-primary btn-full"
-                    >
-                        Find a Ride
-                        <span>→</span>
+                        class="action-btn">
+
+                        Find a Ride →
+
                     </a>
 
-                </article>
+                </div>
 
 
+                <!-- OFFER -->
 
-                <!-- =================================================
-                     OFFER A RIDE
-                ================================================== -->
+                <div class="action-card">
 
-                <article class="dashboard-action-card offer-card">
-
-                    <div class="action-card-top">
-
-                        <div class="action-icon">
-                            🚗
-                        </div>
-
-
-                        <span class="action-badge">
-                            OFFER
-                        </span>
-
+                    <div class="action-icon">
+                        🚗
                     </div>
 
-
-                    <h2>
+                    <h3>
                         Offer a Ride
-                    </h2>
-
+                    </h3>
 
                     <p>
-                        Create your journey, add your vehicle
-                        details and make available seats visible
-                        to suitable commuters.
+                        Share your journey and
+                        available seats.
                     </p>
-
-
-                    <div class="action-features">
-
-                        <div>
-                            <span>✓</span>
-                            Add vehicle details
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Set available seats
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Receive ride requests
-                        </div>
-
-                    </div>
-
 
                     <a
                         href="offer-ride.html"
-                        class="btn btn-secondary btn-full"
-                    >
-                        Offer a Ride
-                        <span>→</span>
+                        class="action-btn">
+
+                        Offer a Ride →
+
                     </a>
 
-                </article>
+                </div>
+
+
+                <!-- JOURNEYS -->
+
+                <div class="action-card">
+
+                    <div class="action-icon">
+                        📅
+                    </div>
+
+                    <h3>
+                        My Journeys
+                    </h3>
+
+                    <p>
+                        View your upcoming and
+                        completed journeys.
+                    </p>
+
+                    <a
+                        href="#journeys"
+                        class="action-btn">
+
+                        View Journeys →
+
+                    </a>
+
+                </div>
+
 
             </div>
 
 
+            <!-- LOWER CARDS -->
 
-            <!-- =================================================
-                 QUICK INFORMATION
-            ================================================== -->
-
-            <section class="dashboard-info-grid">
+            <div class="info-grid">
 
 
-                <!-- ACCOUNT -->
+                <!-- JOURNEYS -->
 
-                <article class="dashboard-info-card">
+                <div
+                    id="journeys"
+                    class="journey-card">
 
-                    <div class="info-card-header">
+                    <div class="card-heading">
 
-                        <div class="info-card-icon">
-                            👤
+                        <h3>
+                            Recent Journeys
+                        </h3>
+
+                        <a
+                            href="#"
+                            class="view-link">
+
+                            View all
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🛣️
                         </div>
 
-                        <div>
+                        <h4>
+                            No journeys yet
+                        </h4>
 
-                            <h3>
-                                Your Account
-                            </h3>
+                        <p>
+                            Your confirmed journeys will appear here.
+                        </p>
 
-                            <span>
-                                Firebase authenticated
-                            </span>
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILE -->
+
+                <div
+                    id="profile"
+                    class="journey-card">
+
+                    <div class="card-heading">
+
+                        <h3>
+                            Your Profile
+                        </h3>
+
+                    </div>
+
+
+                    <div class="profile-mini">
+
+                        <div
+                            id="profileAvatar"
+                            class="profile-avatar">
+
+                            C
+
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <h4 id="profileName">
+                                Commuter
+                            </h4>
+
+                            <p id="profileEmail">
+                                Loading...
+                            </p>
 
                         </div>
 
                     </div>
 
 
-                    <div class="account-details">
+                    <div class="profile-details">
 
-                        <div class="account-detail">
-
-                            <span>
-                                Name
-                            </span>
-
-                            <strong id="profileName">
-                                —
-                            </strong>
-
-                        </div>
-
-
-                        <div class="account-detail">
-
-                            <span>
-                                Email
-                            </span>
-
-                            <strong
-                                id="profileEmail"
-                            >
-                                —
-                            </strong>
-
-                        </div>
-
-
-                        <div class="account-detail">
+                        <div class="profile-row">
 
                             <span>
                                 Mobile
                             </span>
 
-                            <strong
-                                id="profileMobile"
-                            >
+                            <span id="profileMobile">
                                 —
-                            </strong>
+                            </span>
 
                         </div>
 
-                    </div>
 
-                </article>
-
-
-
-                <!-- HOW MATCHING WORKS -->
-
-                <article class="dashboard-info-card">
-
-                    <div class="info-card-header">
-
-                        <div class="info-card-icon">
-                            🗺️
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                How matching works
-                            </h3>
+                        <div class="profile-row">
 
                             <span>
-                                Four factors are considered
+                                Account
+                            </span>
+
+                            <span class="green">
+                                ✓ Active
                             </span>
 
                         </div>
 
                     </div>
-
-
-                    <div class="matching-factors">
-
-                        <div class="factor-row">
-
-                            <span>
-                                Route similarity
-                            </span>
-
-                            <strong>
-                                50%
-                            </strong>
-
-                        </div>
-
-
-                        <div class="factor-row">
-
-                            <span>
-                                Pickup distance
-                            </span>
-
-                            <strong>
-                                20%
-                            </strong>
-
-                        </div>
-
-
-                        <div class="factor-row">
-
-                            <span>
-                                Destination distance
-                            </span>
-
-                            <strong>
-                                15%
-                            </strong>
-
-                        </div>
-
-
-                        <div class="factor-row">
-
-                            <span>
-                                Time similarity
-                            </span>
-
-                            <strong>
-                                15%
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 COST SHARING NOTE
-            ================================================== -->
-
-            <section class="dashboard-note">
-
-                <div class="dashboard-note-icon">
-                    💰
-                </div>
-
-
-                <div>
-
-                    <strong>
-                        Cost sharing
-                    </strong>
-
-                    <p>
-                        When a suitable journey is found,
-                        SmartCommute can show an estimated
-                        cost share. It is only an estimate
-                        for the prototype and actual costs
-                        may vary.
-                    </p>
 
                 </div>
 
-            </section>
+            </div>
+
+
+            <!-- ECO MESSAGE -->
+
+            <div class="eco-card">
+
+                🌱
+
+                <strong>
+                    A greener tomorrow
+                </strong>
+
+                <br>
+
+                Share journeys, reduce unnecessary vehicle
+                use, fuel consumption and local traffic.
+
+            </div>
+
 
         </section>
 
-    </main>
+    </div>
 
+</div>
 
+</main>
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
 
-    <footer class="footer">
+<!-- =====================================================
+     FIREBASE
+     ===================================================== -->
 
-        <div class="footer-inner">
+<script type="module">
 
-            <p class="footer-copy">
-                SmartCommute • Hyperlocal Commute Matching Prototype
-            </p>
+import {
+    protectPage,
+    getUserProfile,
+    logoutUser
+} from "./firebase-auth.js";
 
-        </div>
 
-    </footer>
+/* ---------------------------------------------
+   PROTECT PAGE
+--------------------------------------------- */
 
+const user = await protectPage();
 
 
-    <!-- =====================================================
-         FIREBASE DASHBOARD SCRIPT
-    ====================================================== -->
+if(user){
 
-    <script type="module">
+    try{
 
-        import {
-            protectPage,
-            getUserProfile,
-            logoutUser
-        } from "./firebase-auth.js";
+        const profile =
+            await getUserProfile(user.uid);
 
 
-        /* =================================================
-           ELEMENTS
-        ================================================== */
+        const name =
+            profile?.fullName ||
+            user.displayName ||
+            "Commuter";
 
-        const userName =
-            document.getElementById("userName");
 
-        const profileName =
-            document.getElementById("profileName");
+        const email =
+            profile?.email ||
+            user.email ||
+            "No email";
 
-        const profileEmail =
-            document.getElementById("profileEmail");
 
-        const profileMobile =
-            document.getElementById("profileMobile");
+        const mobile =
+            profile?.mobile ||
+            "Not available";
 
-        const logoutButton =
-            document.getElementById("logoutButton");
 
-        const dashboardLoading =
-            document.getElementById("dashboardLoading");
+        /* NAVBAR */
 
-        const dashboardContent =
-            document.getElementById("dashboardContent");
+        document.getElementById(
+            "navUserName"
+        ).textContent = name;
 
-        const dashboardError =
-            document.getElementById("dashboardError");
 
+        /* WELCOME */
 
-        /* =================================================
-           ERROR DISPLAY
-        ================================================== */
+        document.getElementById(
+            "welcomeName"
+        ).textContent =
+            name.split(" ")[0];
 
-        function showDashboardError(message) {
 
-            dashboardError.textContent =
-                message;
+        /* PROFILE */
 
-            dashboardError.style.display =
-                "block";
+        document.getElementById(
+            "profileName"
+        ).textContent = name;
 
-        }
 
+        document.getElementById(
+            "profileEmail"
+        ).textContent = email;
 
-        /* =================================================
-           LOAD DASHBOARD
-        ================================================== */
 
-        async function loadDashboard() {
+        document.getElementById(
+            "profileMobile"
+        ).textContent = mobile;
 
-            try {
 
-                /*
-                   protectPage() waits for Firebase to
-                   determine whether the user is logged in.
+        /* AVATAR */
 
-                   If the user is not authenticated,
-                   firebase-auth.js redirects to login.html.
-                */
+        const initials =
+            name
+                .split(" ")
+                .map(word => word.charAt(0))
+                .join("")
+                .substring(0,2)
+                .toUpperCase();
 
-                const user =
-                    await protectPage();
 
+        document.getElementById(
+            "profileAvatar"
+        ).textContent = initials;
 
-                if (!user) {
-                    return;
-                }
 
-
-                /*
-                   Load the user's profile from Firestore.
-                */
-
-                const profile =
-                    await getUserProfile(
-                        user.uid
-                    );
-
-
-                /*
-                   Firebase displayName is used as a
-                   fallback if the Firestore profile
-                   cannot be found.
-                */
-
-                const name =
-                    profile?.fullName ||
-                    user.displayName ||
-                    "Commuter";
-
-
-                const email =
-                    profile?.email ||
-                    user.email ||
-                    "—";
-
-
-                const mobile =
-                    profile?.mobile ||
-                    "Not provided";
-
-
-                /* -----------------------------------------
-                   UPDATE UI
-                ------------------------------------------ */
-
-                userName.textContent =
-                    name;
-
-
-                profileName.textContent =
-                    name;
-
-
-                profileEmail.textContent =
-                    email;
-
-
-                profileMobile.textContent =
-                    mobile;
-
-
-                /*
-                   Hide loading and show dashboard.
-                */
-
-                dashboardLoading.style.display =
-                    "none";
-
-                dashboardContent.style.display =
-                    "block";
-
-
-            } catch (error) {
-
-                console.error(
-                    "Dashboard loading error:",
-                    error
-                );
-
-
-                dashboardLoading.style.display =
-                    "none";
-
-
-                showDashboardError(
-                    "Unable to load your account information. Please log in again."
-                );
-
-            }
-
-        }
-
-
-        /* =================================================
-           LOGOUT
-        ================================================== */
-
-        logoutButton.addEventListener(
-            "click",
-            async () => {
-
-                try {
-
-                    logoutButton.disabled =
-                        true;
-
-                    logoutButton.textContent =
-                        "Logging out...";
-
-
-                    await logoutUser();
-
-
-                    /*
-                       Firebase signOut() removes the
-                       authenticated session.
-
-                       replace() prevents the user from
-                       returning to the dashboard through
-                       the browser history.
-                    */
-
-                    window.location.replace(
-                        "index.html"
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
-
-
-                    logoutButton.disabled =
-                        false;
-
-                    logoutButton.textContent =
-                        "Logout";
-
-
-                    showDashboardError(
-                        "Unable to log out. Please try again."
-                    );
-
-                }
-
-            }
+    }catch(error){
+
+        console.error(
+            "Unable to load profile:",
+            error
         );
 
+    }
 
-        /* =================================================
-           START DASHBOARD
-        ================================================== */
+}
 
-        loadDashboard();
 
-    </script>
+/* ---------------------------------------------
+   LOGOUT
+--------------------------------------------- */
+
+async function handleLogout(){
+
+    try{
+
+        await logoutUser();
+
+        window.location.href =
+            "login.html";
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to logout. Please try again."
+        );
+
+    }
+
+}
+
+
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    handleLogout
+);
+
+
+document.getElementById(
+    "logoutBtnTop"
+).addEventListener(
+    "click",
+    handleLogout
+);
+
+</script>
+
 
 </body>
-
 </html>
