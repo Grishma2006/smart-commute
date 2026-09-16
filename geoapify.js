@@ -3,7 +3,7 @@
    Address search + real road routing
    ========================================================= */
 
-const GEOAPIFY_API_KEY = "YOUR_NEW_GEOAPIFY_API_KEY";
+const GEOAPIFY_API_KEY = "89398d24d2e345349d6755ab088d4f3d";
 
 
 /* =========================================================
