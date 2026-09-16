@@ -3,519 +3,736 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>Route Preview | SmartCommute</title>
 
-    <title>Route Preview | SmartCommute</title>
+<!-- Leaflet -->
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+<link rel="stylesheet" href="style.css">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+<style>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-        crossorigin
-    >
+/* =====================================================
+   ROUTE PREVIEW PAGE
+   ===================================================== */
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+.route-page{
+    min-height:calc(100vh - 78px);
+    background:#f6f8f6;
+    padding:25px 0 45px;
+}
 
-    <!-- Leaflet -->
+.route-container{
+    width:min(1200px,94%);
+    margin:auto;
+}
 
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        crossorigin=""
-    >
+
+/* =====================================================
+   TOP
+   ===================================================== */
+
+.route-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:20px;
+}
+
+.back-link{
+    color:#68756e;
+    text-decoration:none;
+    font-size:12px;
+}
+
+.back-link:hover{
+    color:#087a52;
+}
+
+.route-heading{
+    margin-top:12px;
+}
+
+.route-heading h1{
+    font-size:28px;
+    margin-bottom:4px;
+}
+
+.route-heading p{
+    color:#6c7872;
+    font-size:13px;
+}
+
+
+/* =====================================================
+   STEPPER
+   ===================================================== */
+
+.progress{
+    display:flex;
+    align-items:center;
+    margin:15px 0 28px;
+}
+
+.progress-step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:105px;
+    color:#8a9590;
+    font-size:10px;
+    font-weight:600;
+}
+
+.progress-circle{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    background:#dce3df;
+    color:#69756f;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.progress-step.completed,
+.progress-step.active{
+    color:#087a52;
+}
+
+.progress-step.completed .progress-circle,
+.progress-step.active .progress-circle{
+    background:#087a52;
+    color:white;
+}
+
+.progress-line{
+    flex:1;
+    height:2px;
+    background:#dfe5e1;
+    margin:0 -8px;
+    margin-bottom:18px;
+}
+
+.progress-line.active{
+    background:#087a52;
+}
+
+
+/* =====================================================
+   MAIN ROUTE LAYOUT
+   ===================================================== */
+
+.route-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 320px;
+    gap:18px;
+    align-items:start;
+}
+
+
+/* =====================================================
+   MAP
+   ===================================================== */
+
+.map-card{
+    position:relative;
+    background:white;
+    border:1px solid #dfe7e3;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 5px 22px rgba(20,45,35,.05);
+}
+
+#map{
+    width:100%;
+    height:500px;
+    background:#e9efec;
+}
+
+
+/* Map loading overlay */
+
+.map-loading{
+    position:absolute;
+    z-index:1000;
+    top:15px;
+    left:50%;
+    transform:translateX(-50%);
+    background:white;
+    border:1px solid #e1e8e4;
+    border-radius:20px;
+    padding:9px 15px;
+    box-shadow:0 8px 25px rgba(20,45,35,.12);
+    font-size:11px;
+    color:#59665f;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.loading-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#087a52;
+}
+
+
+/* Map bottom information */
+
+.map-bottom{
+    padding:13px 17px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    border-top:1px solid #e4e9e6;
+}
+
+.map-route-label{
+    font-size:11px;
+    color:#6e7974;
+}
+
+.map-route-label strong{
+    color:#26342e;
+}
+
+
+/* =====================================================
+   MAP MARKERS
+   ===================================================== */
+
+.custom-marker{
+    width:31px;
+    height:31px;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(-45deg);
+    background:#087a52;
+    border:3px solid white;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.custom-marker span{
+    display:block;
+    transform:rotate(45deg);
+    color:white;
+    text-align:center;
+    line-height:25px;
+    font-size:11px;
+    font-weight:800;
+}
+
+
+/* =====================================================
+   SIDE SUMMARY
+   ===================================================== */
+
+.summary-card{
+    background:white;
+    border:1px solid #dfe7e3;
+    border-radius:18px;
+    padding:21px;
+    box-shadow:0 5px 22px rgba(20,45,35,.05);
+}
+
+.summary-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:19px;
+}
+
+.summary-header h2{
+    font-size:17px;
+}
+
+.route-badge{
+    background:#e5f4ed;
+    color:#087a52;
+    padding:6px 9px;
+    border-radius:9px;
+    font-size:10px;
+    font-weight:800;
+}
+
+
+/* =====================================================
+   ROUTE POINTS
+   ===================================================== */
+
+.route-points{
+    padding:2px 0 5px;
+}
+
+.route-point{
+    display:flex;
+    gap:11px;
+    align-items:flex-start;
+}
+
+.point-column{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.point-dot{
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    border:3px solid #087a52;
+    background:white;
+    flex-shrink:0;
+}
+
+.point-line{
+    width:2px;
+    height:42px;
+    background:#cfe0d8;
+}
+
+.point-info{
+    padding-bottom:4px;
+}
+
+.point-info .label{
+    color:#7b8580;
+    font-size:10px;
+    margin-bottom:2px;
+}
+
+.point-info .location{
+    font-size:12px;
+    font-weight:700;
+}
+
+
+/* =====================================================
+   SUMMARY STATS
+   ===================================================== */
+
+.summary-stats{
+    border-top:1px solid #e5e9e7;
+    margin-top:18px;
+    padding-top:6px;
+}
+
+.stat{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:13px 0;
+    border-bottom:1px solid #edf0ee;
+}
+
+.stat:last-child{
+    border-bottom:0;
+}
+
+.stat-icon{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    background:#e5f4ed;
+    color:#087a52;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+}
+
+.stat-label{
+    color:#7a8580;
+    font-size:10px;
+}
+
+.stat-value{
+    font-size:14px;
+    font-weight:800;
+    margin-top:1px;
+}
+
+
+/* =====================================================
+   COST
+   ===================================================== */
+
+.cost-box{
+    margin-top:17px;
+    background:#f1f7f4;
+    border:1px solid #d7ebe1;
+    border-radius:13px;
+    padding:15px;
+}
+
+.cost-title{
+    color:#087a52;
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.cost-amount{
+    font-size:24px;
+    font-weight:800;
+    color:#14221c;
+}
+
+.cost-share{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:9px;
+    padding-top:9px;
+    border-top:1px solid #d9e8e1;
+}
+
+.cost-share span{
+    font-size:10px;
+    color:#6e7974;
+}
+
+.cost-share strong{
+    color:#087a52;
+    font-size:14px;
+}
+
+
+/* =====================================================
+   NOTE
+   ===================================================== */
+
+.cost-note{
+    margin-top:8px;
+    color:#75817b;
+    font-size:9px;
+    line-height:1.4;
+}
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+.route-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+    margin-top:18px;
+}
+
+.edit-btn{
+    height:43px;
+    border:1px solid #087a52;
+    background:white;
+    color:#087a52;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.edit-btn:hover{
+    background:#e5f4ed;
+}
+
+.matches-btn{
+    height:43px;
+    border:0;
+    background:#087a52;
+    color:white;
+    border-radius:9px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.matches-btn:hover{
+    background:#075d40;
+}
+
+.matches-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+.route-error{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:#fff0ef;
+    border:1px solid #f0d2cf;
+    color:#a13d38;
+    font-size:11px;
+}
+
+.route-error.show{
+    display:block;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media(max-width:850px){
+
+    .route-layout{
+        grid-template-columns:1fr;
+    }
+
+    #map{
+        height:420px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .route-page{
+        padding-top:18px;
+    }
+
+    .route-heading h1{
+        font-size:23px;
+    }
+
+    .progress-step{
+        min-width:70px;
+        font-size:8px;
+    }
+
+    .progress-line{
+        margin-left:-5px;
+        margin-right:-5px;
+    }
+
+    .route-layout{
+        gap:13px;
+    }
+
+    #map{
+        height:350px;
+    }
+
+    .route-actions{
+        grid-template-columns:1fr;
+    }
+
+    .map-bottom{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+}
+
+</style>
 
 </head>
 
 
-<body class="app-page">
+<body>
 
 
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+<!-- =====================================================
+     NAVBAR
+     ===================================================== -->
 
-    <header class="navbar">
+<header class="navbar">
 
-        <a
-            href="dashboard.html"
-            class="brand"
-        >
+    <div class="nav-inner">
 
-            <div class="brand-icon">
+        <a href="dashboard.html" class="logo-area">
+
+            <div class="logo">
                 SC
             </div>
 
-            <div class="brand-text">
+            <div class="brand">
 
-                <strong>
-                    SmartCommute
-                </strong>
+                <h2>SmartCommute</h2>
 
-                <span>
+                <p>
                     Hyperlocal Travel Matching
-                </span>
+                </p>
 
             </div>
 
         </a>
 
 
-        <nav class="nav-links">
+        <div class="user-menu">
 
-            <a href="dashboard.html">
-                Dashboard
-            </a>
+            <span
+                id="navUserName"
+                class="user-name">
+                Commuter
+            </span>
 
             <button
-                type="button"
-                id="logoutButton"
-                class="nav-logout"
-            >
+                id="logoutBtn"
+                class="logout-btn">
+
                 Logout
+
             </button>
 
-        </nav>
+        </div>
 
-    </header>
+    </div>
 
-
-
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
-    <main class="journey-main">
+</header>
 
 
-        <!-- =================================================
-             PAGE HEADER
-        ================================================== -->
+<!-- =====================================================
+     PAGE
+     ===================================================== -->
 
-        <section class="page-header">
+<main class="route-page">
 
-            <div>
+<div class="route-container">
 
-                <span class="section-label">
-                    STEP 2 OF 3
-                </span>
 
-                <h1>
-                    Preview your route
-                </h1>
+    <!-- BACK -->
 
-                <p>
-                    Check your actual road route before
-                    SmartCommute searches for suitable matches.
-                </p>
+    <a
+        href="find-ride.html"
+        class="back-link">
 
+        ← Back to Journey Details
+
+    </a>
+
+
+    <!-- HEADING -->
+
+    <div class="route-heading">
+
+        <h1>
+            Route preview
+        </h1>
+
+        <p>
+            Here is the route calculated for your journey.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         PROGRESS
+         ================================================= -->
+
+    <div class="progress">
+
+        <div class="progress-step completed">
+
+            <div class="progress-circle">
+                ✓
             </div>
 
-
-            <a
-                href="find-ride.html"
-                class="back-link"
-            >
-                ← Edit Journey
-            </a>
-
-        </section>
-
-
-
-        <!-- =================================================
-             ERROR
-        ================================================== -->
-
-        <div
-            id="pageError"
-            class="form-message error-message"
-            style="display:none;"
-        ></div>
-
-
-
-        <!-- =================================================
-             LOADING
-        ================================================== -->
-
-        <div
-            id="routeLoading"
-            class="route-loading"
-        >
-
-            <div class="loading-spinner"></div>
-
-            <div>
-
-                <strong>
-                    Generating your route...
-                </strong>
-
-                <span>
-                    Connecting to the routing service.
-                </span>
-
-            </div>
+            Journey Details
 
         </div>
 
 
+        <div class="progress-line active"></div>
+
+
+        <div class="progress-step active">
+
+            <div class="progress-circle">
+                2
+            </div>
+
+            Route Preview
+
+        </div>
+
+
+        <div class="progress-line"></div>
+
+
+        <div class="progress-step">
+
+            <div class="progress-circle">
+                3
+            </div>
+
+            Find Matches
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         ROUTE LAYOUT
+         ================================================= -->
+
+    <div class="route-layout">
+
 
         <!-- =================================================
-             ROUTE CONTENT
-        ================================================== -->
+             MAP
+             ================================================= -->
 
-        <section
-            id="routeContent"
-            class="route-preview-layout"
-            style="display:none;"
-        >
+        <section class="map-card">
 
+            <div
+                id="mapLoading"
+                class="map-loading">
 
-            <!-- =================================================
-                 MAP
-            ================================================== -->
+                <span class="loading-dot"></span>
 
-            <div class="route-preview-map-card">
-
-                <div class="map-card-header">
-
-                    <div>
-
-                        <span class="small-label">
-                            ACTUAL ROAD ROUTE
-                        </span>
-
-                        <h2>
-                            Your journey
-                        </h2>
-
-                    </div>
-
-
-                    <span
-                        id="routeStatus"
-                        class="map-status"
-                    >
-                        Route Ready
-                    </span>
-
-                </div>
-
-
-                <div
-                    id="routeMap"
-                    class="route-preview-map"
-                ></div>
-
-
-                <div class="route-map-footer">
-
-                    <div class="map-legend">
-
-                        <span>
-                            <i class="legend-dot pickup"></i>
-                            Pickup
-                        </span>
-
-                        <span>
-                            <i class="legend-dot destination"></i>
-                            Destination
-                        </span>
-
-                        <span>
-                            <i class="route-legend-line"></i>
-                            Road Route
-                        </span>
-
-                    </div>
-
-                </div>
+                Calculating route...
 
             </div>
 
 
+            <div id="map"></div>
 
-            <!-- =================================================
-                 ROUTE DETAILS
-            ================================================== -->
 
-            <div class="route-details-card">
+            <div class="map-bottom">
 
+                <div class="map-route-label">
 
-                <div class="card-heading">
+                    <strong id="mapDistance">
+                        Calculating...
+                    </strong>
 
-                    <div class="card-heading-icon">
-                        🗺️
-                    </div>
-
-                    <div>
-
-                        <h2>
-                            Journey summary
-                        </h2>
-
-                        <p>
-                            Details calculated from the road route.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- ROUTE LOCATIONS -->
-
-                <div class="route-location-summary">
-
-
-                    <div class="route-location-item">
-
-                        <div class="route-location-marker pickup-marker">
-                            A
-                        </div>
-
-                        <div>
-
-                            <span>
-                                PICKUP
-                            </span>
-
-                            <strong id="pickupName">
-                                —
-                            </strong>
-
-                            <small id="pickupAddress">
-                                —
-                            </small>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="vertical-route-line"></div>
-
-
-
-                    <div class="route-location-item">
-
-                        <div class="route-location-marker destination-marker">
-                            B
-                        </div>
-
-                        <div>
-
-                            <span>
-                                DESTINATION
-                            </span>
-
-                            <strong id="destinationName">
-                                —
-                            </strong>
-
-                            <small id="destinationAddress">
-                                —
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- STATS -->
-
-                <div class="route-stats">
-
-
-                    <div class="route-stat">
-
-                        <span class="route-stat-icon">
-                            📏
-                        </span>
-
-                        <div>
-
-                            <small>
-                                DISTANCE
-                            </small>
-
-                            <strong id="routeDistance">
-                                —
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="route-stat">
-
-                        <span class="route-stat-icon">
-                            ⏱️
-                        </span>
-
-                        <div>
-
-                            <small>
-                                ESTIMATED TIME
-                            </small>
-
-                            <strong id="routeTime">
-                                —
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- JOURNEY INFO -->
-
-                <div class="journey-summary-box">
-
-                    <div class="summary-row">
-
-                        <span>
-                            Travel date
-                        </span>
-
-                        <strong id="journeyDateDisplay">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Departure
-                        </span>
-
-                        <strong id="journeyTimeDisplay">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Seats needed
-                        </span>
-
-                        <strong id="seatsDisplay">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- COST -->
-
-                <div class="estimated-cost-card">
-
-                    <div class="cost-icon">
-                        💰
-                    </div>
-
-                    <div class="cost-content">
-
-                        <span>
-                            ESTIMATED JOURNEY COST
-                        </span>
-
-                        <strong id="estimatedCost">
-                            —
-                        </strong>
-
-                        <small>
-                            Estimate for demonstration.
-                            Actual cost may vary.
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MATCHING INFO -->
-
-                <div class="route-next-info">
+                    <br>
 
                     <span>
-                        ✓
+                        Actual road route
                     </span>
-
-                    <div>
-
-                        <strong>
-                            Ready for matching
-                        </strong>
-
-                        <p>
-                            The next step will compare your
-                            route with available commuter
-                            journeys.
-                        </p>
-
-                    </div>
 
                 </div>
 
 
+                <div class="map-route-label">
 
-                <!-- ACTIONS -->
-
-                <div class="route-actions">
-
-                    <a
-                        href="find-ride.html"
-                        class="btn btn-secondary"
-                    >
-                        ← Edit Journey
-                    </a>
-
-
-                    <button
-                        type="button"
-                        id="findMatchesButton"
-                        class="btn btn-primary"
-                    >
-                        Find Matches →
-                    </button>
+                    Powered by
+                    <strong>
+                        Geoapify
+                    </strong>
 
                 </div>
 
@@ -523,826 +740,858 @@
 
         </section>
 
-    </main>
 
+        <!-- =================================================
+             SUMMARY
+             ================================================= -->
 
+        <aside class="summary-card">
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
 
-    <footer class="footer">
+            <div class="summary-header">
 
-        <div class="footer-inner">
+                <h2>
+                    Route summary
+                </h2>
 
-            <p class="footer-copy">
-                SmartCommute • Hyperlocal Commute Matching Prototype
-            </p>
+                <span class="route-badge">
+                    ROUTE FOUND
+                </span>
 
-        </div>
+            </div>
 
-    </footer>
 
+            <!-- ROUTE POINTS -->
 
+            <div class="route-points">
 
-    <!-- =====================================================
-         LEAFLET
-    ====================================================== -->
 
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        crossorigin=""
-    ></script>
+                <div class="route-point">
 
+                    <div class="point-column">
 
+                        <div class="point-dot"></div>
 
-    <!-- =====================================================
-         FIREBASE + GEOAPIFY
-    ====================================================== -->
+                        <div class="point-line"></div>
 
-    <script type="module">
+                    </div>
 
-        import {
-            protectPage,
-            logoutUser
-        } from "./firebase-auth.js";
 
+                    <div class="point-info">
 
-        import {
-            getGeoapifyRoute,
-            formatDistance,
-            formatDuration
-        } from "./geoapify.js";
+                        <div class="label">
+                            PICKUP
+                        </div>
 
+                        <div
+                            id="pickupName"
+                            class="location">
 
+                            Loading...
 
-        /* =================================================
-           ELEMENTS
-        ================================================== */
+                        </div>
 
-        const routeLoading =
-            document.getElementById("routeLoading");
+                    </div>
 
+                </div>
 
-        const routeContent =
-            document.getElementById("routeContent");
 
+                <div class="route-point">
 
-        const pageError =
-            document.getElementById("pageError");
+                    <div class="point-column">
 
+                        <div class="point-dot"></div>
 
-        const routeMap =
-            document.getElementById("routeMap");
+                    </div>
 
 
-        const routeStatus =
-            document.getElementById("routeStatus");
+                    <div class="point-info">
 
+                        <div class="label">
+                            DESTINATION
+                        </div>
 
-        const pickupName =
-            document.getElementById("pickupName");
+                        <div
+                            id="destinationName"
+                            class="location">
 
+                            Loading...
 
-        const pickupAddress =
-            document.getElementById("pickupAddress");
+                        </div>
 
+                    </div>
 
-        const destinationName =
-            document.getElementById("destinationName");
+                </div>
 
 
-        const destinationAddress =
-            document.getElementById("destinationAddress");
+            </div>
 
 
-        const routeDistance =
-            document.getElementById("routeDistance");
+            <!-- STATS -->
 
+            <div class="summary-stats">
 
-        const routeTime =
-            document.getElementById("routeTime");
 
+                <div class="stat">
 
-        const journeyDateDisplay =
-            document.getElementById("journeyDateDisplay");
+                    <div class="stat-icon">
+                        📏
+                    </div>
 
+                    <div>
 
-        const journeyTimeDisplay =
-            document.getElementById("journeyTimeDisplay");
+                        <div class="stat-label">
+                            Distance
+                        </div>
 
+                        <div
+                            id="distanceValue"
+                            class="stat-value">
 
-        const seatsDisplay =
-            document.getElementById("seatsDisplay");
+                            —
 
+                        </div>
 
-        const estimatedCost =
-            document.getElementById("estimatedCost");
+                    </div>
 
+                </div>
 
-        const findMatchesButton =
-            document.getElementById("findMatchesButton");
 
+                <div class="stat">
 
-        const logoutButton =
-            document.getElementById("logoutButton");
+                    <div class="stat-icon">
+                        🕐
+                    </div>
 
+                    <div>
 
+                        <div class="stat-label">
+                            Travel time
+                        </div>
 
-        /* =================================================
-           JOURNEY DATA
-        ================================================== */
+                        <div
+                            id="durationValue"
+                            class="stat-value">
 
-        let journey = null;
+                            —
 
-        let generatedRoute = null;
+                        </div>
 
-        let map = null;
+                    </div>
 
-        let routeLayer = null;
+                </div>
 
-        let pickupMarker = null;
 
-        let destinationMarker = null;
+                <div class="stat">
 
+                    <div class="stat-icon">
+                        📅
+                    </div>
 
+                    <div>
 
-        /* =================================================
-           ERROR HANDLER
-        ================================================== */
+                        <div class="stat-label">
+                            Departure
+                        </div>
 
-        function showError(message) {
+                        <div
+                            id="departureValue"
+                            class="stat-value">
 
-            pageError.textContent =
-                message;
+                            —
 
-            pageError.style.display =
-                "block";
+                        </div>
 
+                    </div>
 
-            routeLoading.style.display =
-                "none";
+                </div>
 
-            routeContent.style.display =
-                "none";
 
+            </div>
+
+
+            <!-- COST -->
+
+            <div class="cost-box">
+
+                <div class="cost-title">
+                    💰 ESTIMATED JOURNEY COST
+                </div>
+
+                <div
+                    id="totalCost"
+                    class="cost-amount">
+
+                    ₹—
+
+                </div>
+
+
+                <div class="cost-share">
+
+                    <span>
+                        Estimated cost share
+                    </span>
+
+                    <strong id="costShare">
+                        ₹—
+                    </strong>
+
+                </div>
+
+
+                <div class="cost-note">
+
+                    Estimate for demonstration.
+                    Actual cost may vary.
+
+                </div>
+
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="routeError"
+                class="route-error">
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="route-actions">
+
+                <button
+                    id="editJourneyBtn"
+                    class="edit-btn">
+
+                    ← Edit Journey
+
+                </button>
+
+
+                <button
+                    id="findMatchesBtn"
+                    class="matches-btn"
+                    disabled>
+
+                    Find Matches →
+
+                </button>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- =====================================================
+     LEAFLET
+     ===================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
+<script type="module">
+
+import {
+    protectPage,
+    logoutUser
+} from "./firebase-auth.js";
+
+import {
+    getGeoapifyRoute,
+    formatDistance,
+    formatDuration
+} from "./geoapify.js";
+
+
+/* =====================================================
+   AUTH
+   ===================================================== */
+
+const user =
+    await protectPage();
+
+
+if(!user){
+
+    throw new Error(
+        "User is not authenticated."
+    );
+
+}
+
+
+document.getElementById(
+    "navUserName"
+).textContent =
+    user.displayName || "Commuter";
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    async () => {
+
+        await logoutUser();
+
+        window.location.href =
+            "login.html";
+
+    }
+);
+
+
+/* =====================================================
+   GET JOURNEY FROM SESSION STORAGE
+   ===================================================== */
+
+const storedJourney =
+    sessionStorage.getItem(
+        "smartCommuteCurrentJourney"
+    );
+
+
+if(!storedJourney){
+
+    alert(
+        "Journey details were not found. Please enter your journey again."
+    );
+
+    window.location.href =
+        "find-ride.html";
+
+    throw new Error(
+        "No journey found in sessionStorage."
+    );
+
+}
+
+
+let journey;
+
+
+try{
+
+    journey =
+        JSON.parse(storedJourney);
+
+}catch(error){
+
+    console.error(error);
+
+    alert(
+        "Journey data is invalid. Please try again."
+    );
+
+    window.location.href =
+        "find-ride.html";
+
+    throw error;
+
+}
+
+
+/* =====================================================
+   CHECK LOCATION DATA
+   ===================================================== */
+
+if(
+    !journey.pickup ||
+    !journey.destination ||
+    !Number.isFinite(Number(journey.pickup.lat)) ||
+    !Number.isFinite(Number(journey.pickup.lng)) ||
+    !Number.isFinite(Number(journey.destination.lat)) ||
+    !Number.isFinite(Number(journey.destination.lng))
+){
+
+    alert(
+        "Pickup or destination location is missing. Please select locations again."
+    );
+
+    window.location.href =
+        "find-ride.html";
+
+    throw new Error(
+        "Invalid journey locations."
+    );
+
+}
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const mapLoading =
+    document.getElementById(
+        "mapLoading"
+    );
+
+const routeError =
+    document.getElementById(
+        "routeError"
+    );
+
+const findMatchesBtn =
+    document.getElementById(
+        "findMatchesBtn"
+    );
+
+
+/* =====================================================
+   SHOW JOURNEY INFORMATION
+   ===================================================== */
+
+document.getElementById(
+    "pickupName"
+).textContent =
+    journey.pickup.name ||
+    journey.pickup.formatted ||
+    "Pickup location";
+
+
+document.getElementById(
+    "destinationName"
+).textContent =
+    journey.destination.name ||
+    journey.destination.formatted ||
+    "Destination";
+
+
+document.getElementById(
+    "departureValue"
+).textContent =
+    formatDeparture(
+        journey.date,
+        journey.time
+    );
+
+
+/* =====================================================
+   FORMAT DEPARTURE
+   ===================================================== */
+
+function formatDeparture(
+    date,
+    time
+){
+
+    if(!date && !time){
+
+        return "—";
+
+    }
+
+
+    if(!time){
+
+        return date || "—";
+
+    }
+
+
+    const parts =
+        time.split(":");
+
+
+    let hour =
+        Number(parts[0]);
+
+    const minute =
+        parts[1] || "00";
+
+
+    const period =
+        hour >= 12
+            ? "PM"
+            : "AM";
+
+
+    hour =
+        hour % 12 || 12;
+
+
+    return `${date || ""} ${hour}:${minute} ${period}`;
+
+}
+
+
+/* =====================================================
+   INITIALIZE MAP
+   ===================================================== */
+
+const map =
+    L.map(
+        "map",
+        {
+            zoomControl:true
         }
+    );
 
 
+/*
+ * Do not use an incorrect Leaflet integrity hash.
+ */
 
-        /* =================================================
-           ESCAPE HTML
-        ================================================== */
+L.tileLayer(
+    `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${window.GEOAPIFY_API_KEY}`,
+    {
+        maxZoom:20,
+        attribution:
+            '© OpenStreetMap contributors © Geoapify'
+    }
+).addTo(map);
 
-        function escapeHTML(value) {
 
-            return String(value ?? "")
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
+/* Initial view */
 
+map.setView(
+    [
+        Number(journey.pickup.lat),
+        Number(journey.pickup.lng)
+    ],
+    14
+);
+
+
+/* =====================================================
+   MARKER ICONS
+   ===================================================== */
+
+const pickupIcon =
+    L.divIcon({
+
+        className:"",
+        
+        html:`
+            <div class="custom-marker">
+                <span>A</span>
+            </div>
+        `,
+
+        iconSize:[31,31],
+
+        iconAnchor:[8,29],
+
+        popupAnchor:[8,-28]
+
+    });
+
+
+const destinationIcon =
+    L.divIcon({
+
+        className:"",
+
+        html:`
+            <div
+                class="custom-marker"
+                style="background:#d94b45;">
+                <span>B</span>
+            </div>
+        `,
+
+        iconSize:[31,31],
+
+        iconAnchor:[8,29],
+
+        popupAnchor:[8,-28]
+
+    });
+
+
+const pickupMarker =
+    L.marker(
+        [
+            Number(journey.pickup.lat),
+            Number(journey.pickup.lng)
+        ],
+        {
+            icon:pickupIcon
         }
+    )
+    .addTo(map)
+    .bindPopup(
+        `<strong>Pickup</strong><br>${escapeHtml(
+            journey.pickup.name ||
+            journey.pickup.formatted ||
+            ""
+        )}`
+    );
 
 
-
-        /* =================================================
-           DATE FORMAT
-        ================================================== */
-
-        function formatDate(dateString) {
-
-            if (!dateString) {
-                return "—";
-            }
-
-
-            const date =
-                new Date(
-                    `${dateString}T00:00:00`
-                );
-
-
-            if (
-                Number.isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                return dateString;
-
-            }
+const destinationMarker =
+    L.marker(
+        [
+            Number(journey.destination.lat),
+            Number(journey.destination.lng)
+        ],
+        {
+            icon:destinationIcon
+        }
+    )
+    .addTo(map)
+    .bindPopup(
+        `<strong>Destination</strong><br>${escapeHtml(
+            journey.destination.name ||
+            journey.destination.formatted ||
+            ""
+        )}`
+    );
 
 
-            return date.toLocaleDateString(
-                "en-IN",
-                {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric"
-                }
+/* =====================================================
+   ROUTE LAYER
+   ===================================================== */
+
+let routeLayer = null;
+
+
+/* =====================================================
+   LOAD ROUTE
+   ===================================================== */
+
+async function loadRoute(){
+
+    try{
+
+        mapLoading.style.display =
+            "flex";
+
+
+        routeError.classList.remove(
+            "show"
+        );
+
+
+        /*
+         * Geoapify routing.
+         *
+         * The helper function from geoapify.js
+         * handles the API request.
+         */
+
+        const route =
+            await getGeoapifyRoute(
+                [
+                    journey.pickup,
+                    journey.destination
+                ]
+            );
+
+
+        if(!route){
+
+            throw new Error(
+                "No route was returned by Geoapify."
             );
 
         }
 
 
+        console.log(
+            "Geoapify route:",
+            route
+        );
+
 
         /* =================================================
-           TIME FORMAT
-        ================================================== */
+           GET DISTANCE
+           ================================================= */
 
-        function formatTime(timeString) {
+        let distanceKm = 0;
 
-            if (!timeString) {
-                return "—";
-            }
+        let durationMin = 0;
 
 
-            const parts =
-                timeString.split(":");
+        /*
+         * Support the common Geoapify response
+         * formats used by the helper.
+         */
 
+        if(route.distance != null){
 
-            if (parts.length < 2) {
-                return timeString;
-            }
+            distanceKm =
+                Number(route.distance) / 1000;
 
+        }
 
-            let hour =
-                Number(parts[0]);
+        if(route.time != null){
 
-
-            const minute =
-                parts[1];
-
-
-            const period =
-                hour >= 12
-                    ? "PM"
-                    : "AM";
-
-
-            hour =
-                hour % 12 || 12;
-
-
-            return `${hour}:${minute} ${period}`;
+            durationMin =
+                Number(route.time) / 60;
 
         }
 
 
+        /*
+         * If helper returns a feature,
+         * read values from properties.
+         */
 
-        /* =================================================
-           ESTIMATED COST
-        ================================================== */
+        if(
+            route.properties &&
+            route.properties.distance != null
+        ){
 
-        function calculateEstimatedCost(
-            distanceKm
-        ) {
-
-            /*
-               Prototype cost-sharing calculation.
-
-               This is NOT a commercial taxi fare.
-
-               Fuel estimate:
-               distance × ₹8/km
-
-               Small fixed vehicle-cost component:
-               ₹15
-
-               Minimum:
-               ₹30
-            */
-
-            const distance =
-                Number(distanceKm) || 0;
-
-
-            const cost =
-                Math.max(
-                    30,
-                    Math.round(
-                        distance * 8 + 15
-                    )
-                );
-
-
-            return cost;
+            distanceKm =
+                Number(
+                    route.properties.distance
+                ) / 1000;
 
         }
 
 
+        if(
+            route.properties &&
+            route.properties.time != null
+        ){
 
-        /* =================================================
-           INITIALIZE MAP
-        ================================================== */
+            durationMin =
+                Number(
+                    route.properties.time
+                ) / 60;
 
-        function initializeMap() {
+        }
 
-            if (!window.L) {
 
-                throw new Error(
-                    "Map library could not be loaded."
-                );
+        if(
+            (!distanceKm || !durationMin) &&
+            route.features &&
+            route.features.length
+        ){
+
+            const properties =
+                route.features[0].properties || {};
+
+
+            if(properties.distance != null){
+
+                distanceKm =
+                    Number(
+                        properties.distance
+                    ) / 1000;
 
             }
 
 
-            map =
-                L.map(
-                    "routeMap"
-                );
+            if(properties.time != null){
 
-
-            const apiKey =
-                window.GEOAPIFY_API_KEY;
-
-
-            if (
-                apiKey &&
-                apiKey !==
-                    "YOUR_NEW_GEOAPIFY_API_KEY"
-            ) {
-
-                L.tileLayer(
-                    `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${apiKey}`,
-                    {
-                        maxZoom: 20,
-                        attribution:
-                            "© OpenStreetMap contributors | © Geoapify"
-                    }
-                ).addTo(map);
-
-            } else {
-
-                L.tileLayer(
-                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                    {
-                        maxZoom: 19,
-                        attribution:
-                            "© OpenStreetMap contributors"
-                    }
-                ).addTo(map);
+                durationMin =
+                    Number(
+                        properties.time
+                    ) / 60;
 
             }
 
         }
 
 
-
         /* =================================================
-           LOAD ROUTE
-        ================================================== */
+           DRAW GEOJSON
+           ================================================= */
 
-        async function loadRoute() {
+        let geojson = null;
 
-            try {
 
-                /*
-                   Firebase authentication first.
-                */
+        if(route.type === "FeatureCollection"){
 
-                const user =
-                    await protectPage();
+            geojson =
+                route;
 
+        }
 
-                if (!user) {
-                    return;
-                }
+        else if(
+            route.geojson &&
+            route.geojson.type
+        ){
 
+            geojson =
+                route.geojson;
 
-                /*
-                   Get journey saved by find-ride.html.
-                */
+        }
 
-                const savedJourney =
-                    sessionStorage.getItem(
-                        "smartCommuteCurrentJourney"
-                    );
+        else if(
+            route.geometry
+        ){
 
+            geojson = {
 
-                if (!savedJourney) {
+                type:"Feature",
 
-                    throw new Error(
-                        "No journey details were found. Please enter your journey again."
-                    );
+                properties:{},
 
-                }
+                geometry:
+                    route.geometry
 
+            };
 
-                try {
+        }
 
-                    journey =
-                        JSON.parse(
-                            savedJourney
-                        );
+        else if(
+            route.features &&
+            route.features.length
+        ){
 
-                } catch (parseError) {
+            geojson = {
 
-                    throw new Error(
-                        "The saved journey data is invalid. Please enter your journey again."
-                    );
+                type:"FeatureCollection",
 
-                }
+                features:
+                    route.features
 
-
-                /* -----------------------------------------
-                   VALIDATE JOURNEY
-                ------------------------------------------ */
-
-                if (
-                    !journey ||
-                    !journey.pickup ||
-                    !journey.destination
-                ) {
-
-                    throw new Error(
-                        "Journey information is incomplete."
-                    );
-
-                }
-
-
-                const pickup =
-                    journey.pickup;
-
-
-                const destination =
-                    journey.destination;
-
-
-                if (
-                    !Number.isFinite(
-                        Number(pickup.lat)
-                    ) ||
-                    !Number.isFinite(
-                        Number(pickup.lng)
-                    ) ||
-                    !Number.isFinite(
-                        Number(destination.lat)
-                    ) ||
-                    !Number.isFinite(
-                        Number(destination.lng)
-                    )
-                ) {
-
-                    throw new Error(
-                        "Journey locations do not contain valid coordinates."
-                    );
-
-                }
-
-
-                /* -----------------------------------------
-                   INITIALIZE MAP
-                ------------------------------------------ */
-
-                initializeMap();
-
-
-                /* -----------------------------------------
-                   DISPLAY BASIC DETAILS
-                ------------------------------------------ */
-
-                pickupName.textContent =
-                    pickup.name || "Pickup";
-
-
-                pickupAddress.textContent =
-                    pickup.address || "";
-
-
-                destinationName.textContent =
-                    destination.name ||
-                    "Destination";
-
-
-                destinationAddress.textContent =
-                    destination.address || "";
-
-
-                journeyDateDisplay.textContent =
-                    formatDate(
-                        journey.date
-                    );
-
-
-                journeyTimeDisplay.textContent =
-                    formatTime(
-                        journey.time
-                    );
-
-
-                seatsDisplay.textContent =
-                    `${journey.seats || 1} ${
-                        Number(journey.seats) === 1
-                            ? "seat"
-                            : "seats"
-                    }`;
-
-
-                /* -----------------------------------------
-                   CALL GEOAPIFY ROUTING
-                ------------------------------------------ */
-
-                generatedRoute =
-                    await getGeoapifyRoute([
-                        pickup,
-                        destination
-                    ]);
-
-
-                if (
-                    !generatedRoute ||
-                    !generatedRoute.geojson
-                ) {
-
-                    throw new Error(
-                        "No route was returned by the routing service."
-                    );
-
-                }
-
-
-                /* -----------------------------------------
-                   DISTANCE / TIME
-                ------------------------------------------ */
-
-                const distanceKm =
-                    (
-                        Number(
-                            generatedRoute.distance
-                        ) / 1000
-                    );
-
-
-                const timeMinutes =
-                    (
-                        Number(
-                            generatedRoute.time
-                        ) / 60
-                    );
-
-
-                if (
-                    !Number.isFinite(
-                        distanceKm
-                    ) ||
-                    !Number.isFinite(
-                        timeMinutes
-                    )
-                ) {
-
-                    throw new Error(
-                        "The routing service returned invalid distance or time."
-                    );
-
-                }
-
-
-                routeDistance.textContent =
-                    formatDistance(
-                        distanceKm
-                    );
-
-
-                routeTime.textContent =
-                    formatDuration(
-                        timeMinutes
-                    );
-
-
-                /* -----------------------------------------
-                   ESTIMATED COST
-                ------------------------------------------ */
-
-                const totalCost =
-                    calculateEstimatedCost(
-                        distanceKm
-                    );
-
-
-                estimatedCost.textContent =
-                    `₹${totalCost}`;
-
-
-                /* -----------------------------------------
-                   STORE ROUTE DETAILS
-                ------------------------------------------ */
-
-                journey.route = {
-
-                    distanceKm:
-                        Number(
-                            distanceKm.toFixed(2)
-                        ),
-
-                    timeMinutes:
-                        Number(
-                            timeMinutes.toFixed(1)
-                        ),
-
-                    distanceMeters:
-                        Number(
-                            generatedRoute.distance
-                        ),
-
-                    timeSeconds:
-                        Number(
-                            generatedRoute.time
-                        )
-
-                };
-
-
-                journey.estimatedJourneyCost =
-                    totalCost;
-
-
-                journey.routeGeoJSON =
-                    generatedRoute.geojson;
-
-
-                sessionStorage.setItem(
-                    "smartCommuteCurrentJourney",
-                    JSON.stringify(journey)
-                );
-
-
-                /* -----------------------------------------
-                   DRAW ROUTE
-                ------------------------------------------ */
-
-                drawRoute(
-                    generatedRoute.geojson,
-                    pickup,
-                    destination
-                );
-
-
-                /* -----------------------------------------
-                   SHOW CONTENT
-                ------------------------------------------ */
-
-                routeLoading.style.display =
-                    "none";
-
-
-                routeContent.style.display =
-                    "grid";
-
-
-                routeStatus.textContent =
-                    "Route Ready";
-
-
-                setTimeout(
-                    () => {
-
-                        if (map) {
-                            map.invalidateSize();
-                        }
-
-                    },
-                    200
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Route generation error:",
-                    error
-                );
-
-
-                showError(
-                    error.message ||
-                    "Unable to generate your route."
-                );
-
-            }
+            };
 
         }
 
 
-
-        /* =================================================
-           DRAW ROUTE
-        ================================================== */
-
-        function drawRoute(
-            geojson,
-            pickup,
-            destination
-        ) {
-
-            if (!map) {
-                return;
-            }
-
-
-            /*
-               Geoapify returns GeoJSON.
-
-               Leaflet can render the FeatureCollection
-               directly through L.geoJSON().
-            */
+        if(geojson){
 
             routeLayer =
                 L.geoJSON(
                     geojson,
                     {
-                        style: {
-                            weight: 6,
-                            opacity: 0.9
+                        style:{
+                            color:"#087a52",
+                            weight:6,
+                            opacity:.9
                         }
                     }
                 ).addTo(map);
-
-
-            pickupMarker =
-                L.marker([
-                    Number(pickup.lat),
-                    Number(pickup.lng)
-                ])
-                .addTo(map)
-                .bindPopup(
-                    `
-                    <strong>Pickup</strong><br>
-                    ${escapeHTML(
-                        pickup.name || ""
-                    )}
-                    `
-                );
-
-
-            destinationMarker =
-                L.marker([
-                    Number(destination.lat),
-                    Number(destination.lng)
-                ])
-                .addTo(map)
-                .bindPopup(
-                    `
-                    <strong>Destination</strong><br>
-                    ${escapeHTML(
-                        destination.name || ""
-                    )}
-                    `
-                );
 
 
             const bounds =
                 routeLayer.getBounds();
 
 
-            if (bounds.isValid()) {
+            if(bounds.isValid()){
 
                 map.fitBounds(
                     bounds,
                     {
-                        padding: [
-                            40,
-                            40
-                        ]
-                    }
-                );
-
-            } else {
-
-                map.fitBounds(
-                    [
-                        [
-                            Number(pickup.lat),
-                            Number(pickup.lng)
-                        ],
-                        [
-                            Number(destination.lat),
-                            Number(destination.lng)
-                        ]
-                    ],
-                    {
-                        padding: [
-                            40,
-                            40
-                        ]
+                        padding:[40,40]
                     }
                 );
 
@@ -1351,135 +1600,333 @@
         }
 
 
-
         /* =================================================
-           FIND MATCHES
-        ================================================== */
+           FORMAT VALUES
+           ================================================= */
 
-        findMatchesButton.addEventListener(
-            "click",
-            () => {
+        let distanceText;
 
-                if (!journey) {
-
-                    showError(
-                        "Journey information is unavailable. Please start again."
-                    );
-
-                    return;
-
-                }
+        let durationText;
 
 
-                findMatchesButton.disabled =
-                    true;
+        if(
+            typeof formatDistance ===
+            "function"
+        ){
 
-
-                findMatchesButton.textContent =
-                    "Finding Matches...";
-
-
-                /*
-                   Save a small marker so
-                   match-results.html knows that
-                   route generation was completed.
-                */
-
-                journey.routePreviewCompleted =
-                    true;
-
-
-                journey.matchSearchStartedAt =
-                    new Date().toISOString();
-
-
-                sessionStorage.setItem(
-                    "smartCommuteCurrentJourney",
-                    JSON.stringify(journey)
+            distanceText =
+                formatDistance(
+                    distanceKm * 1000
                 );
 
+        }else{
 
-                window.location.href =
-                    "match-results.html";
+            distanceText =
+                `${distanceKm.toFixed(1)} km`;
 
-            }
-        );
-
-
-
-        /* =================================================
-           LOGOUT
-        ================================================== */
-
-        logoutButton.addEventListener(
-            "click",
-            async () => {
-
-                try {
-
-                    logoutButton.disabled =
-                        true;
+        }
 
 
-                    logoutButton.textContent =
-                        "Logging out...";
+        if(
+            typeof formatDuration ===
+            "function"
+        ){
 
+            durationText =
+                formatDuration(
+                    durationMin * 60
+                );
 
-                    await logoutUser();
+        }else{
 
+            durationText =
+                `${Math.round(durationMin)} min`;
 
-                    /*
-                       Clear only journey-session data.
-                       Firebase remains responsible for
-                       authentication.
-                    */
-
-                    sessionStorage.removeItem(
-                        "smartCommuteCurrentJourney"
-                    );
-
-
-                    window.location.replace(
-                        "index.html"
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
-
-
-                    logoutButton.disabled =
-                        false;
-
-
-                    logoutButton.textContent =
-                        "Logout";
-
-
-                    showError(
-                        "Unable to log out. Please try again."
-                    );
-
-                }
-
-            }
-        );
-
+        }
 
 
         /* =================================================
-           START
-        ================================================== */
+           ESTIMATED COST
+           ================================================= */
 
-        loadRoute();
+        const estimatedCost =
+            calculateEstimatedCost(
+                distanceKm
+            );
 
-    </script>
+
+        const seats =
+            Number(
+                journey.seats || 1
+            );
+
+
+        /*
+         * For the requester, demonstrate
+         * cost sharing across two participants.
+         */
+
+        const participants =
+            Math.max(
+                2,
+                seats + 1
+            );
+
+
+        const costShare =
+            Math.ceil(
+                estimatedCost /
+                participants
+            );
+
+
+        /* =================================================
+           UPDATE UI
+           ================================================= */
+
+        document.getElementById(
+            "distanceValue"
+        ).textContent =
+            distanceText;
+
+
+        document.getElementById(
+            "durationValue"
+        ).textContent =
+            durationText;
+
+
+        document.getElementById(
+            "mapDistance"
+        ).textContent =
+            distanceText;
+
+
+        document.getElementById(
+            "totalCost"
+        ).textContent =
+            `₹${estimatedCost}`;
+
+
+        document.getElementById(
+            "costShare"
+        ).textContent =
+            `₹${costShare}`;
+
+
+        /* =================================================
+           SAVE ROUTE DATA
+           ================================================= */
+
+        const updatedJourney = {
+
+            ...journey,
+
+            routeDistanceKm:
+                distanceKm,
+
+            routeDurationMin:
+                durationMin,
+
+            estimatedJourneyCost:
+                estimatedCost,
+
+            estimatedCostShare:
+                costShare,
+
+            routeGeoJSON:
+                geojson || null
+
+        };
+
+
+        sessionStorage.setItem(
+            "smartCommuteCurrentJourney",
+            JSON.stringify(
+                updatedJourney
+            )
+        );
+
+
+        /* =================================================
+           ENABLE NEXT BUTTON
+           ================================================= */
+
+        findMatchesBtn.disabled =
+            false;
+
+
+        findMatchesBtn.textContent =
+            "Find Matches →";
+
+
+        mapLoading.style.display =
+            "none";
+
+
+        /*
+         * Make sure Leaflet calculates its
+         * container size correctly.
+         */
+
+        setTimeout(
+            () => {
+
+                map.invalidateSize();
+
+            },
+            150
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Route loading failed:",
+            error
+        );
+
+
+        mapLoading.style.display =
+            "none";
+
+
+        routeError.textContent =
+            "We could not calculate the route. Please go back and check your pickup and destination.";
+
+
+        routeError.classList.add(
+            "show"
+        );
+
+
+        findMatchesBtn.disabled =
+            true;
+
+    }
+
+}
+
+
+/* =====================================================
+   COST CALCULATION
+   ===================================================== */
+
+function calculateEstimatedCost(
+    distanceKm
+){
+
+    /*
+     * Prototype cost estimate.
+     * This is NOT a taxi fare.
+     *
+     * Approximate vehicle/fuel cost
+     * used only to demonstrate cost sharing.
+     */
+
+    const baseCost = 25;
+
+    const perKm = 11;
+
+
+    const cost =
+        baseCost +
+        (distanceKm * perKm);
+
+
+    return Math.max(
+        30,
+        Math.round(cost)
+    );
+
+}
+
+
+/* =====================================================
+   FIND MATCHES
+   ===================================================== */
+
+findMatchesBtn.addEventListener(
+    "click",
+    () => {
+
+        if(findMatchesBtn.disabled){
+
+            return;
+
+        }
+
+
+        findMatchesBtn.disabled =
+            true;
+
+        findMatchesBtn.textContent =
+            "Finding matches...";
+
+
+        window.location.href =
+            "match-results.html";
+
+    }
+);
+
+
+/* =====================================================
+   EDIT JOURNEY
+   ===================================================== */
+
+document.getElementById(
+    "editJourneyBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "find-ride.html";
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPE HTML
+   ===================================================== */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+loadRoute();
+
+</script>
 
 
 </body>
-
 </html>
