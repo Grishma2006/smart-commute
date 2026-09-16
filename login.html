@@ -1,178 +1,786 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Log In | Smart Commute</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>Login | SmartCommute</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
 </head>
 
-<body class="auth-body">
 
-<div class="auth-layout">
+<body class="auth-page">
 
-    <section class="auth-brand-panel login-panel">
 
-        <a href="index.html" class="auth-brand">
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-            <div class="brand-icon">SC</div>
+    <header class="navbar">
 
-            <div>
-                <strong>Smart Commute</strong>
-                <span>Hyperlocal Route Matching</span>
+        <a
+            href="index.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                SC
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    SmartCommute
+                </strong>
+
+                <span>
+                    Hyperlocal Travel Matching
+                </span>
+
             </div>
 
         </a>
 
 
-        <div class="auth-intro">
+        <nav class="nav-links">
 
-            <span class="eyebrow">WELCOME BACK</span>
+            <a href="index.html">
+                Home
+            </a>
 
-            <h1>
-                Your daily commute,
-                <span>made smarter.</span>
-            </h1>
+            <a
+                href="register.html"
+                class="nav-register"
+            >
+                Register
+            </a>
 
-            <p>
-                Log in to find a suitable journey or offer
-                your own ride to nearby commuters.
-            </p>
+        </nav>
 
-        </div>
+    </header>
 
 
-        <div class="login-preview">
 
-            <div class="preview-header">
-                <span>YOUR NEXT STEP</span>
-            </div>
+    <!-- =====================================================
+         LOGIN AREA
+    ====================================================== -->
 
-            <div class="preview-choice">
+    <main class="auth-main">
 
-                <div class="choice-icon">⌕</div>
+        <section class="auth-container">
 
-                <div>
-                    <strong>Find a Ride</strong>
-                    <span>Search for a matching journey</span>
+
+            <!-- =================================================
+                 LEFT INFORMATION PANEL
+            ================================================== -->
+
+            <div class="auth-info">
+
+                <div class="auth-info-badge">
+                    WELCOME BACK
                 </div>
 
-            </div>
 
+                <h1>
+                    Your daily commute,
+                    <span>made smarter.</span>
+                </h1>
 
-            <div class="preview-choice">
-
-                <div class="choice-icon car-icon">↗</div>
-
-                <div>
-                    <strong>Offer a Ride</strong>
-                    <span>Share your available journey</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <section class="auth-form-panel">
-
-        <div class="auth-form-container">
-
-            <div class="mobile-brand">
-                <div class="brand-icon">SC</div>
-                <strong>Smart Commute</strong>
-            </div>
-
-
-            <div class="form-heading">
-
-                <span class="form-label">LOG IN</span>
-
-                <h2>Welcome back</h2>
 
                 <p>
-                    Log in to continue to your dashboard.
+                    Log in to find commuters travelling on
+                    similar routes and at similar times.
                 </p>
 
-            </div>
 
 
-            <form id="loginForm" class="auth-form">
-
-                <div class="input-group">
-
-                    <label for="loginEmail">
-                        Email Address
-                    </label>
-
-                    <input
-                        type="email"
-                        id="loginEmail"
-                        placeholder="you@example.com"
-                        autocomplete="email"
-                        required
-                    >
-
-                </div>
+                <div class="auth-benefits">
 
 
-                <div class="input-group">
+                    <div class="auth-benefit">
 
-                    <label for="loginPassword">
-                        Password
-                    </label>
+                        <div class="benefit-icon">
+                            📍
+                        </div>
 
-                    <div class="password-wrapper">
+                        <div>
 
-                        <input
-                            type="password"
-                            id="loginPassword"
-                            placeholder="Enter your password"
-                            autocomplete="current-password"
-                            required
-                        >
+                            <strong>
+                                Find a Ride
+                            </strong>
 
-                        <button
-                            type="button"
-                            class="password-toggle"
-                            data-target="loginPassword"
-                        >
-                            Show
-                        </button>
+                            <span>
+                                Search for suitable nearby commuters.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="auth-benefit">
+
+                        <div class="benefit-icon">
+                            🚗
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Offer a Ride
+                            </strong>
+
+                            <span>
+                                Create your journey and receive requests.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="auth-benefit">
+
+                        <div class="benefit-icon">
+                            🗺️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Compare Routes
+                            </strong>
+
+                            <span>
+                                Matching considers route and timing.
+                            </span>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-
-                <div id="loginMessage" class="form-message"></div>
-
-
-                <button type="submit" class="submit-btn">
-                    Log In
-                    <span>→</span>
-                </button>
-
-            </form>
+            </div>
 
 
-            <p class="auth-switch">
-                Don't have an account?
-                <a href="register.html">Create one</a>
+
+            <!-- =================================================
+                 LOGIN CARD
+            ================================================== -->
+
+            <div class="auth-card">
+
+
+                <div class="auth-card-header">
+
+                    <div class="auth-card-icon">
+                        🔐
+                    </div>
+
+
+                    <h2>
+                        Welcome back
+                    </h2>
+
+
+                    <p>
+                        Log in to continue to SmartCommute.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ERROR MESSAGE
+                ================================================== -->
+
+                <div
+                    id="loginError"
+                    class="form-message error-message"
+                    style="display:none;"
+                ></div>
+
+
+
+                <!-- =================================================
+                     SUCCESS MESSAGE
+                ================================================== -->
+
+                <div
+                    id="loginSuccess"
+                    class="form-message success-message"
+                    style="display:none;"
+                ></div>
+
+
+
+                <!-- =================================================
+                     LOGIN FORM
+                ================================================== -->
+
+                <form
+                    id="loginForm"
+                    novalidate
+                >
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉️
+                            </span>
+
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                                aria-label="Show password"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- REMEMBER / INFO -->
+
+                    <div class="login-info-row">
+
+                        <span>
+                            🔒 Secure Firebase authentication
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- SUBMIT BUTTON -->
+
+                    <button
+                        type="submit"
+                        id="loginButton"
+                        class="btn btn-primary btn-full"
+                    >
+
+                        <span id="loginButtonText">
+                            Login
+                        </span>
+
+
+                        <span
+                            id="loginLoader"
+                            class="button-loader"
+                            style="display:none;"
+                        >
+                            Logging in...
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- =================================================
+                     REGISTER LINK
+                ================================================== -->
+
+                <div class="auth-switch">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+
+                    <a href="register.html">
+                        Create an account
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <p class="footer-copy">
+                SmartCommute • Hyperlocal Commute Matching Prototype
             </p>
 
         </div>
 
-    </section>
-
-</div>
+    </footer>
 
 
-<script type="module" src="firebase-auth.js"></script>
+
+    <!-- =====================================================
+         FIREBASE LOGIN SCRIPT
+    ====================================================== -->
+
+    <script type="module">
+
+        import {
+            loginUser
+        } from "./firebase-auth.js";
+
+
+
+        /* =================================================
+           GET ELEMENTS
+        ================================================== */
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+
+        const emailInput =
+            document.getElementById("email");
+
+
+        const passwordInput =
+            document.getElementById("password");
+
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+
+        const loginButtonText =
+            document.getElementById("loginButtonText");
+
+
+        const loginLoader =
+            document.getElementById("loginLoader");
+
+
+        const loginError =
+            document.getElementById("loginError");
+
+
+        const loginSuccess =
+            document.getElementById("loginSuccess");
+
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+
+        /* =================================================
+           MESSAGE HELPERS
+        ================================================== */
+
+        function showError(message) {
+
+            loginSuccess.style.display = "none";
+
+            loginError.textContent = message;
+
+            loginError.style.display = "block";
+
+        }
+
+
+
+        function showSuccess(message) {
+
+            loginError.style.display = "none";
+
+            loginSuccess.textContent = message;
+
+            loginSuccess.style.display = "block";
+
+        }
+
+
+
+        function clearMessages() {
+
+            loginError.style.display = "none";
+
+            loginSuccess.style.display = "none";
+
+            loginError.textContent = "";
+
+            loginSuccess.textContent = "";
+
+        }
+
+
+
+        /* =================================================
+           PASSWORD VISIBILITY
+        ================================================== */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                const isPassword =
+                    passwordInput.type === "password";
+
+
+                passwordInput.type =
+                    isPassword
+                        ? "text"
+                        : "password";
+
+
+                togglePassword.textContent =
+                    isPassword
+                        ? "Hide"
+                        : "Show";
+
+            }
+        );
+
+
+
+        /* =================================================
+           BUTTON LOADING STATE
+        ================================================== */
+
+        function setLoading(loading) {
+
+            loginButton.disabled =
+                loading;
+
+
+            loginButtonText.style.display =
+                loading
+                    ? "none"
+                    : "inline";
+
+
+            loginLoader.style.display =
+                loading
+                    ? "inline"
+                    : "none";
+
+        }
+
+
+
+        /* =================================================
+           FORM VALIDATION
+        ================================================== */
+
+        function validateLoginForm() {
+
+            const email =
+                emailInput.value.trim();
+
+
+            const password =
+                passwordInput.value;
+
+
+            if (!email) {
+
+                throw new Error(
+                    "Please enter your email address."
+                );
+
+            }
+
+
+            if (!password) {
+
+                throw new Error(
+                    "Please enter your password."
+                );
+
+            }
+
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (!emailPattern.test(email)) {
+
+                throw new Error(
+                    "Please enter a valid email address."
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================================
+           LOGIN
+        ================================================== */
+
+        loginForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                clearMessages();
+
+
+                try {
+
+                    validateLoginForm();
+
+                    setLoading(true);
+
+
+                    const email =
+                        emailInput.value
+                            .trim()
+                            .toLowerCase();
+
+
+                    const password =
+                        passwordInput.value;
+
+
+                    /*
+                       Firebase Authentication happens
+                       inside loginUser().
+                    */
+
+                    await loginUser(
+                        email,
+                        password
+                    );
+
+
+                    showSuccess(
+                        "Login successful. Redirecting..."
+                    );
+
+
+                    /*
+                       Give Firebase a moment to finish
+                       updating the authentication state.
+                    */
+
+                    setTimeout(
+                        () => {
+
+                            window.location.replace(
+                                "dashboard.html"
+                            );
+
+                        },
+                        700
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    let message =
+                        "Unable to log in. Please try again.";
+
+
+                    /*
+                       Firebase error handling
+                    */
+
+                    if (error.code) {
+
+                        switch (error.code) {
+
+
+                            case "auth/invalid-credential":
+
+                                message =
+                                    "Incorrect email or password.";
+
+                                break;
+
+
+                            case "auth/invalid-login-credentials":
+
+                                message =
+                                    "Incorrect email or password.";
+
+                                break;
+
+
+                            case "auth/user-not-found":
+
+                                message =
+                                    "No account was found with this email.";
+
+                                break;
+
+
+                            case "auth/wrong-password":
+
+                                message =
+                                    "Incorrect password.";
+
+                                break;
+
+
+                            case "auth/invalid-email":
+
+                                message =
+                                    "Please enter a valid email address.";
+
+                                break;
+
+
+                            case "auth/user-disabled":
+
+                                message =
+                                    "This account has been disabled.";
+
+                                break;
+
+
+                            case "auth/too-many-requests":
+
+                                message =
+                                    "Too many login attempts. Please try again later.";
+
+                                break;
+
+
+                            case "auth/network-request-failed":
+
+                                message =
+                                    "Network error. Check your internet connection.";
+
+                                break;
+
+
+                            default:
+
+                                message =
+                                    error.message ||
+                                    message;
+
+                        }
+
+                    } else {
+
+                        message =
+                            error.message ||
+                            message;
+
+                    }
+
+
+                    showError(message);
+
+                    setLoading(false);
+
+                }
+
+            }
+        );
+
+    </script>
 
 </body>
+
 </html>
