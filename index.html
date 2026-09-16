@@ -1,639 +1,917 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartCommute | Hyperlocal Travel Matching</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <title>
-        Smart Hyperlocal Commute Matching System
-    </title>
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f7f8f5;
+    color:#14201b;
+    line-height:1.5;
+}
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+/* NAVBAR */
+.navbar{
+    height:82px;
+    background:#ffffff;
+    border-bottom:1px solid #e5e9e5;
+    display:flex;
+    align-items:center;
+}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+.nav-inner{
+    width:min(1180px,92%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo{
+    width:52px;
+    height:52px;
+    border-radius:16px;
+    background:#147653;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    font-weight:800;
+}
+
+.brand h2{
+    font-size:20px;
+    line-height:1.1;
+}
+
+.brand p{
+    color:#718078;
+    font-size:13px;
+    margin-top:3px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    font-size:16px;
+}
+
+.nav-links a:hover{
+    color:#147653;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    cursor:pointer;
+    border-radius:12px;
+    padding:13px 23px;
+    font-size:15px;
+    font-weight:700;
+}
+
+.btn-primary{
+    background:#147653;
+    color:white;
+}
+
+.btn-primary:hover{
+    background:#0e6042;
+}
+
+.btn-outline{
+    border:1px solid #147653;
+    color:#147653;
+    background:white;
+}
+
+/* HERO */
+.hero{
+    padding:85px 0 75px;
+    overflow:hidden;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    align-items:center;
+    gap:60px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#e7f3ed;
+    color:#147653;
+    border-radius:30px;
+    padding:8px 15px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-size:clamp(48px,6vw,78px);
+    line-height:.98;
+    letter-spacing:-3px;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:#147653;
+}
+
+.hero-text{
+    font-size:19px;
+    color:#59665f;
+    max-width:600px;
+    margin-bottom:30px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:13px;
+    flex-wrap:wrap;
+}
+
+.checks{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:25px;
+    color:#59665f;
+    font-size:14px;
+}
+
+.checks span::before{
+    content:"✓";
+    color:#147653;
+    font-weight:bold;
+    margin-right:6px;
+}
+
+/* DEMO CARD */
+.visual{
+    position:relative;
+}
+
+.glow{
+    position:absolute;
+    width:390px;
+    height:390px;
+    background:#dceee5;
+    border-radius:50%;
+    top:30px;
+    left:50%;
+    transform:translateX(-50%);
+    filter:blur(5px);
+}
+
+.route-card{
+    position:relative;
+    z-index:2;
+    background:white;
+    border:1px solid #e4e8e5;
+    border-radius:28px;
+    padding:30px;
+    box-shadow:0 25px 70px rgba(20,45,35,.13);
+}
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.small-label{
+    font-size:11px;
+    letter-spacing:1.5px;
+    font-weight:800;
+    color:#6d7973;
+    text-transform:uppercase;
+}
+
+.route-card h3{
+    font-size:24px;
+    margin-top:4px;
+}
+
+.score{
+    background:#e7f3ed;
+    color:#147653;
+    padding:10px 14px;
+    border-radius:14px;
+    font-weight:800;
+    font-size:18px;
+}
+
+.location{
+    display:flex;
+    gap:15px;
+    margin:20px 0;
+}
+
+.dot-column{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.dot{
+    width:13px;
+    height:13px;
+    border:3px solid #147653;
+    border-radius:50%;
+    background:white;
+}
+
+.line{
+    width:2px;
+    height:52px;
+    background:#cbdcd3;
+}
+
+.location strong{
+    display:block;
+    font-size:15px;
+}
+
+.location p{
+    color:#7b8580;
+    font-size:13px;
+    margin-top:2px;
+}
+
+.match-box{
+    background:#f5f8f6;
+    border-radius:17px;
+    padding:18px;
+    margin-top:24px;
+}
+
+.match-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.person{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#d9ece3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#147653;
+    font-weight:800;
+}
+
+.person p{
+    color:#6d7772;
+    font-size:13px;
+}
+
+.match-percent{
+    color:#147653;
+    font-weight:800;
+}
+
+/* FEATURES */
+.features{
+    padding:80px 0;
+    background:white;
+}
+
+.section-label{
+    color:#147653;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+}
+
+.section-title{
+    font-size:38px;
+    margin-bottom:40px;
+    letter-spacing:-1px;
+}
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.feature{
+    border:1px solid #e2e7e3;
+    border-radius:20px;
+    padding:26px;
+    background:#fbfcfb;
+}
+
+.icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:#e7f3ed;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.feature h3{
+    margin-bottom:8px;
+    font-size:19px;
+}
+
+.feature p{
+    color:#68746d;
+    font-size:14px;
+}
+
+/* CONCEPT */
+.concept{
+    padding:85px 0;
+}
+
+.concept-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:55px;
+    align-items:center;
+}
+
+.concept h2{
+    font-size:40px;
+    line-height:1.1;
+    margin-bottom:18px;
+}
+
+.concept p{
+    color:#65716b;
+    font-size:17px;
+    margin-bottom:25px;
+}
+
+.criteria{
+    display:grid;
+    gap:12px;
+}
+
+.criteria div{
+    background:white;
+    border:1px solid #e4e8e5;
+    border-radius:12px;
+    padding:13px 16px;
+    font-weight:600;
+}
+
+.criteria div::before{
+    content:"✓";
+    color:#147653;
+    margin-right:10px;
+}
+
+/* SIMPLE DIAGRAM */
+.diagram{
+    background:#ffffff;
+    border:1px solid #e2e7e3;
+    border-radius:24px;
+    padding:30px;
+    box-shadow:0 15px 45px rgba(20,45,35,.08);
+}
+
+.diagram-title{
+    font-weight:800;
+    margin-bottom:25px;
+}
+
+.flow{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.flow-box{
+    flex:1;
+    min-width:120px;
+    text-align:center;
+    padding:18px 10px;
+    background:#f1f7f4;
+    border-radius:13px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.arrow{
+    color:#147653;
+    font-size:20px;
+}
+
+/* CTA */
+.cta{
+    padding:70px 0;
+    background:#143f31;
+    color:white;
+}
+
+.cta-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+}
+
+.cta h2{
+    font-size:38px;
+    line-height:1.1;
+    margin-bottom:10px;
+}
+
+.cta p{
+    color:#c9d9d2;
+}
+
+.cta .btn{
+    background:white;
+    color:#147653;
+    white-space:nowrap;
+}
+
+/* FOOTER */
+footer{
+    background:#102c23;
+    color:#d8e3de;
+    padding:30px 0;
+}
+
+.footer-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.footer-logo{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    background:#147653;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    color:white;
+}
+
+footer p{
+    color:#9db0a7;
+    font-size:13px;
+}
+
+/* MOBILE */
+@media(max-width:850px){
+
+    .nav-links{
+        gap:12px;
+        font-size:14px;
+    }
+
+    .nav-links .btn{
+        padding:10px 14px;
+    }
+
+    .hero{
+        padding:55px 0;
+    }
+
+    .hero-grid,
+    .concept-grid{
+        grid-template-columns:1fr;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hero h1{
+        font-size:52px;
+    }
+
+    .cta-box{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:550px){
+
+    .navbar{
+        height:auto;
+        padding:15px 0;
+    }
+
+    .nav-inner{
+        flex-wrap:wrap;
+        gap:15px;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:flex-end;
+    }
+
+    .brand h2{
+        font-size:18px;
+    }
+
+    .hero h1{
+        font-size:43px;
+        letter-spacing:-2px;
+    }
+
+    .hero-text{
+        font-size:16px;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-title,
+    .concept h2,
+    .cta h2{
+        font-size:30px;
+    }
+
+    .route-card{
+        padding:22px;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+</style>
 </head>
 
-<body class="landing-page">
+<body>
 
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="nav-inner">
 
-    <header class="navbar">
+        <a href="index.html" class="logo-area">
+            <div class="logo">SC</div>
 
-        <a
-            href="index.html"
-            class="brand"
-        >
-            <div class="brand-icon">
-                SC
-            </div>
-
-            <div class="brand-text">
-                <strong>SmartCommute</strong>
-                <span>Hyperlocal Travel Matching</span>
+            <div class="brand">
+                <h2>SmartCommute</h2>
+                <p>Hyperlocal Travel Matching</p>
             </div>
         </a>
 
         <nav class="nav-links">
-
-            <a href="index.html" class="active">
-                Home
-            </a>
-
-            <a href="login.html">
-                Login
-            </a>
-
-            <a
-                href="register.html"
-                class="nav-register"
-            >
-                Get Started
-            </a>
-
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="btn btn-primary">Get Started</a>
         </nav>
 
-    </header>
+    </div>
+</header>
 
 
-    <!-- =====================================================
-         HERO SECTION
-    ====================================================== -->
+<!-- HERO -->
+<section class="hero">
+    <div class="container hero-grid">
 
-    <main>
+        <div>
 
-        <section class="hero-section">
-
-            <div class="hero-content">
-
-                <div class="hero-badge">
-                    <span class="status-dot"></span>
-                    Hyperlocal • Route-Based • Simple
-                </div>
-
-                <h1>
-                    Find people travelling
-                    <span>your way.</span>
-                </h1>
-
-                <p class="hero-description">
-                    SmartCommute helps commuters find people
-                    travelling on similar routes and at similar
-                    times within their local area.
-                </p>
-
-                <div class="hero-actions">
-
-                    <a
-                        href="register.html"
-                        class="btn btn-primary btn-large"
-                    >
-                        Get Started
-                        <span>→</span>
-                    </a>
-
-                    <a
-                        href="login.html"
-                        class="btn btn-secondary btn-large"
-                    >
-                        Login
-                    </a>
-
-                </div>
-
-                <div class="hero-note">
-                    <span>✓</span>
-                    Simple web-based prototype
-                </div>
-
+            <div class="badge">
+                ● Hyperlocal &nbsp;•&nbsp; Route-Based &nbsp;•&nbsp; Simple
             </div>
 
-
-            <!-- =================================================
-                 HERO VISUAL
-            ================================================== -->
-
-            <div class="hero-visual">
-
-                <div class="route-card">
-
-                    <div class="route-card-header">
-
-                        <div>
-                            <span class="small-label">
-                                DAILY COMMUTE
-                            </span>
-
-                            <h3>
-                                Similar route found
-                            </h3>
-                        </div>
-
-                        <div class="match-percentage">
-                            92%
-                        </div>
-
-                    </div>
-
-
-                    <div class="route-line">
-
-                        <div class="route-point start-point">
-                            <span></span>
-                        </div>
-
-                        <div class="route-details">
-
-                            <div>
-                                <strong>
-                                    Your Pickup
-                                </strong>
-
-                                <small>
-                                    College Road
-                                </small>
-                            </div>
-
-                            <div class="route-connector"></div>
-
-                            <div>
-                                <strong>
-                                    Destination
-                                </strong>
-
-                                <small>
-                                    Gangapur Road
-                                </small>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="route-match">
-
-                        <div class="mini-avatar">
-                            DC
-                        </div>
-
-                        <div class="commuter-info">
-
-                            <strong>
-                                Demo Commuter
-                            </strong>
-
-                            <span>
-                                Similar route • Similar time
-                            </span>
-
-                        </div>
-
-                        <span class="match-tag">
-                            92% Match
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="floating-card floating-card-one">
-
-                    <span class="floating-icon">
-                        📍
-                    </span>
-
-                    <div>
-                        <strong>
-                            Nearby routes
-                        </strong>
-
-                        <small>
-                            Hyperlocal matching
-                        </small>
-                    </div>
-
-                </div>
-
-
-                <div class="floating-card floating-card-two">
-
-                    <span class="floating-icon">
-                        ⏱
-                    </span>
-
-                    <div>
-                        <strong>
-                            Similar timing
-                        </strong>
-
-                        <small>
-                            Match within a time window
-                        </small>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             HOW IT WORKS
-        ====================================================== -->
-
-        <section class="section how-section">
-
-            <div class="section-heading">
-
-                <span class="section-label">
-                    HOW IT WORKS
-                </span>
-
-                <h2>
-                    Three simple steps
-                </h2>
-
-                <p>
-                    Enter your journey, compare routes and
-                    connect with a suitable commuter.
-                </p>
-
-            </div>
-
-
-            <div class="steps-grid">
-
-                <article class="step-card">
-
-                    <div class="step-number">
-                        01
-                    </div>
-
-                    <div class="step-icon">
-                        📍
-                    </div>
-
-                    <h3>
-                        Enter your journey
-                    </h3>
-
-                    <p>
-                        Add your pickup location, destination,
-                        departure time and available seats.
-                    </p>
-
-                </article>
-
-
-                <article class="step-card">
-
-                    <div class="step-number">
-                        02
-                    </div>
-
-                    <div class="step-icon">
-                        🗺️
-                    </div>
-
-                    <h3>
-                        Compare routes
-                    </h3>
-
-                    <p>
-                        The system compares route similarity,
-                        pickup distance, destination distance
-                        and time.
-                    </p>
-
-                </article>
-
-
-                <article class="step-card">
-
-                    <div class="step-number">
-                        03
-                    </div>
-
-                    <div class="step-icon">
-                        🤝
-                    </div>
-
-                    <h3>
-                        Connect
-                    </h3>
-
-                    <p>
-                        View suitable matches and send a request
-                        to start a shared journey.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             FEATURES
-        ====================================================== -->
-
-        <section class="section features-section">
-
-            <div class="section-heading">
-
-                <span class="section-label">
-                    KEY FEATURES
-                </span>
-
-                <h2>
-                    Designed for everyday local travel
-                </h2>
-
-            </div>
-
-
-            <div class="features-grid">
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        🗺️
-                    </div>
-
-                    <h3>
-                        Route Similarity
-                    </h3>
-
-                    <p>
-                        Compare actual road routes instead of
-                        matching only by starting and ending
-                        locations.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        📍
-                    </div>
-
-                    <h3>
-                        Hyperlocal Matching
-                    </h3>
-
-                    <p>
-                        Focus on commuters travelling within
-                        nearby local areas.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        ⏰
-                    </div>
-
-                    <h3>
-                        Time Matching
-                    </h3>
-
-                    <p>
-                        Consider departure times so that
-                        commuters have compatible schedules.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <div class="feature-icon">
-                        💰
-                    </div>
-
-                    <h3>
-                        Cost Sharing
-                    </h3>
-
-                    <p>
-                        Show an estimated cost share for a
-                        shared journey.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             PROJECT CONCEPT
-        ====================================================== -->
-
-        <section class="section concept-section">
-
-            <div class="concept-card">
-
-                <div class="concept-content">
-
-                    <span class="section-label">
-                        PROJECT CONCEPT
-                    </span>
-
-                    <h2>
-                        A route-first approach to
-                        commute matching
-                    </h2>
-
-                    <p>
-                        Instead of simply checking whether two
-                        people live in the same area, SmartCommute
-                        compares their journey routes and travel
-                        times to identify possible matches.
-                    </p>
-
-                    <div class="concept-points">
-
-                        <div>
-                            <span>✓</span>
-                            Pickup proximity
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Destination proximity
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Route similarity
-                        </div>
-
-                        <div>
-                            <span>✓</span>
-                            Departure-time similarity
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="concept-visual">
-
-                    <div class="concept-route">
-
-                        <div class="concept-location">
-                            <span class="location-dot"></span>
-                            Person A
-                        </div>
-
-                        <div class="concept-road"></div>
-
-                        <div class="concept-location">
-                            <span class="location-dot"></span>
-                            Person B
-                        </div>
-
-                        <div class="concept-road"></div>
-
-                        <div class="concept-location">
-                            <span class="destination-dot"></span>
-                            Common Direction
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             CALL TO ACTION
-        ====================================================== -->
-
-        <section class="cta-section">
-
-            <div class="cta-card">
-
-                <div>
-
-                    <span class="section-label">
-                        START YOUR JOURNEY
-                    </span>
-
-                    <h2>
-                        Ready to find a similar route?
-                    </h2>
-
-                    <p>
-                        Create an account and try the
-                        SmartCommute prototype.
-                    </p>
-
-                </div>
-
-                <a
-                    href="register.html"
-                    class="btn btn-primary btn-large"
-                >
-                    Create Account
-                    <span>→</span>
+            <h1>
+                Find people<br>
+                travelling <span>your way.</span>
+            </h1>
+
+            <p class="hero-text">
+                SmartCommute helps commuters find people travelling
+                on similar routes and at similar times within their
+                local area.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="register.html" class="btn btn-primary">
+                    Get Started →
                 </a>
 
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <div class="footer-brand">
-
-                <div class="brand-icon">
-                    SC
-                </div>
-
-                <div>
-                    <strong>
-                        SmartCommute
-                    </strong>
-
-                    <span>
-                        Smart Hyperlocal Commute Matching
-                    </span>
-                </div>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="login.html">
+                <a href="login.html" class="btn btn-outline">
                     Login
                 </a>
-
-                <a href="register.html">
-                    Register
-                </a>
-
             </div>
 
-
-            <p class="footer-copy">
-                Web-based prototype for local commute matching.
-            </p>
+            <div class="checks">
+                <span>Simple web-based prototype</span>
+                <span>Route similarity</span>
+                <span>Time matching</span>
+            </div>
 
         </div>
 
-    </footer>
 
+        <!-- VISUAL CARD -->
+        <div class="visual">
+
+            <div class="glow"></div>
+
+            <div class="route-card">
+
+                <div class="card-top">
+                    <div>
+                        <div class="small-label">Daily Commute</div>
+                        <h3>Similar route found</h3>
+                    </div>
+
+                    <div class="score">92%</div>
+                </div>
+
+                <div class="location">
+
+                    <div class="dot-column">
+                        <div class="dot"></div>
+                        <div class="line"></div>
+                        <div class="dot"></div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <strong>Your Pickup</strong>
+                            <p>College Road</p>
+                        </div>
+
+                        <div style="margin-top:36px">
+                            <strong>Destination</strong>
+                            <p>Gangapur Road</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="match-box">
+
+                    <div class="match-header">
+
+                        <div class="person">
+
+                            <div class="avatar">DC</div>
+
+                            <div>
+                                <strong>Demo Commuter</strong>
+                                <p>Similar route • Similar time</p>
+                            </div>
+
+                        </div>
+
+                        <div class="match-percent">
+                            92% Match
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- FEATURES -->
+<section class="features">
+
+    <div class="container">
+
+        <div class="section-label">Key Features</div>
+
+        <h2 class="section-title">
+            Designed for everyday local travel
+        </h2>
+
+        <div class="feature-grid">
+
+            <div class="feature">
+                <div class="icon">🗺️</div>
+                <h3>Route Similarity</h3>
+                <p>
+                    Compare actual road routes instead of matching
+                    only by starting and ending locations.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="icon">📍</div>
+                <h3>Hyperlocal Matching</h3>
+                <p>
+                    Focus on commuters travelling within nearby
+                    local areas.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="icon">⏰</div>
+                <h3>Time Matching</h3>
+                <p>
+                    Consider departure times so that commuters
+                    have compatible schedules.
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="icon">₹</div>
+                <h3>Cost Sharing</h3>
+                <p>
+                    Show an estimated cost share for a shared journey.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROJECT CONCEPT -->
+<section class="concept">
+
+    <div class="container concept-grid">
+
+        <div>
+
+            <div class="section-label">Project Concept</div>
+
+            <h2>
+                A route-first approach to commute matching
+            </h2>
+
+            <p>
+                Instead of simply checking whether two people live
+                in the same area, SmartCommute compares their
+                journey routes and travel times to identify
+                possible matches.
+            </p>
+
+            <div class="criteria">
+                <div>Pickup proximity</div>
+                <div>Destination proximity</div>
+                <div>Route similarity</div>
+                <div>Departure-time similarity</div>
+            </div>
+
+        </div>
+
+
+        <div class="diagram">
+
+            <div class="diagram-title">
+                How SmartCommute works
+            </div>
+
+            <div class="flow">
+
+                <div class="flow-box">
+                    Person A<br>
+                    <small>Journey</small>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="flow-box">
+                    Route<br>
+                    Comparison
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="flow-box">
+                    Person B<br>
+                    <small>Journey</small>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="flow-box">
+                    Common<br>
+                    Direction
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="cta">
+
+    <div class="container cta-box">
+
+        <div>
+            <h2>Ready to find a similar route?</h2>
+
+            <p>
+                Create an account and try the SmartCommute prototype.
+            </p>
+        </div>
+
+        <a href="register.html" class="btn">
+            Create Account →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container footer-inner">
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">SC</div>
+
+            <div>
+                <strong>SmartCommute</strong>
+                <p>Smart Hyperlocal Commute Matching</p>
+            </div>
+
+        </div>
+
+        <p>
+            Web-based research prototype
+        </p>
+
+    </div>
+
+</footer>
 
 </body>
 </html>
