@@ -1,218 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Offered Journey | Smart Commute</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Journey Provider | SmartCommute</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
-<body class="dashboard-body">
+<body>
 
-<!-- =====================================================
-     NAVIGATION
-     ===================================================== -->
+<header class="main-header">
 
-<header class="app-navbar">
+    <div class="nav-container">
 
-    <a href="dashboard.html" class="app-brand">
+        <a href="dashboard.html" class="brand">
 
-        <div class="brand-icon">SC</div>
+            <span class="brand-icon">
+                SC
+            </span>
 
-        <div>
-            <strong>Smart Commute</strong>
-            <span>Hyperlocal Route Matching</span>
-        </div>
+            <span>
+                <strong>SmartCommute</strong>
+                <small>Hyperlocal Matching</small>
+            </span>
 
-    </a>
-
-
-    <div class="provider-nav-right">
-
-        <a href="dashboard.html" class="back-dashboard">
-            ← Dashboard
         </a>
 
-        <div class="app-user">
+        <nav class="nav-links">
 
-            <div class="user-avatar" id="userAvatar">
-                U
-            </div>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-            <div class="user-info">
+            <a href="find-ride.html">
+                Find a Ride
+            </a>
 
-                <strong id="providerName">
-                    User
-                </strong>
+            <a href="offer-ride.html" class="active">
+                Offer a Ride
+            </a>
 
-                <span>Ride Provider</span>
-
-            </div>
-
-            <button
-                type="button"
-                id="logoutBtn"
-                class="logout-btn"
-            >
-                Log out
-            </button>
-
-        </div>
+        </nav>
 
     </div>
 
 </header>
 
 
+<main class="provider-page">
 
-<!-- =====================================================
-     MAIN
-     ===================================================== -->
+    <section class="page-intro">
 
-<main class="provider-journey-main">
+        <p class="eyebrow">
+            YOUR JOURNEY
+        </p>
 
+        <h1>
+            Journey published
+        </h1>
 
-    <!-- =================================================
-         SUCCESS HEADER
-         ================================================= -->
-
-    <section class="published-header">
-
-        <div class="published-icon">
-            ✓
-        </div>
-
-        <div class="published-text">
-
-            <span class="eyebrow">
-                JOURNEY PUBLISHED
-            </span>
-
-            <h1>
-                Your ride is ready.
-            </h1>
-
-            <p>
-                Your journey has been saved and can now be
-                considered for matching with commuters
-                travelling along a similar route.
-            </p>
-
-        </div>
-
-
-        <div class="published-status">
-
-            <span class="live-dot"></span>
-
-            <strong>
-                Active
-            </strong>
-
-            <small>
-                Waiting for requests
-            </small>
-
-        </div>
+        <p>
+            Your journey is available for suitable commuters.
+        </p>
 
     </section>
 
 
+    <section class="provider-grid">
 
-    <!-- =================================================
-         MAIN CONTENT
-         ================================================= -->
+        <div class="provider-main-card">
 
-    <section class="provider-dashboard-grid">
+            <div class="journey-status active">
+                <span></span>
+                Active · Waiting for requests
+            </div>
 
 
-        <!-- =================================================
-             JOURNEY CARD
-             ================================================= -->
+            <h2 id="journeyRoute">
+                Loading...
+            </h2>
 
-        <div class="provider-journey-card">
 
-            <div class="provider-card-header">
+            <div class="journey-info-grid">
 
                 <div>
 
-                    <span class="preview-label">
-                        YOUR JOURNEY
-                    </span>
-
-                    <h2>
-                        Offered ride
-                    </h2>
-
-                </div>
-
-                <span class="published-badge">
-                    Published
-                </span>
-
-            </div>
-
-
-            <!-- ROUTE -->
-
-            <div class="provider-route">
-
-                <div class="provider-route-point">
-
-                    <div class="provider-point start-provider-point">
-                    </div>
-
-                    <div>
-
-                        <small>
-                            PICKUP
-                        </small>
-
-                        <strong id="journeyPickup">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="provider-route-line">
-                </div>
-
-
-                <div class="provider-route-point">
-
-                    <div class="provider-point end-provider-point">
-                    </div>
-
-                    <div>
-
-                        <small>
-                            DESTINATION
-                        </small>
-
-                        <strong id="journeyDestination">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- JOURNEY DETAILS -->
-
-            <div class="provider-details-grid">
-
-                <div class="provider-detail">
-
                     <span>
-                        DEPARTURE DATE
+                        Date
                     </span>
 
                     <strong id="journeyDate">
@@ -222,10 +105,10 @@
                 </div>
 
 
-                <div class="provider-detail">
+                <div>
 
                     <span>
-                        DEPARTURE TIME
+                        Departure
                     </span>
 
                     <strong id="journeyTime">
@@ -235,10 +118,10 @@
                 </div>
 
 
-                <div class="provider-detail">
+                <div>
 
                     <span>
-                        AVAILABLE SEATS
+                        Available Seats
                     </span>
 
                     <strong id="journeySeats">
@@ -248,613 +131,464 @@
                 </div>
 
 
-                <div class="provider-detail">
-
-                    <span>
-                        JOURNEY STATUS
-                    </span>
-
-                    <strong class="status-active">
-                        Active
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             VEHICLE CARD
-             ================================================= -->
-
-        <div class="provider-vehicle-card">
-
-            <div class="provider-card-header">
-
-                <div>
-
-                    <span class="preview-label">
-                        VEHICLE
-                    </span>
-
-                    <h2>
-                        Ride vehicle
-                    </h2>
-
-                </div>
-
-                <div class="vehicle-small-icon">
-                    🚗
-                </div>
-
-            </div>
-
-
-            <div class="provider-vehicle-main">
-
-                <h3 id="vehicleModelDisplay">
-                    —
-                </h3>
-
-                <span id="vehicleTypeDisplay">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="vehicle-detail-row">
-
-                <span>
-                    Vehicle number
-                </span>
-
-                <strong id="vehicleNumberDisplay">
-                    —
-                </strong>
-
-            </div>
-
-
-            <div class="vehicle-detail-row">
-
-                <span>
-                    Passenger seats
-                </span>
-
-                <strong id="vehicleSeatsDisplay">
-                    —
-                </strong>
-
-            </div>
-
-
-            <div class="provider-verification">
-
-                <div class="verification-icon">
-                    ✓
-                </div>
-
-                <div>
-
-                    <strong>
-                        Provider profile
-                    </strong>
-
-                    <p>
-                        Your account is linked to this journey.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             COST CARD
-             ================================================= -->
-
-        <div class="provider-cost-card">
-
-            <div>
-
-                <span class="preview-label">
-                    COST SHARING
-                </span>
-
-                <h2>
-                    Estimated journey cost
-                </h2>
-
-                <p>
-                    This is the estimated total cost entered
-                    for your journey.
-                </p>
-
-            </div>
-
-
-            <div class="provider-cost-value">
-
-                <span>
-                    ESTIMATED COST
-                </span>
-
-                <strong id="journeyCost">
-                    ₹—
-                </strong>
-
-            </div>
-
-
-            <div class="provider-cost-share">
-
                 <div>
 
                     <span>
-                        Estimated cost share
+                        Vehicle
                     </span>
 
-                    <strong id="journeyCostShare">
-                        ₹—
+                    <strong id="vehicleDetails">
+                        —
                     </strong>
 
                 </div>
 
-                <small>
-                    Based on the available passenger seats.
-                    Final cost share can be agreed after a request.
-                </small>
-
             </div>
 
         </div>
 
 
+        <aside class="provider-cost-card">
 
-        <!-- =================================================
-             REQUEST STATUS
-             ================================================= -->
-
-        <div class="request-status-card">
-
-            <div class="request-status-icon">
-                ⌁
-            </div>
-
-            <div class="request-status-content">
-
-                <span class="preview-label">
-                    NEXT STEP
-                </span>
-
-                <h2>
-                    Waiting for matching requests
-                </h2>
-
-                <p>
-                    When a commuter's journey matches your route
-                    and timing, their request will appear here.
-                </p>
-
-            </div>
-
-            <div class="request-status-badge">
-
-                <span class="live-dot"></span>
-
-                Listening for matches
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =================================================
-         HOW REQUESTS WILL WORK
-         ================================================= -->
-
-    <section class="provider-request-flow">
-
-        <div class="provider-request-heading">
-
-            <span class="eyebrow">
-                WHEN A REQUEST ARRIVES
-            </span>
-
-            <h2>
-                You stay in control.
-            </h2>
-
-            <p>
-                Review a commuter's request before confirming
-                the shared journey.
+            <p class="eyebrow">
+                COST SHARING
             </p>
 
-        </div>
+            <h2>
+                Journey Cost
+            </h2>
 
 
-        <div class="request-flow-grid">
+            <div class="provider-cost-row">
 
+                <span>
+                    Estimated Journey Cost
+                </span>
 
-            <div class="request-flow-card">
-
-                <div class="request-flow-number">
-                    01
-                </div>
-
-                <h3>
-                    Receive request
-                </h3>
-
-                <p>
-                    A commuter with a suitable route and timing
-                    can request to join your journey.
-                </p>
+                <strong id="estimatedCost">
+                    ₹--
+                </strong>
 
             </div>
 
 
-            <div class="request-flow-card">
+            <div class="provider-cost-row">
 
-                <div class="request-flow-number">
-                    02
-                </div>
+                <span>
+                    Estimated Cost Share
+                </span>
 
-                <h3>
-                    Review details
-                </h3>
-
-                <p>
-                    Check the requester's journey and relevant
-                    information before making a decision.
-                </p>
+                <strong id="estimatedShare">
+                    ₹--
+                </strong>
 
             </div>
 
 
-            <div class="request-flow-card">
+            <p class="estimate-note">
+                Actual cost may vary.
+            </p>
 
-                <div class="request-flow-number">
-                    03
-                </div>
-
-                <h3>
-                    Accept or reject
-                </h3>
-
-                <p>
-                    You decide whether to accept the request
-                    for your offered journey.
-                </p>
-
-            </div>
-
-
-            <div class="request-flow-card">
-
-                <div class="request-flow-number">
-                    04
-                </div>
-
-                <h3>
-                    Journey confirmed
-                </h3>
-
-                <p>
-                    After acceptance, both users receive the
-                    confirmed journey details and agreed cost.
-                </p>
-
-            </div>
-
-        </div>
+        </aside>
 
     </section>
 
 
-
-    <!-- =================================================
-         IMPORTANT NOTE
-         ================================================= -->
-
-    <section class="journey-note">
-
-        <div class="info-icon">
-            i
-        </div>
+    <section class="request-placeholder">
 
         <div>
 
-            <strong>
-                Your journey is currently active.
-            </strong>
+            <p class="eyebrow">
+                REQUESTS
+            </p>
+
+            <h2>
+                No live requests yet
+            </h2>
 
             <p>
-                Requester contact and complete vehicle details
-                will be shared only after a ride request is
-                accepted in the final system.
+                In the prototype, incoming requests are simulated.
+                In the production version, authenticated users can
+                send requests to this journey.
             </p>
+
+        </div>
+
+        <button
+            id="demoRequestBtn"
+            class="secondary-btn"
+        >
+            Simulate Request
+        </button>
+
+    </section>
+
+
+    <section
+        id="requestCard"
+        class="incoming-request hidden"
+    >
+
+        <div class="request-user-avatar">
+            R
+        </div>
+
+        <div class="request-user-info">
+
+            <span class="eyebrow">
+                NEW JOURNEY REQUEST
+            </span>
+
+            <h2>
+                Demo Requester
+            </h2>
+
+            <p>
+                A commuter has requested to join your journey.
+            </p>
+
+            <div class="request-details">
+
+                <span>
+                    Similar Route
+                </span>
+
+                <strong>
+                    88%
+                </strong>
+
+                <span>
+                    Proposed Cost Share
+                </span>
+
+                <strong>
+                    ₹40
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="request-actions">
+
+            <button
+                id="acceptRequestBtn"
+                class="primary-btn"
+            >
+                Accept Request
+            </button>
+
+            <button
+                id="rejectRequestBtn"
+                class="secondary-btn"
+            >
+                Reject
+            </button>
 
         </div>
 
     </section>
 
+
+    <section
+        id="acceptedCard"
+        class="success-card hidden"
+    >
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Journey Request Accepted
+        </h2>
+
+        <p>
+            The requester can now see your contact and vehicle details.
+        </p>
+
+
+        <div class="provider-details-revealed">
+
+            <div>
+
+                <span>
+                    Mobile
+                </span>
+
+                <strong>
+                    +91 XXXXX XXXXX
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Vehicle
+                </span>
+
+                <strong id="acceptedVehicle">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Vehicle Number
+                </span>
+
+                <strong id="acceptedVehicleNumber">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Agreed Cost Share
+                </span>
+
+                <strong id="agreedShare">
+                    ₹--
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="startJourneyBtn"
+            class="primary-btn"
+        >
+            Start Confirmed Journey →
+        </button>
+
+    </section>
 
 </main>
 
 
-
-<!-- =====================================================
-     SHARED APP SCRIPT
-     ===================================================== -->
-
 <script src="app.js"></script>
 
 
-<script>
+<script type="module">
 
-document.addEventListener("DOMContentLoaded", function () {
+import {
+    protectPage
+} from "./firebase-auth.js";
 
 
-    /* =================================================
-       AUTH CHECK
-       ================================================= */
+await protectPage();
 
-    const currentUser =
-        JSON.parse(
-            localStorage.getItem(
-                "smartCommuteCurrentUser"
+
+const journey =
+    JSON.parse(
+        sessionStorage.getItem(
+            "smartCommuteCurrentOfferedJourney"
+        )
+    );
+
+
+if (!journey) {
+
+    window.location.href =
+        "offer-ride.html";
+
+    throw new Error(
+        "Journey not found."
+    );
+
+}
+
+
+document.getElementById(
+    "journeyRoute"
+).textContent =
+    `${journey.pickup} → ${journey.destination}`;
+
+
+document.getElementById(
+    "journeyDate"
+).textContent =
+    formatDate(journey.date);
+
+
+document.getElementById(
+    "journeyTime"
+).textContent =
+    journey.time;
+
+
+document.getElementById(
+    "journeySeats"
+).textContent =
+    `${journey.availableSeats} seat(s)`;
+
+
+document.getElementById(
+    "vehicleDetails"
+).textContent =
+    `${journey.vehicleType} · ${journey.vehicleModel}`;
+
+
+document.getElementById(
+    "estimatedCost"
+).textContent =
+    `₹${journey.estimatedJourneyCost}`;
+
+
+document.getElementById(
+    "estimatedShare"
+).textContent =
+    `₹${journey.estimatedCostShare}`;
+
+
+// --------------------------------------------------
+// DEMO REQUEST
+// --------------------------------------------------
+
+document.getElementById(
+    "demoRequestBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        document.getElementById(
+            "requestCard"
+        ).classList.remove(
+            "hidden"
+        );
+
+        document.getElementById(
+            "demoRequestBtn"
+        ).disabled = true;
+
+    }
+);
+
+
+// --------------------------------------------------
+// ACCEPT
+// --------------------------------------------------
+
+document.getElementById(
+    "acceptRequestBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        document.getElementById(
+            "requestCard"
+        ).classList.add(
+            "hidden"
+        );
+
+
+        document.getElementById(
+            "acceptedCard"
+        ).classList.remove(
+            "hidden"
+        );
+
+
+        document.getElementById(
+            "acceptedVehicle"
+        ).textContent =
+            `${journey.vehicleType} · ${journey.vehicleModel}`;
+
+
+        document.getElementById(
+            "acceptedVehicleNumber"
+        ).textContent =
+            journey.vehicleNumber;
+
+
+        document.getElementById(
+            "agreedShare"
+        ).textContent =
+            `₹${journey.estimatedCostShare}`;
+
+    }
+);
+
+
+// --------------------------------------------------
+// REJECT
+// --------------------------------------------------
+
+document.getElementById(
+    "rejectRequestBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        document.getElementById(
+            "requestCard"
+        ).classList.add(
+            "hidden"
+        );
+
+
+        document.getElementById(
+            "demoRequestBtn"
+        ).disabled = false;
+
+        alert(
+            "Request rejected."
+        );
+
+    }
+);
+
+
+// --------------------------------------------------
+// START JOURNEY
+// --------------------------------------------------
+
+document.getElementById(
+    "startJourneyBtn"
+).addEventListener(
+    "click",
+    () => {
+
+        const confirmed = {
+
+            ...journey,
+
+            status:
+                "in-progress",
+
+            agreedCostShare:
+                journey.estimatedCostShare,
+
+            startedAt:
+                new Date().toISOString()
+
+        };
+
+
+        sessionStorage.setItem(
+            "smartCommuteConfirmedJourney",
+            JSON.stringify(
+                confirmed
             )
         );
 
 
-    if (!currentUser) {
-
-        window.location.href =
-            "login.html";
-
-        return;
-
-    }
-
-
-
-    /* =================================================
-       LOAD PUBLISHED JOURNEY
-       ================================================= */
-
-    const journey =
-        JSON.parse(
-            localStorage.getItem(
-                "smartCommuteCurrentOfferedJourney"
-            )
+        alert(
+            "Journey started successfully."
         );
 
-
-    if (!journey) {
-
-        /*
-         * If somebody opens this page directly without
-         * publishing a journey, send them back to the
-         * provider form.
-         */
-
-        window.location.href =
-            "offer-ride.html";
-
-        return;
-
     }
-
-
-
-    /* =================================================
-       USER
-       ================================================= */
-
-    const providerName =
-        document.getElementById(
-            "providerName"
-        );
-
-
-    const userAvatar =
-        document.getElementById(
-            "userAvatar"
-        );
-
-
-    if (providerName) {
-
-        providerName.textContent =
-            currentUser.fullName;
-
-    }
-
-
-    if (userAvatar) {
-
-        userAvatar.textContent =
-            currentUser.fullName
-                .charAt(0)
-                .toUpperCase();
-
-    }
-
-
-
-    /* =================================================
-       JOURNEY
-       ================================================= */
-
-    document.getElementById(
-        "journeyPickup"
-    ).textContent =
-        journey.pickup || "—";
-
-
-    document.getElementById(
-        "journeyDestination"
-    ).textContent =
-        journey.destination || "—";
-
-
-    document.getElementById(
-        "journeySeats"
-    ).textContent =
-        journey.availableSeats || "—";
-
-
-    document.getElementById(
-        "vehicleSeatsDisplay"
-    ).textContent =
-        journey.availableSeats || "—";
-
-
-
-    /* =================================================
-       DATE
-       ================================================= */
-
-    if (journey.departureDate) {
-
-        const date =
-            new Date(
-                `${journey.departureDate}T00:00:00`
-            );
-
-
-        if (!Number.isNaN(date.getTime())) {
-
-            document.getElementById(
-                "journeyDate"
-            ).textContent =
-                date.toLocaleDateString(
-                    "en-IN",
-                    {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric"
-                    }
-                );
-
-        }
-
-    }
-
-
-
-    /* =================================================
-       TIME
-       ================================================= */
-
-    if (journey.departureTime) {
-
-        const timeParts =
-            journey.departureTime.split(":");
-
-
-        let hour =
-            Number(timeParts[0]);
-
-        const minute =
-            timeParts[1];
-
-
-        const suffix =
-            hour >= 12 ? "PM" : "AM";
-
-
-        hour =
-            hour % 12 || 12;
-
-
-        document.getElementById(
-            "journeyTime"
-        ).textContent =
-            `${hour}:${minute} ${suffix}`;
-
-    }
-
-
-
-    /* =================================================
-       VEHICLE
-       ================================================= */
-
-    if (journey.vehicle) {
-
-        document.getElementById(
-            "vehicleModelDisplay"
-        ).textContent =
-            journey.vehicle.model ||
-            "Vehicle";
-
-
-        document.getElementById(
-            "vehicleTypeDisplay"
-        ).textContent =
-            journey.vehicle.type ||
-            "—";
-
-
-        document.getElementById(
-            "vehicleNumberDisplay"
-        ).textContent =
-            journey.vehicle.number ||
-            "—";
-
-    }
-
-
-
-    /* =================================================
-       COST
-       ================================================= */
-
-    const journeyCost =
-        Number(
-            journey.estimatedJourneyCost
-        );
-
-
-    if (journeyCost > 0) {
-
-        document.getElementById(
-            "journeyCost"
-        ).textContent =
-            `₹${journeyCost.toLocaleString("en-IN")}`;
-
-    }
-
-
-    const costShare =
-        Number(
-            journey.estimatedCostShare
-        );
-
-
-    if (costShare > 0) {
-
-        document.getElementById(
-            "journeyCostShare"
-        ).textContent =
-            `₹${costShare.toLocaleString("en-IN")}`;
-
-    }
-
-
-});
+);
 
 </script>
 
