@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Match Details | SmartCommute</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <a
+            href="dashboard.html"
+            class="brand"
+        >
+
+            <div class="brand-icon">
+                SC
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    SmartCommute
+                </strong>
+
+                <span>
+                    Hyperlocal Travel Matching
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <button
+                type="button"
+                id="logoutButton"
+                class="nav-logout"
+            >
+                Logout
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="journey-main">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <section class="page-header">
+
+            <div>
+
+                <span class="section-label">
+                    MATCH DETAILS
+                </span>
+
+                <h1>
+                    Review your match
+                </h1>
+
+                <p>
+                    Check the journey details before sending
+                    a request to join.
+                </p>
+
+            </div>
+
+
+            <a
+                href="match-results.html"
+                class="back-link"
+            >
+                ← Back to Matches
+            </a>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ERROR
+        ================================================== -->
+
+        <div
+            id="pageError"
+            class="form-message error-message"
+            style="display:none;"
+        ></div>
+
+
+
+        <!-- =================================================
+             MAIN MATCH LAYOUT
+        ================================================== -->
+
+        <section
+            id="matchContent"
+            class="match-details-layout"
+            style="display:none;"
+        >
+
+
+            <!-- =================================================
+                 LEFT SIDE
+            ================================================== -->
+
+            <div class="match-details-main">
+
+
+                <!-- =================================================
+                     MATCH PROFILE
+                ================================================== -->
+
+                <section class="profile-match-card">
+
+                    <div class="profile-match-top">
+
+
+                        <div class="large-match-avatar">
+                            <span id="commuterInitials">
+                                DC
+                            </span>
+                        </div>
+
+
+                        <div class="profile-match-info">
+
+                            <div class="profile-name-row">
+
+                                <h2 id="commuterName">
+                                    Demo Commuter
+                                </h2>
+
+                                <span
+                                    id="verifiedBadge"
+                                    class="verified-badge"
+                                >
+                                    ✓ Verified
+                                </span>
+
+                            </div>
+
+
+                            <p>
+                                Prototype Demo Commuter
+                            </p>
+
+
+                            <div class="profile-status">
+
+                                <span class="status-dot"></span>
+
+                                Suitable journey available
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="large-match-score">
+
+                            <span>
+                                MATCH
+                            </span>
+
+                            <strong id="matchScore">
+                                —%
+                            </strong>
+
+                            <small>
+                                route compatible
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- MATCH FACTORS -->
+
+                    <div class="match-factor-bars">
+
+
+                        <div class="match-factor-bar">
+
+                            <div class="factor-bar-header">
+
+                                <span>
+                                    Route similarity
+                                </span>
+
+                                <strong id="routeScore">
+                                    —%
+                                </strong>
+
+                            </div>
+
+                            <div class="factor-track">
+
+                                <div
+                                    id="routeScoreBar"
+                                    class="factor-fill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="match-factor-bar">
+
+                            <div class="factor-bar-header">
+
+                                <span>
+                                    Pickup proximity
+                                </span>
+
+                                <strong id="pickupScore">
+                                    —%
+                                </strong>
+
+                            </div>
+
+                            <div class="factor-track">
+
+                                <div
+                                    id="pickupScoreBar"
+                                    class="factor-fill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="match-factor-bar">
+
+                            <div class="factor-bar-header">
+
+                                <span>
+                                    Destination proximity
+                                </span>
+
+                                <strong id="destinationScore">
+                                    —%
+                                </strong>
+
+                            </div>
+
+                            <div class="factor-track">
+
+                                <div
+                                    id="destinationScoreBar"
+                                    class="factor-fill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="match-factor-bar">
+
+                            <div class="factor-bar-header">
+
+                                <span>
+                                    Time similarity
+                                </span>
+
+                                <strong id="timeScore">
+                                    —%
+                                </strong>
+
+                            </div>
+
+                            <div class="factor-track">
+
+                                <div
+                                    id="timeScoreBar"
+                                    class="factor-fill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     JOURNEY
+                ================================================== -->
+
+                <section class="details-card">
+
+                    <div class="card-heading">
+
+                        <div class="card-heading-icon">
+                            🗺️
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Journey details
+                            </h2>
+
+                            <p>
+                                Details of the selected commuter's
+                                journey.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="journey-route-large">
+
+
+                        <div class="large-route-point">
+
+                            <div class="large-route-marker pickup">
+                                A
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    PICKUP
+                                </span>
+
+                                <strong id="pickupName">
+                                    —
+                                </strong>
+
+                                <small id="pickupAddress">
+                                    —
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="large-route-connector">
+                        </div>
+
+
+                        <div class="large-route-point">
+
+                            <div class="large-route-marker destination">
+                                B
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    DESTINATION
+                                </span>
+
+                                <strong id="destinationName">
+                                    —
+                                </strong>
+
+                                <small id="destinationAddress">
+                                    —
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- JOURNEY STATS -->
+
+                    <div class="journey-detail-stats">
+
+
+                        <div class="journey-detail-stat">
+
+                            <span class="detail-stat-icon">
+                                ⏰
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    DEPARTURE
+                                </small>
+
+                                <strong id="departureTime">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="journey-detail-stat">
+
+                            <span class="detail-stat-icon">
+                                📅
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    DATE
+                                </small>
+
+                                <strong id="departureDate">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="journey-detail-stat">
+
+                            <span class="detail-stat-icon">
+                                💺
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    AVAILABLE SEATS
+                                </small>
+
+                                <strong id="availableSeats">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="journey-detail-stat">
+
+                            <span class="detail-stat-icon">
+                                🚗
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    VEHICLE
+                                </small>
+
+                                <strong id="vehicleModel">
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ROUTE COMPATIBILITY
+                ================================================== -->
+
+                <section class="details-card">
+
+                    <div class="card-heading">
+
+                        <div class="card-heading-icon">
+                            🔗
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Route compatibility
+                            </h2>
+
+                            <p>
+                                How this journey compares with yours.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="compatibility-grid">
+
+
+                        <div class="compatibility-item">
+
+                            <span>
+                                Pickup distance
+                            </span>
+
+                            <strong id="pickupDistance">
+                                —
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="compatibility-item">
+
+                            <span>
+                                Destination distance
+                            </span>
+
+                            <strong id="destinationDistance">
+                                —
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="compatibility-item">
+
+                            <span>
+                                Time difference
+                            </span>
+
+                            <strong id="timeDifference">
+                                —
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="compatibility-item">
+
+                            <span>
+                                Shared route
+                            </span>
+
+                            <strong id="sharedDistance">
+                                —
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="compatibility-item">
+
+                            <span>
+                                Shared travel time
+                            </span>
+
+                            <strong id="sharedTime">
+                                —
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="compatibility-item">
+
+                            <span>
+                                Extra journey time
+                            </span>
+
+                            <strong id="extraTime">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT SIDE
+            ================================================== -->
+
+            <aside class="match-details-sidebar">
+
+
+                <!-- COST -->
+
+                <section class="cost-summary-card">
+
+                    <div class="cost-summary-header">
+
+                        <span class="small-label">
+                            COST SHARING
+                        </span>
+
+                        <span class="cost-icon">
+                            💰
+                        </span>
+
+                    </div>
+
+
+                    <div class="cost-main">
+
+                        <span>
+                            Estimated Journey Cost
+                        </span>
+
+                        <strong id="estimatedJourneyCost">
+                            ₹—
+                        </strong>
+
+                    </div>
+
+
+                    <div class="cost-share">
+
+                        <div>
+
+                            <span>
+                                Your Estimated Cost Share
+                            </span>
+
+                            <strong id="estimatedCostShare">
+                                ₹—
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="cost-note">
+                        Estimate for demonstration.
+                        Actual cost may vary.
+                    </p>
+
+                </section>
+
+
+
+                <!-- SECURITY -->
+
+                <section class="security-card">
+
+                    <div class="security-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Contact details are protected
+                        </h3>
+
+                        <p>
+                            Mobile number and vehicle number
+                            are shown only after the ride
+                            request is accepted.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- REQUEST CARD -->
+
+                <section class="request-card">
+
+                    <div>
+
+                        <span class="small-label">
+                            READY TO CONNECT?
+                        </span>
+
+                        <h2>
+                            Request to join
+                        </h2>
+
+                        <p>
+                            Send a request to this commuter.
+                            Their contact and vehicle details
+                            will be available after acceptance.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="requestButton"
+                        class="btn btn-primary btn-full"
+                    >
+                        Request to Join
+                        <span>→</span>
+                    </button>
+
+
+                    <small class="request-disclaimer">
+                        This is a prototype request flow.
+                    </small>
+
+                </section>
+
+            </aside>
+
+        </section>
+
+
+
+        <!-- =================================================
+             REQUEST SENT
+        ================================================== -->
+
+        <section
+            id="requestSentSection"
+            class="request-sent-card"
+            style="display:none;"
+        >
+
+            <div class="request-success-icon">
+                ✓
+            </div>
+
+
+            <span class="section-label">
+                REQUEST SENT
+            </span>
+
+
+            <h2>
+                Your request has been sent
+            </h2>
+
+
+            <p>
+                The commuter has received your request.
+                Please wait for the journey provider to
+                accept it.
+            </p>
+
+
+            <div class="request-summary">
+
+                <div>
+
+                    <span>
+                        Match
+                    </span>
+
+                    <strong id="sentMatchName">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Estimated Cost Share
+                    </span>
+
+                    <strong id="sentCostShare">
+                        ₹—
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="request-status">
+
+                <span class="status-dot"></span>
+
+                Waiting for acceptance...
+
+            </div>
+
+
+            <div class="request-actions">
+
+                <a
+                    href="dashboard.html"
+                    class="btn btn-secondary"
+                >
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <p class="footer-copy">
+                SmartCommute • Hyperlocal Commute Matching Prototype
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script type="module">
+
+        import {
+            protectPage,
+            logoutUser
+        } from "./firebase-auth.js";
+
+
+
+        /* =================================================
+           ELEMENTS
+        ================================================== */
+
+        const matchContent =
+            document.getElementById(
+                "matchContent"
+            );
+
+
+        const requestSentSection =
+            document.getElementById(
+                "requestSentSection"
+            );
+
+
+        const pageError =
+            document.getElementById(
+                "pageError"
+            );
+
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+        const requestButton =
+            document.getElementById(
+                "requestButton"
+            );
+
+
+        const commuterInitials =
+            document.getElementById(
+                "commuterInitials"
+            );
+
+
+        const commuterName =
+            document.getElementById(
+                "commuterName"
+            );
+
+
+        const verifiedBadge =
+            document.getElementById(
+                "verifiedBadge"
+            );
+
+
+        const matchScore =
+            document.getElementById(
+                "matchScore"
+            );
+
+
+        const routeScore =
+            document.getElementById(
+                "routeScore"
+            );
+
+
+        const pickupScore =
+            document.getElementById(
+                "pickupScore"
+            );
+
+
+        const destinationScore =
+            document.getElementById(
+                "destinationScore"
+            );
+
+
+        const timeScore =
+            document.getElementById(
+                "timeScore"
+            );
+
+
+        const routeScoreBar =
+            document.getElementById(
+                "routeScoreBar"
+            );
+
+
+        const pickupScoreBar =
+            document.getElementById(
+                "pickupScoreBar"
+            );
+
+
+        const destinationScoreBar =
+            document.getElementById(
+                "destinationScoreBar"
+            );
+
+
+        const timeScoreBar =
+            document.getElementById(
+                "timeScoreBar"
+            );
+
+
+        const pickupName =
+            document.getElementById(
+                "pickupName"
+            );
+
+
+        const pickupAddress =
+            document.getElementById(
+                "pickupAddress"
+            );
+
+
+        const destinationName =
+            document.getElementById(
+                "destinationName"
+            );
+
+
+        const destinationAddress =
+            document.getElementById(
+                "destinationAddress"
+            );
+
+
+        const departureTime =
+            document.getElementById(
+                "departureTime"
+            );
+
+
+        const departureDate =
+            document.getElementById(
+                "departureDate"
+            );
+
+
+        const availableSeats =
+            document.getElementById(
+                "availableSeats"
+            );
+
+
+        const vehicleModel =
+            document.getElementById(
+                "vehicleModel"
+            );
+
+
+        const pickupDistance =
+            document.getElementById(
+                "pickupDistance"
+            );
+
+
+        const destinationDistance =
+            document.getElementById(
+                "destinationDistance"
+            );
+
+
+        const timeDifference =
+            document.getElementById(
+                "timeDifference"
+            );
+
+
+        const sharedDistance =
+            document.getElementById(
+                "sharedDistance"
+            );
+
+
+        const sharedTime =
+            document.getElementById(
+                "sharedTime"
+            );
+
+
+        const extraTime =
+            document.getElementById(
+                "extraTime"
+            );
+
+
+        const estimatedJourneyCost =
+            document.getElementById(
+                "estimatedJourneyCost"
+            );
+
+
+        const estimatedCostShare =
+            document.getElementById(
+                "estimatedCostShare"
+            );
+
+
+        const sentMatchName =
+            document.getElementById(
+                "sentMatchName"
+            );
+
+
+        const sentCostShare =
+            document.getElementById(
+                "sentCostShare"
+            );
+
+
+
+        /* =================================================
+           STATE
+        ================================================== */
+
+        let currentUser = null;
+
+        let selectedMatch = null;
+
+
+
+        /* =================================================
+           ERROR
+        ================================================== */
+
+        function showError(message) {
+
+            pageError.textContent =
+                message;
+
+            pageError.style.display =
+                "block";
+
+        }
+
+
+
+        /* =================================================
+           HTML ESCAPE
+        ================================================== */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+
+        /* =================================================
+           FORMAT DATE
+        ================================================== */
+
+        function formatDate(
+            dateString
+        ) {
+
+            if (!dateString) {
+                return "—";
+            }
+
+
+            const date =
+                new Date(
+                    `${dateString}T00:00:00`
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return dateString;
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        /* =================================================
+           FORMAT TIME
+        ================================================== */
+
+        function formatTime(
+            timeString
+        ) {
+
+            if (!timeString) {
+                return "—";
+            }
+
+
+            const parts =
+                timeString.split(":");
+
+
+            let hour =
+                Number(
+                    parts[0]
+                );
+
+
+            const minute =
+                parts[1] || "00";
+
+
+            const period =
+                hour >= 12
+                    ? "PM"
+                    : "AM";
+
+
+            hour =
+                hour % 12 || 12;
+
+
+            return `${hour}:${minute} ${period}`;
+
+        }
+
+
+
+        /* =================================================
+           DISPLAY SCORE BAR
+        ================================================== */
+
+        function setScore(
+            textElement,
+            barElement,
+            value
+        ) {
+
+            const numericValue =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(value) || 0
+                    )
+                );
+
+
+            textElement.textContent =
+                `${Math.round(
+                    numericValue
+                )}%`;
+
+
+            barElement.style.width =
+                `${numericValue}%`;
+
+        }
+
+
+
+        /* =================================================
+           LOAD MATCH
+        ================================================== */
+
+        async function loadMatch() {
+
+            try {
+
+                currentUser =
+                    await protectPage();
+
+
+                if (!currentUser) {
+                    return;
+                }
+
+
+                const savedMatch =
+                    sessionStorage.getItem(
+                        "smartCommuteSelectedMatch"
+                    );
+
+
+                if (!savedMatch) {
+
+                    throw new Error(
+                        "No match was selected. Please return to the match results."
+                    );
+
+                }
+
+
+                try {
+
+                    selectedMatch =
+                        JSON.parse(
+                            savedMatch
+                        );
+
+                } catch (error) {
+
+                    throw new Error(
+                        "The selected match data is invalid."
+                    );
+
+                }
+
+
+                if (
+                    !selectedMatch ||
+                    !selectedMatch.id
+                ) {
+
+                    throw new Error(
+                        "Selected match information is incomplete."
+                    );
+
+                }
+
+
+                /* -----------------------------------------
+                   PROFILE
+                ------------------------------------------ */
+
+                commuterInitials.textContent =
+                    selectedMatch.initials ||
+                    "DC";
+
+
+                commuterName.textContent =
+                    selectedMatch.name ||
+                    "Demo Commuter";
+
+
+                if (
+                    selectedMatch.verified
+                ) {
+
+                    verifiedBadge.style.display =
+                        "inline-flex";
+
+                } else {
+
+                    verifiedBadge.style.display =
+                        "none";
+
+                }
+
+
+                matchScore.textContent =
+                    `${selectedMatch.matchScore || 0}%`;
+
+
+                /* -----------------------------------------
+                   MATCH FACTORS
+                ------------------------------------------ */
+
+                setScore(
+                    routeScore,
+                    routeScoreBar,
+                    selectedMatch.routeScore
+                );
+
+
+                setScore(
+                    pickupScore,
+                    pickupScoreBar,
+                    selectedMatch.pickupScore
+                );
+
+
+                setScore(
+                    destinationScore,
+                    destinationScoreBar,
+                    selectedMatch.destinationScore
+                );
+
+
+                setScore(
+                    timeScore,
+                    timeScoreBar,
+                    selectedMatch.timeScore
+                );
+
+
+                /* -----------------------------------------
+                   JOURNEY
+                ------------------------------------------ */
+
+                pickupName.textContent =
+                    selectedMatch.pickup?.name ||
+                    "—";
+
+
+                pickupAddress.textContent =
+                    selectedMatch.pickup?.address ||
+                    "";
+
+
+                destinationName.textContent =
+                    selectedMatch.destination?.name ||
+                    "—";
+
+
+                destinationAddress.textContent =
+                    selectedMatch.destination?.address ||
+                    "";
+
+
+                departureTime.textContent =
+                    formatTime(
+                        selectedMatch.departureTime
+                    );
+
+
+                /*
+                   The selected demo commuter's date is
+                   the same date as the user's requested
+                   journey in this prototype.
+                */
+
+                const currentJourneyRaw =
+                    sessionStorage.getItem(
+                        "smartCommuteCurrentJourney"
+                    );
+
+
+                let currentJourney =
+                    null;
+
+
+                if (currentJourneyRaw) {
+
+                    try {
+
+                        currentJourney =
+                            JSON.parse(
+                                currentJourneyRaw
+                            );
+
+                    } catch (error) {
+
+                        currentJourney =
+                            null;
+
+                    }
+
+                }
+
+
+                departureDate.textContent =
+                    formatDate(
+                        currentJourney?.date
+                    );
+
+
+                availableSeats.textContent =
+                    selectedMatch.availableSeats ||
+                    "—";
+
+
+                vehicleModel.textContent =
+                    selectedMatch.vehicleModel ||
+                    selectedMatch.vehicleType ||
+                    "Vehicle";
+
+
+
+                /* -----------------------------------------
+                   COMPATIBILITY
+                ------------------------------------------ */
+
+                pickupDistance.textContent =
+                    `${Number(
+                        selectedMatch.pickupDistance || 0
+                    ).toFixed(1)} km`;
+
+
+                destinationDistance.textContent =
+                    `${Number(
+                        selectedMatch.destinationDistance || 0
+                    ).toFixed(1)} km`;
+
+
+                const timeDiff =
+                    Number(
+                        selectedMatch.timeDifference
+                    );
+
+
+                timeDifference.textContent =
+                    `${Number.isFinite(timeDiff)
+                        ? Math.round(timeDiff)
+                        : 0
+                    } min`;
+
+
+                sharedDistance.textContent =
+                    `${Number(
+                        selectedMatch.sharedDistance || 0
+                    ).toFixed(1)} km`;
+
+
+                sharedTime.textContent =
+                    `${Math.round(
+                        Number(
+                            selectedMatch.sharedTime || 0
+                        )
+                    )} min`;
+
+
+                extraTime.textContent =
+                    `${Math.round(
+                        Number(
+                            selectedMatch.extraTime || 0
+                        )
+                    )} min`;
+
+
+                /* -----------------------------------------
+                   COST
+                ------------------------------------------ */
+
+                estimatedJourneyCost.textContent =
+                    `₹${Number(
+                        selectedMatch.estimatedJourneyCost || 0
+                    )}`;
+
+
+                estimatedCostShare.textContent =
+                    `₹${Number(
+                        selectedMatch.estimatedCostShare || 0
+                    )}`;
+
+
+                /* -----------------------------------------
+                   SHOW
+                ------------------------------------------ */
+
+                matchContent.style.display =
+                    "grid";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Match details error:",
+                    error
+                );
+
+
+                showError(
+                    error.message ||
+                    "Unable to load match details."
+                );
+
+            }
+
+        }
+
+
+
+        /* =================================================
+           REQUEST TO JOIN
+        ================================================== */
+
+        requestButton.addEventListener(
+            "click",
+            async () => {
+
+                if (!selectedMatch) {
+
+                    showError(
+                        "Match information is unavailable."
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    requestButton.disabled =
+                        true;
+
+
+                    requestButton.textContent =
+                        "Sending Request...";
+
+
+                    /*
+                       This is a prototype request.
+
+                       A production version would create
+                       a Firestore ride request document
+                       here and notify the provider.
+                    */
+
+                    const request = {
+
+                        requestId:
+                            `request-${Date.now()}`,
+
+                        requesterId:
+                            currentUser.uid,
+
+                        requesterName:
+                            currentUser.displayName ||
+                            "Commuter",
+
+                        matchId:
+                            selectedMatch.id,
+
+                        matchName:
+                            selectedMatch.name,
+
+                        estimatedCostShare:
+                            selectedMatch.estimatedCostShare,
+
+                        status:
+                            "pending",
+
+                        createdAt:
+                            new Date().toISOString()
+
+                    };
+
+
+                    sessionStorage.setItem(
+                        "smartCommuteCurrentRequest",
+                        JSON.stringify(request)
+                    );
+
+
+                    await new Promise(
+                        (resolve) =>
+                            setTimeout(
+                                resolve,
+                                700
+                            )
+                    );
+
+
+                    matchContent.style.display =
+                        "none";
+
+
+                    requestSentSection.style.display =
+                        "block";
+
+
+                    sentMatchName.textContent =
+                        selectedMatch.name;
+
+
+                    sentCostShare.textContent =
+                        `₹${Number(
+                            selectedMatch.estimatedCostShare || 0
+                        )}`;
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Request error:",
+                        error
+                    );
+
+
+                    requestButton.disabled =
+                        false;
+
+
+                    requestButton.textContent =
+                        "Request to Join →";
+
+
+                    showError(
+                        "Unable to send the request. Please try again."
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           LOGOUT
+        ================================================== */
+
+        logoutButton.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    logoutButton.disabled =
+                        true;
+
+
+                    logoutButton.textContent =
+                        "Logging out...";
+
+
+                    await logoutUser();
+
+
+                    sessionStorage.clear();
+
+
+                    window.location.replace(
+                        "index.html"
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+
+                    logoutButton.textContent =
+                        "Logout";
+
+
+                    showError(
+                        "Unable to log out. Please try again."
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           START
+        ================================================== */
+
+        loadMatch();
+
+    </script>
+
+</body>
+
+</html>
