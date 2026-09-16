@@ -2,238 +2,813 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Create Account | Smart Commute</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>Register | SmartCommute</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 </head>
 
-<body class="auth-body">
+<body class="auth-page">
 
-<div class="auth-layout">
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-    <section class="auth-brand-panel">
+    <header class="navbar">
 
-        <a href="index.html" class="auth-brand">
-            <div class="brand-icon">SC</div>
+        <a
+            href="index.html"
+            class="brand"
+        >
+            <div class="brand-icon">
+                SC
+            </div>
 
-            <div>
-                <strong>Smart Commute</strong>
-                <span>Hyperlocal Route Matching</span>
+            <div class="brand-text">
+                <strong>SmartCommute</strong>
+
+                <span>
+                    Hyperlocal Travel Matching
+                </span>
             </div>
         </a>
 
+        <nav class="nav-links">
 
-        <div class="auth-intro">
+            <a href="index.html">
+                Home
+            </a>
 
-            <span class="eyebrow">GET STARTED</span>
+            <a href="login.html">
+                Login
+            </a>
 
-            <h1>
-                One account.<br>
-                <span>Multiple journeys.</span>
-            </h1>
+        </nav>
 
-            <p>
-                Create your account once. Later, you can choose
-                whether you want to find a ride or offer a ride.
-            </p>
-
-        </div>
+    </header>
 
 
-        <div class="auth-points">
+    <!-- =====================================================
+         REGISTRATION AREA
+    ====================================================== -->
 
-            <div>
-                <div class="check">✓</div>
-                <span>Simple account setup</span>
-            </div>
+    <main class="auth-main">
 
-            <div>
-                <div class="check">✓</div>
-                <span>Choose your journey after login</span>
-            </div>
+        <section class="auth-container">
 
-            <div>
-                <div class="check">✓</div>
-                <span>Vehicle details only when offering a ride</span>
-            </div>
+            <!-- LEFT INFORMATION PANEL -->
 
-        </div>
+            <div class="auth-info">
 
-    </section>
+                <div class="auth-info-badge">
+                    SMARTCOMMUTE
+                </div>
 
-
-    <section class="auth-form-panel">
-
-        <div class="auth-form-container">
-
-            <div class="mobile-brand">
-                <div class="brand-icon">SC</div>
-                <strong>Smart Commute</strong>
-            </div>
-
-
-            <div class="form-heading">
-
-                <span class="form-label">CREATE ACCOUNT</span>
-
-                <h2>Welcome to Smart Commute</h2>
+                <h1>
+                    Travel smarter,
+                    <span>together.</span>
+                </h1>
 
                 <p>
-                    Enter your basic details to create your account.
+                    Create your SmartCommute account and
+                    find commuters travelling on similar
+                    routes and at similar times.
                 </p>
+
+
+                <div class="auth-benefits">
+
+                    <div class="auth-benefit">
+
+                        <div class="benefit-icon">
+                            📍
+                        </div>
+
+                        <div>
+                            <strong>
+                                Hyperlocal matching
+                            </strong>
+
+                            <span>
+                                Find suitable commuters nearby.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-benefit">
+
+                        <div class="benefit-icon">
+                            🗺️
+                        </div>
+
+                        <div>
+                            <strong>
+                                Route-based matching
+                            </strong>
+
+                            <span>
+                                Compare actual travel routes.
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="auth-benefit">
+
+                        <div class="benefit-icon">
+                            🔐
+                        </div>
+
+                        <div>
+                            <strong>
+                                Protected account
+                            </strong>
+
+                            <span>
+                                Your account uses Firebase Authentication.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <form id="registerForm" class="auth-form">
+            <!-- REGISTRATION FORM -->
 
-                <div class="input-group">
+            <div class="auth-card">
 
-                    <label for="fullName">
-                        Full Name
-                    </label>
+                <div class="auth-card-header">
 
-                    <input
-                        type="text"
-                        id="fullName"
-                        placeholder="Enter your full name"
-                        autocomplete="name"
-                        required
-                    >
+                    <div class="auth-card-icon">
+                        👋
+                    </div>
 
-                </div>
+                    <h2>
+                        Create your account
+                    </h2>
 
-
-                <div class="input-group">
-
-                    <label for="mobile">
-                        Mobile Number
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="mobile"
-                        placeholder="10-digit mobile number"
-                        maxlength="10"
-                        inputmode="numeric"
-                        autocomplete="tel"
-                        required
-                    >
+                    <p>
+                        Enter your basic details to get started.
+                    </p>
 
                 </div>
 
 
-                <div class="input-group">
+                <!-- ERROR MESSAGE -->
 
-                    <label for="email">
-                        Email Address
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="you@example.com"
-                        autocomplete="email"
-                        required
-                    >
-
-                </div>
+                <div
+                    id="registerError"
+                    class="form-message error-message"
+                    style="display:none;"
+                ></div>
 
 
-                <div class="form-row">
+                <!-- SUCCESS MESSAGE -->
 
-                    <div class="input-group">
+                <div
+                    id="registerSuccess"
+                    class="form-message success-message"
+                    style="display:none;"
+                ></div>
+
+
+                <form
+                    id="registerForm"
+                    novalidate
+                >
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MOBILE -->
+
+                    <div class="form-group">
+
+                        <label for="mobile">
+                            Mobile Number
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                📱
+                            </span>
+
+                            <input
+                                type="tel"
+                                id="mobile"
+                                name="mobile"
+                                placeholder="Enter 10-digit mobile number"
+                                autocomplete="tel"
+                                inputmode="numeric"
+                                maxlength="10"
+                                required
+                            >
+
+                        </div>
+
+                        <small class="field-hint">
+                            Enter a valid 10-digit mobile number.
+                        </small>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉️
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
 
                         <label for="password">
                             Password
                         </label>
 
-                        <div class="password-wrapper">
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
 
                             <input
                                 type="password"
                                 id="password"
-                                placeholder="Create password"
+                                name="password"
+                                placeholder="Create a password"
                                 autocomplete="new-password"
+                                minlength="6"
                                 required
                             >
 
                             <button
                                 type="button"
                                 class="password-toggle"
-                                data-target="password"
+                                id="togglePassword"
+                                aria-label="Show password"
                             >
                                 Show
                             </button>
 
                         </div>
 
+                        <small class="field-hint">
+                            Password must contain at least 6 characters.
+                        </small>
+
                     </div>
 
 
-                    <div class="input-group">
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
 
                         <label for="confirmPassword">
                             Confirm Password
                         </label>
 
-                        <div class="password-wrapper">
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
 
                             <input
                                 type="password"
                                 id="confirmPassword"
-                                placeholder="Repeat password"
+                                name="confirmPassword"
+                                placeholder="Re-enter your password"
                                 autocomplete="new-password"
+                                minlength="6"
                                 required
                             >
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                data-target="confirmPassword"
-                            >
-                                Show
-                            </button>
 
                         </div>
 
                     </div>
 
+
+                    <!-- TERMS -->
+
+                    <div class="terms-row">
+
+                        <input
+                            type="checkbox"
+                            id="terms"
+                            required
+                        >
+
+                        <label for="terms">
+                            I agree to use SmartCommute responsibly
+                            and provide accurate account information.
+                        </label>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        id="registerButton"
+                        class="btn btn-primary btn-full"
+                    >
+
+                        <span id="registerButtonText">
+                            Create Account
+                        </span>
+
+                        <span
+                            id="registerLoader"
+                            class="button-loader"
+                            style="display:none;"
+                        >
+                            Creating...
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- LOGIN LINK -->
+
+                <div class="auth-switch">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <a href="login.html">
+                        Login here
+                    </a>
+
                 </div>
 
+            </div>
 
-                <div id="registerMessage" class="form-message"></div>
+        </section>
 
-
-                <button type="submit" class="submit-btn">
-                    Create Account
-                    <span>→</span>
-                </button>
-
-            </form>
+    </main>
 
 
-            <p class="auth-switch">
-                Already have an account?
-                <a href="login.html">Log in</a>
-            </p>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
+    <footer class="footer">
 
-            <p class="auth-note">
-                By creating an account, you agree to use the
-                platform responsibly.
+        <div class="footer-inner">
+
+            <p class="footer-copy">
+                SmartCommute • Hyperlocal Commute Matching Prototype
             </p>
 
         </div>
 
-    </section>
-
-</div>
+    </footer>
 
 
-<script type="module" src="firebase-auth.js"></script>
+    <!-- =====================================================
+         FIREBASE REGISTRATION SCRIPT
+    ====================================================== -->
+
+    <script type="module">
+
+        import {
+            registerUser
+        } from "./firebase-auth.js";
+
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+        const fullNameInput =
+            document.getElementById("fullName");
+
+        const mobileInput =
+            document.getElementById("mobile");
+
+        const emailInput =
+            document.getElementById("email");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const confirmPasswordInput =
+            document.getElementById("confirmPassword");
+
+        const termsInput =
+            document.getElementById("terms");
+
+        const registerButton =
+            document.getElementById("registerButton");
+
+        const registerButtonText =
+            document.getElementById("registerButtonText");
+
+        const registerLoader =
+            document.getElementById("registerLoader");
+
+        const registerError =
+            document.getElementById("registerError");
+
+        const registerSuccess =
+            document.getElementById("registerSuccess");
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+
+        /* =================================================
+           MESSAGE HELPERS
+        ================================================== */
+
+        function showError(message) {
+
+            registerSuccess.style.display = "none";
+
+            registerError.textContent = message;
+
+            registerError.style.display = "block";
+        }
+
+
+        function showSuccess(message) {
+
+            registerError.style.display = "none";
+
+            registerSuccess.textContent = message;
+
+            registerSuccess.style.display = "block";
+        }
+
+
+        function clearMessages() {
+
+            registerError.style.display = "none";
+
+            registerSuccess.style.display = "none";
+
+            registerError.textContent = "";
+
+            registerSuccess.textContent = "";
+        }
+
+
+        /* =================================================
+           PASSWORD VISIBILITY
+        ================================================== */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                const isPassword =
+                    passwordInput.type === "password";
+
+                passwordInput.type =
+                    isPassword
+                        ? "text"
+                        : "password";
+
+                togglePassword.textContent =
+                    isPassword
+                        ? "Hide"
+                        : "Show";
+
+            }
+        );
+
+
+        /* =================================================
+           MOBILE INPUT
+        ================================================== */
+
+        mobileInput.addEventListener(
+            "input",
+            () => {
+
+                mobileInput.value =
+                    mobileInput.value
+                        .replace(/\D/g, "")
+                        .slice(0, 10);
+
+            }
+        );
+
+
+        /* =================================================
+           VALIDATION
+        ================================================== */
+
+        function validateForm() {
+
+            const fullName =
+                fullNameInput.value.trim();
+
+            const mobile =
+                mobileInput.value.trim();
+
+            const email =
+                emailInput.value.trim();
+
+            const password =
+                passwordInput.value;
+
+            const confirmPassword =
+                confirmPasswordInput.value;
+
+
+            if (!fullName) {
+                throw new Error(
+                    "Please enter your full name."
+                );
+            }
+
+
+            if (!/^[0-9]{10}$/.test(mobile)) {
+                throw new Error(
+                    "Please enter a valid 10-digit mobile number."
+                );
+            }
+
+
+            if (!email) {
+                throw new Error(
+                    "Please enter your email address."
+                );
+            }
+
+
+            if (password.length < 6) {
+                throw new Error(
+                    "Password must contain at least 6 characters."
+                );
+            }
+
+
+            if (password !== confirmPassword) {
+                throw new Error(
+                    "Passwords do not match."
+                );
+            }
+
+
+            if (!termsInput.checked) {
+                throw new Error(
+                    "Please agree to the terms before creating your account."
+                );
+            }
+
+        }
+
+
+        /* =================================================
+           BUTTON STATE
+        ================================================== */
+
+        function setLoading(loading) {
+
+            registerButton.disabled =
+                loading;
+
+            registerButtonText.style.display =
+                loading
+                    ? "none"
+                    : "inline";
+
+            registerLoader.style.display =
+                loading
+                    ? "inline"
+                    : "none";
+
+        }
+
+
+        /* =================================================
+           REGISTER
+        ================================================== */
+
+        registerForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                clearMessages();
+
+
+                try {
+
+                    validateForm();
+
+                    setLoading(true);
+
+
+                    const fullName =
+                        fullNameInput.value.trim();
+
+                    const mobile =
+                        mobileInput.value.trim();
+
+                    const email =
+                        emailInput.value.trim();
+
+                    const password =
+                        passwordInput.value;
+
+
+                    await registerUser(
+                        fullName,
+                        mobile,
+                        email,
+                        password
+                    );
+
+
+                    showSuccess(
+                        "Account created successfully. Redirecting..."
+                    );
+
+
+                    registerForm.reset();
+
+
+                    setTimeout(
+                        () => {
+
+                            window.location.replace(
+                                "dashboard.html"
+                            );
+
+                        },
+                        1000
+                    );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Registration error:",
+                        error
+                    );
+
+
+                    let message =
+                        "Unable to create your account. Please try again.";
+
+
+                    if (error.code) {
+
+                        switch (error.code) {
+
+                            case "auth/email-already-in-use":
+
+                                message =
+                                    "An account with this email already exists.";
+
+                                break;
+
+
+                            case "auth/invalid-email":
+
+                                message =
+                                    "Please enter a valid email address.";
+
+                                break;
+
+
+                            case "auth/weak-password":
+
+                                message =
+                                    "Password is too weak. Use at least 6 characters.";
+
+                                break;
+
+
+                            case "auth/network-request-failed":
+
+                                message =
+                                    "Network error. Check your internet connection.";
+
+                                break;
+
+
+                            case "permission-denied":
+
+                                message =
+                                    "Firestore permission denied. Check your Firestore rules.";
+
+                                break;
+
+                            default:
+
+                                message =
+                                    error.message ||
+                                    message;
+
+                        }
+
+                    } else {
+
+                        message =
+                            error.message ||
+                            message;
+
+                    }
+
+
+                    showError(message);
+
+                    setLoading(false);
+
+                }
+
+            }
+        );
+
+    </script>
 
 </body>
 </html>
