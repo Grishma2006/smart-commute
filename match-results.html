@@ -10,2359 +10,982 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Match Results | SmartCommute</title>
+    <title>Matching Journeys | SmartCommute</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
+<body>
 
-<body class="app-page">
+<header class="main-header">
 
+    <div class="nav-container">
 
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+        <a href="dashboard.html" class="brand">
 
-    <header class="navbar">
+            <span class="brand-icon">SC</span>
 
-        <a
-            href="dashboard.html"
-            class="brand"
-        >
-
-            <div class="brand-icon">
-                SC
-            </div>
-
-            <div class="brand-text">
-
-                <strong>
-                    SmartCommute
-                </strong>
-
-                <span>
-                    Hyperlocal Travel Matching
-                </span>
-
-            </div>
+            <span>
+                <strong>SmartCommute</strong>
+                <small>Hyperlocal Matching</small>
+            </span>
 
         </a>
 
-
         <nav class="nav-links">
 
-            <a
-                href="dashboard.html"
-            >
+            <a href="dashboard.html">
                 Dashboard
             </a>
 
-            <button
-                type="button"
-                id="logoutButton"
-                class="nav-logout"
-            >
-                Logout
-            </button>
+            <a href="find-ride.html" class="active">
+                Find a Ride
+            </a>
+
+            <a href="offer-ride.html">
+                Offer a Ride
+            </a>
 
         </nav>
 
-    </header>
+    </div>
+
+</header>
 
 
+<main class="results-page">
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+    <section class="page-intro">
 
-    <main class="journey-main">
+        <p class="eyebrow">
+            STEP 3 · MATCHING
+        </p>
 
+        <h1>
+            Matching journeys
+        </h1>
 
-        <!-- =================================================
-             HEADER
-        ================================================== -->
+        <p>
+            We compare route, pickup, destination and time similarity.
+        </p>
 
-        <section class="page-header">
-
-            <div>
-
-                <span class="section-label">
-                    STEP 3 OF 3
-                </span>
-
-                <h1>
-                    Suitable matches
-                </h1>
-
-                <p>
-                    We compared your route and travel time
-                    with available prototype journeys.
-                </p>
-
-            </div>
+    </section>
 
 
-            <a
-                href="route-preview.html"
-                class="back-link"
-            >
-                ← Route Preview
-            </a>
+    <section class="journey-mini-card">
 
-        </section>
+        <div>
 
+            <span>Your Journey</span>
 
-
-        <!-- =================================================
-             DEMO DATA NOTICE
-        ================================================== -->
-
-        <div class="prototype-notice">
-
-            <div class="prototype-notice-icon">
-                ℹ️
-            </div>
-
-            <div>
-
-                <strong>
-                    Prototype Demo Data
-                </strong>
-
-                <p>
-                    The commuter profiles shown below are
-                    simulated for demonstrating the matching
-                    system. Route calculations use real map
-                    coordinates and routing data.
-                </p>
-
-            </div>
+            <strong id="journeyText">
+                Loading...
+            </strong>
 
         </div>
 
+        <div>
 
+            <span>Departure</span>
 
-        <!-- =================================================
-             ERROR
-        ================================================== -->
+            <strong id="journeyTime">
+                --
+            </strong>
 
-        <div
-            id="pageError"
-            class="form-message error-message"
-            style="display:none;"
-        ></div>
+        </div>
 
+    </section>
 
 
-        <!-- =================================================
-             USER JOURNEY SUMMARY
-        ================================================== -->
+    <div
+        id="loading"
+        class="loading-card"
+    >
 
-        <section class="match-summary-card">
+        <div class="loading-spinner"></div>
 
-            <div class="match-summary-heading">
+        <h2>
+            Finding suitable journeys...
+        </h2>
 
-                <div class="card-heading-icon">
-                    🗺️
-                </div>
+        <p>
+            Comparing routes and travel timings.
+        </p>
 
-                <div>
+    </div>
 
-                    <h2>
-                        Your journey
-                    </h2>
 
-                    <p>
-                        Used as the basis for matching.
-                    </p>
+    <section
+        id="resultsSection"
+        class="results-section hidden"
+    >
 
-                </div>
+        <div class="results-heading">
 
-            </div>
+            <div>
 
-
-            <div class="match-route-summary">
-
-
-                <div class="match-location">
-
-                    <span class="summary-location-dot pickup">
-                    </span>
-
-                    <div>
-
-                        <small>
-                            PICKUP
-                        </small>
-
-                        <strong id="userPickup">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="match-route-arrow">
-                    →
-                </div>
-
-
-                <div class="match-location">
-
-                    <span class="summary-location-dot destination">
-                    </span>
-
-                    <div>
-
-                        <small>
-                            DESTINATION
-                        </small>
-
-                        <strong id="userDestination">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="user-route-stats">
-
-                    <div>
-
-                        <small>
-                            Distance
-                        </small>
-
-                        <strong id="userDistance">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <small>
-                            Time
-                        </small>
-
-                        <strong id="userTime">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <small>
-                            Departure
-                        </small>
-
-                        <strong id="userDeparture">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             MATCHING STATUS
-        ================================================== -->
-
-        <section class="matching-status-card">
-
-            <div class="matching-status-icon">
-                🔎
-            </div>
-
-            <div class="matching-status-content">
-
-                <strong id="matchingStatusTitle">
-                    Comparing journeys...
-                </strong>
-
-                <span id="matchingStatusText">
-                    Checking route, location and time compatibility.
-                </span>
-
-            </div>
-
-
-            <div
-                id="matchingSpinner"
-                class="loading-spinner small"
-            ></div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             MATCH RESULTS
-        ================================================== -->
-
-        <section
-            id="resultsSection"
-            style="display:none;"
-        >
-
-            <div class="results-header">
-
-                <div>
-
-                    <span class="section-label">
-                        MATCH RESULTS
-                    </span>
-
-                    <h2>
-                        Available commuters
-                    </h2>
-
-                </div>
-
-
-                <span
-                    id="resultCount"
-                    class="result-count"
-                >
-                    0 matches
-                </span>
-
-            </div>
-
-
-            <div
-                id="resultsContainer"
-                class="results-container"
-            ></div>
-
-
-
-            <!-- =================================================
-                 NO RESULTS
-            ================================================== -->
-
-            <div
-                id="noResults"
-                class="no-results-card"
-                style="display:none;"
-            >
-
-                <div class="no-results-icon">
-                    🔎
-                </div>
-
-                <h3>
-                    No suitable matches found
-                </h3>
-
-                <p>
-                    Try another departure time, route or
-                    nearby location.
+                <p class="eyebrow">
+                    AVAILABLE MATCHES
                 </p>
 
-                <a
-                    href="find-ride.html"
-                    class="btn btn-secondary"
-                >
-                    Change Journey
-                </a>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             MATCHING EXPLANATION
-        ================================================== -->
-
-        <section class="matching-explanation">
-
-            <div class="section-heading compact">
-
-                <span class="section-label">
-                    MATCHING METHOD
-                </span>
-
                 <h2>
-                    How the match percentage is calculated
+                    Suitable commuters
                 </h2>
 
             </div>
 
+            <span id="resultCount">
+                0 matches
+            </span>
 
-            <div class="matching-method-grid">
-
-
-                <div class="method-item">
-
-                    <div class="method-number">
-                        50%
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Route similarity
-                        </strong>
-
-                        <span>
-                            Compares the extra distance required
-                            when combining the journeys.
-                        </span>
-
-                    </div>
-
-                </div>
+        </div>
 
 
-
-                <div class="method-item">
-
-                    <div class="method-number">
-                        20%
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Pickup distance
-                        </strong>
-
-                        <span>
-                            Checks how close the pickup locations
-                            are.
-                        </span>
-
-                    </div>
-
-                </div>
+        <div
+            id="resultsContainer"
+            class="results-container"
+        ></div>
 
 
+        <div class="prototype-note">
 
-                <div class="method-item">
+            <strong>
+                Prototype data
+            </strong>
 
-                    <div class="method-number">
-                        15%
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Destination distance
-                        </strong>
-
-                        <span>
-                            Checks how close the destinations
-                            are.
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="method-item">
-
-                    <div class="method-number">
-                        15%
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Time similarity
-                        </strong>
-
-                        <span>
-                            Compares the requested departure
-                            times.
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <p class="footer-copy">
-                SmartCommute • Hyperlocal Commute Matching Prototype
+            <p>
+                Matching journeys shown here are demonstration
+                profiles. In the production version, these records
+                will come from real authenticated users and journeys.
             </p>
 
         </div>
 
-    </footer>
+    </section>
+
+</main>
 
 
-
-    <!-- =====================================================
-         SCRIPT
-    ====================================================== -->
-
-    <script type="module">
-
-        import {
-            protectPage,
-            logoutUser
-        } from "./firebase-auth.js";
+<script src="app.js"></script>
 
 
-        import {
-            getGeoapifyRoute
-        } from "./geoapify.js";
+<script type="module">
+
+import {
+    protectPage
+} from "./firebase-auth.js";
 
 
-
-        /* =================================================
-           ELEMENTS
-        ================================================== */
-
-        const pageError =
-            document.getElementById("pageError");
+import {
+    getGeoapifyRoute,
+    formatDistance,
+    formatDuration
+} from "./geoapify.js";
 
 
-        const userPickup =
-            document.getElementById("userPickup");
+await protectPage();
 
 
-        const userDestination =
-            document.getElementById("userDestination");
+const journey =
+    JSON.parse(
+        sessionStorage.getItem(
+            "smartCommuteCurrentJourney"
+        )
+    );
 
 
-        const userDistance =
-            document.getElementById("userDistance");
+if (!journey) {
+
+    window.location.href =
+        "find-ride.html";
+
+    throw new Error(
+        "Journey missing."
+    );
+}
 
 
-        const userTime =
-            document.getElementById("userTime");
+document.getElementById(
+    "journeyText"
+).textContent =
+    `${journey.pickup.name} → ${journey.destination.name}`;
 
 
-        const userDeparture =
-            document.getElementById("userDeparture");
+document.getElementById(
+    "journeyTime"
+).textContent =
+    journey.time;
 
 
-        const matchingStatusTitle =
-            document.getElementById(
-                "matchingStatusTitle"
+// --------------------------------------------------
+// DEMO PROVIDERS
+// --------------------------------------------------
+
+const demoCommuters = [
+
+    {
+        id: "commuter-01",
+        name: "Demo Commuter 01",
+        departure: "07:20",
+        pickup: {
+            lat: journey.pickup.lat + 0.006,
+            lng: journey.pickup.lng + 0.004
+        },
+        destination: {
+            lat: journey.destination.lat + 0.005,
+            lng: journey.destination.lng + 0.004
+        },
+        seats: 2,
+        vehicleType: "Car",
+        vehicleModel: "Hatchback",
+        vehicleNumber: "MH XX XX 0001",
+        verified: true
+    },
+
+    {
+        id: "commuter-02",
+        name: "Demo Commuter 02",
+        departure: "07:30",
+        pickup: {
+            lat: journey.pickup.lat + 0.010,
+            lng: journey.pickup.lng + 0.006
+        },
+        destination: {
+            lat: journey.destination.lat + 0.006,
+            lng: journey.destination.lng + 0.006
+        },
+        seats: 1,
+        vehicleType: "Car",
+        vehicleModel: "Sedan",
+        vehicleNumber: "MH XX XX 0002",
+        verified: true
+    },
+
+    {
+        id: "commuter-03",
+        name: "Demo Commuter 03",
+        departure: "07:35",
+        pickup: {
+            lat: journey.pickup.lat + 0.003,
+            lng: journey.pickup.lng + 0.003
+        },
+        destination: {
+            lat: journey.destination.lat + 0.003,
+            lng: journey.destination.lng + 0.003
+        },
+        seats: 2,
+        vehicleType: "Car",
+        vehicleModel: "Compact",
+        vehicleNumber: "MH XX XX 0003",
+        verified: true
+    },
+
+    {
+        id: "commuter-04",
+        name: "Demo Commuter 04",
+        departure: "08:00",
+        pickup: {
+            lat: journey.pickup.lat + 0.020,
+            lng: journey.pickup.lng + 0.015
+        },
+        destination: {
+            lat: journey.destination.lat + 0.010,
+            lng: journey.destination.lng + 0.010
+        },
+        seats: 1,
+        vehicleType: "Car",
+        vehicleModel: "Hatchback",
+        vehicleNumber: "MH XX XX 0004",
+        verified: true
+    },
+
+    {
+        id: "commuter-05",
+        name: "Demo Commuter 05",
+        departure: "07:45",
+        pickup: {
+            lat: journey.pickup.lat + 0.025,
+            lng: journey.pickup.lng + 0.010
+        },
+        destination: {
+            lat: journey.destination.lat + 0.015,
+            lng: journey.destination.lng + 0.012
+        },
+        seats: 2,
+        vehicleType: "Car",
+        vehicleModel: "Sedan",
+        vehicleNumber: "MH XX XX 0005",
+        verified: true
+    },
+
+    {
+        id: "commuter-06",
+        name: "Demo Commuter 06",
+        departure: "07:25",
+        pickup: {
+            lat: journey.pickup.lat + 0.007,
+            lng: journey.pickup.lng + 0.007
+        },
+        destination: {
+            lat: journey.destination.lat + 0.008,
+            lng: journey.destination.lng + 0.005
+        },
+        seats: 2,
+        vehicleType: "Car",
+        vehicleModel: "Compact",
+        vehicleNumber: "MH XX XX 0006",
+        verified: true
+    },
+
+    {
+        id: "commuter-07",
+        name: "Demo Commuter 07",
+        departure: "08:10",
+        pickup: {
+            lat: journey.pickup.lat + 0.030,
+            lng: journey.pickup.lng + 0.025
+        },
+        destination: {
+            lat: journey.destination.lat + 0.020,
+            lng: journey.destination.lng + 0.020
+        },
+        seats: 1,
+        vehicleType: "Car",
+        vehicleModel: "Sedan",
+        vehicleNumber: "MH XX XX 0007",
+        verified: true
+    },
+
+    {
+        id: "commuter-08",
+        name: "Demo Commuter 08",
+        departure: "07:40",
+        pickup: {
+            lat: journey.pickup.lat + 0.004,
+            lng: journey.pickup.lng + 0.006
+        },
+        destination: {
+            lat: journey.destination.lat + 0.004,
+            lng: journey.destination.lng + 0.005
+        },
+        seats: 2,
+        vehicleType: "Car",
+        vehicleModel: "Hatchback",
+        vehicleNumber: "MH XX XX 0008",
+        verified: true
+    }
+
+];
+
+
+// --------------------------------------------------
+// SETTINGS
+// --------------------------------------------------
+
+const MAX_PICKUP_DISTANCE_KM = 5;
+
+const MAX_DESTINATION_DISTANCE_KM = 5;
+
+const MAX_TIME_DIFFERENCE_MIN = 30;
+
+const MAX_EXTRA_TIME_MIN = 10;
+
+const MIN_MATCH_SCORE = 35;
+
+
+// --------------------------------------------------
+// ROUTE COMPATIBILITY
+// --------------------------------------------------
+
+function calculateRouteCompatibility(
+    userSoloDistance,
+    extraDistance
+) {
+
+    if (userSoloDistance <= 0) {
+        return 0;
+    }
+
+    const detourRatio =
+        extraDistance /
+        userSoloDistance;
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            100 * (1 - detourRatio)
+        )
+    );
+}
+
+
+// --------------------------------------------------
+// TIME SCORE
+// --------------------------------------------------
+
+function getTimeScore(
+    userTime,
+    commuterTime
+) {
+
+    const difference =
+        timeDifferenceMinutes(
+            userTime,
+            commuterTime
+        );
+
+    if (
+        difference >
+        MAX_TIME_DIFFERENCE_MIN
+    ) {
+        return {
+            difference,
+            score: 0
+        };
+    }
+
+    const score =
+        calculateTimeScore(
+            difference
+        );
+
+    return {
+        difference,
+        score
+    };
+}
+
+
+// --------------------------------------------------
+// MATCHING
+// --------------------------------------------------
+
+async function calculateMatch(
+    commuter
+) {
+
+    if (
+        commuter.seats <
+        journey.seats
+    ) {
+        return null;
+    }
+
+
+    const pickupDistance =
+        calculateDistanceKm(
+            journey.pickup.lat,
+            journey.pickup.lng,
+            commuter.pickup.lat,
+            commuter.pickup.lng
+        );
+
+
+    const destinationDistance =
+        calculateDistanceKm(
+            journey.destination.lat,
+            journey.destination.lng,
+            commuter.destination.lat,
+            commuter.destination.lng
+        );
+
+
+    if (
+        pickupDistance >
+        MAX_PICKUP_DISTANCE_KM
+    ) {
+        return null;
+    }
+
+
+    if (
+        destinationDistance >
+        MAX_DESTINATION_DISTANCE_KM
+    ) {
+        return null;
+    }
+
+
+    const timeData =
+        getTimeScore(
+            journey.time,
+            commuter.departure
+        );
+
+
+    if (
+        timeData.difference >
+        MAX_TIME_DIFFERENCE_MIN
+    ) {
+        return null;
+    }
+
+
+    const userSoloRoute =
+        await getGeoapifyRoute(
+            [
+                journey.pickup,
+                journey.destination
+            ]
+        );
+
+
+    const commuterPickup = {
+
+        lat:
+            commuter.pickup.lat,
+
+        lng:
+            commuter.pickup.lng
+
+    };
+
+
+    const commuterDestination = {
+
+        lat:
+            commuter.destination.lat,
+
+        lng:
+            commuter.destination.lng
+
+    };
+
+
+    const routeOrders = [
+
+        [
+            journey.pickup,
+            commuterPickup,
+            commuterDestination,
+            journey.destination
+        ],
+
+        [
+            journey.pickup,
+            commuterPickup,
+            journey.destination,
+            commuterDestination
+        ],
+
+        [
+            commuterPickup,
+            journey.pickup,
+            journey.destination,
+            commuterDestination
+        ],
+
+        [
+            journey.pickup,
+            journey.destination,
+            commuterPickup,
+            commuterDestination
+        ]
+
+    ];
+
+
+    let bestRoute = null;
+
+
+    for (
+        const locations
+        of routeOrders
+    ) {
+
+        try {
+
+            const route =
+                await getGeoapifyRoute(
+                    locations
+                );
+
+
+            const sharedDistance =
+                Number(route.distance || 0)
+                / 1000;
+
+
+            const sharedTime =
+                Number(route.time || 0)
+                / 60;
+
+
+            const userSoloDistance =
+                Number(userSoloRoute.distance || 0)
+                / 1000;
+
+
+            const userSoloTime =
+                Number(userSoloRoute.time || 0)
+                / 60;
+
+
+            const extraTime =
+                Math.max(
+                    0,
+                    sharedTime -
+                    userSoloTime
+                );
+
+
+            if (
+                extraTime >
+                MAX_EXTRA_TIME_MIN
+            ) {
+                continue;
+            }
+
+
+            const extraDistance =
+                Math.max(
+                    0,
+                    sharedDistance -
+                    userSoloDistance
+                );
+
+
+            const routeScore =
+                calculateRouteCompatibility(
+                    userSoloDistance,
+                    extraDistance
+                );
+
+
+            if (
+                !bestRoute ||
+                routeScore >
+                bestRoute.routeScore
+            ) {
+
+                bestRoute = {
+
+                    route,
+
+                    sharedDistance,
+
+                    sharedTime,
+
+                    extraTime,
+
+                    extraDistance,
+
+                    routeScore,
+
+                    userSoloDistance,
+
+                    userSoloTime
+
+                };
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Route comparison failed:",
+                error
             );
-
-
-        const matchingStatusText =
-            document.getElementById(
-                "matchingStatusText"
-            );
-
-
-        const matchingSpinner =
-            document.getElementById(
-                "matchingSpinner"
-            );
-
-
-        const resultsSection =
-            document.getElementById(
-                "resultsSection"
-            );
-
-
-        const resultsContainer =
-            document.getElementById(
-                "resultsContainer"
-            );
-
-
-        const noResults =
-            document.getElementById(
-                "noResults"
-            );
-
-
-        const resultCount =
-            document.getElementById(
-                "resultCount"
-            );
-
-
-        const logoutButton =
-            document.getElementById(
-                "logoutButton"
-            );
-
-
-
-        /* =================================================
-           CONFIGURATION
-        ================================================== */
-
-        const MAX_PICKUP_DISTANCE_KM = 5;
-
-        const MAX_DESTINATION_DISTANCE_KM = 5;
-
-        const MAX_TIME_DIFFERENCE_MIN = 30;
-
-        const MAX_EXTRA_TIME_MIN = 10;
-
-        const MIN_MATCH_SCORE = 35;
-
-
-
-        /* =================================================
-           CURRENT JOURNEY
-        ================================================== */
-
-        let currentJourney = null;
-
-        let currentUser = null;
-
-
-
-        /* =================================================
-           ERROR
-        ================================================== */
-
-        function showError(message) {
-
-            pageError.textContent =
-                message;
-
-            pageError.style.display =
-                "block";
 
         }
 
+    }
 
 
-        /* =================================================
-           HTML ESCAPING
-        ================================================== */
+    if (!bestRoute) {
+        return null;
+    }
 
-        function escapeHTML(value) {
 
-            return String(value ?? "")
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
+    const pickupScore =
+        calculateDistanceScore(
+            pickupDistance
+        );
 
-        }
 
+    const destinationScore =
+        calculateDistanceScore(
+            destinationDistance
+        );
 
 
-        /* =================================================
-           HAVERSINE DISTANCE
-        ================================================== */
+    const finalScore = Math.round(
 
-        function calculateDistanceKm(
-            lat1,
-            lon1,
-            lat2,
-            lon2
-        ) {
+        bestRoute.routeScore * 0.50 +
 
-            const earthRadiusKm =
-                6371;
+        pickupScore * 0.20 +
 
+        destinationScore * 0.15 +
 
-            const toRadians =
-                (degrees) =>
-                    degrees *
-                    Math.PI /
-                    180;
+        timeData.score * 0.15
 
+    );
 
-            const dLat =
-                toRadians(
-                    lat2 - lat1
-                );
 
+    if (
+        finalScore <
+        MIN_MATCH_SCORE
+    ) {
+        return null;
+    }
 
-            const dLon =
-                toRadians(
-                    lon2 - lon1
-                );
 
+    const estimatedCost =
+        calculateEstimatedJourneyCost(
+            bestRoute.sharedDistance
+        );
 
-            const a =
-                Math.sin(dLat / 2) ** 2 +
-                Math.cos(
-                    toRadians(lat1)
-                ) *
-                Math.cos(
-                    toRadians(lat2)
-                ) *
-                Math.sin(dLon / 2) ** 2;
 
+    const estimatedCostShare =
+        calculateCostShare(
+            estimatedCost,
+            2
+        );
 
-            const c =
-                2 *
-                Math.atan2(
-                    Math.sqrt(a),
-                    Math.sqrt(1 - a)
-                );
 
+    return {
 
-            return earthRadiusKm * c;
+        commuter,
 
-        }
+        score: finalScore,
 
+        pickupDistance,
 
+        destinationDistance,
 
-        /* =================================================
-           DISTANCE SCORE
-        ================================================== */
+        timeDifference:
+            timeData.difference,
 
-        function calculateDistanceScore(
-            distanceKm,
-            maxDistanceKm
-        ) {
+        timeScore:
+            timeData.score,
 
-            if (
-                distanceKm >=
-                maxDistanceKm
-            ) {
+        routeScore:
+            bestRoute.routeScore,
 
-                return 0;
+        sharedDistance:
+            bestRoute.sharedDistance,
 
-            }
+        sharedTime:
+            bestRoute.sharedTime,
 
+        extraTime:
+            bestRoute.extraTime,
 
-            return Math.max(
-                0,
-                Math.min(
-                    100,
-                    100 *
-                    (
-                        1 -
-                        distanceKm /
-                        maxDistanceKm
-                    )
-                )
-            );
+        estimatedCost,
 
-        }
+        estimatedCostShare,
 
+        route:
+            bestRoute.route,
 
+        routePoints: [
+            journey.pickup,
+            commuterPickup,
+            commuterDestination,
+            journey.destination
+        ]
 
-        /* =================================================
-           TIME DIFFERENCE
-        ================================================== */
+    };
 
-        function calculateTimeDifferenceMinutes(
-            time1,
-            time2
-        ) {
+}
 
-            if (
-                !time1 ||
-                !time2
-            ) {
 
-                return Infinity;
+// --------------------------------------------------
+// RENDER
+// --------------------------------------------------
 
-            }
+async function loadMatches() {
 
+    const matches = [];
 
-            const parts1 =
-                time1.split(":");
 
+    for (
+        const commuter
+        of demoCommuters
+    ) {
 
-            const parts2 =
-                time2.split(":");
+        try {
 
-
-            const minutes1 =
-                Number(parts1[0]) * 60 +
-                Number(parts1[1]);
-
-
-            const minutes2 =
-                Number(parts2[0]) * 60 +
-                Number(parts2[1]);
-
-
-            return Math.abs(
-                minutes1 -
-                minutes2
-            );
-
-        }
-
-
-
-        /* =================================================
-           TIME SCORE
-        ================================================== */
-
-        function calculateTimeScore(
-            differenceMinutes
-        ) {
-
-            if (
-                differenceMinutes >=
-                MAX_TIME_DIFFERENCE_MIN
-            ) {
-
-                return 0;
-
-            }
-
-
-            return Math.max(
-                0,
-                Math.min(
-                    100,
-                    100 *
-                    (
-                        1 -
-                        differenceMinutes /
-                        MAX_TIME_DIFFERENCE_MIN
-                    )
-                )
-            );
-
-        }
-
-
-
-        /* =================================================
-           ROUTE COMPATIBILITY
-        ================================================== */
-
-        function calculateRouteCompatibility(
-            userSoloDistance,
-            extraDistance
-        ) {
-
-            if (
-                !userSoloDistance ||
-                userSoloDistance <= 0
-            ) {
-
-                return 0;
-
-            }
-
-
-            const detourRatio =
-                extraDistance /
-                userSoloDistance;
-
-
-            return Math.max(
-                0,
-                Math.min(
-                    100,
-                    100 *
-                    (
-                        1 -
-                        detourRatio
-                    )
-                )
-            );
-
-        }
-
-
-
-        /* =================================================
-           TEST / DEMO COMMUTERS
-        ================================================== */
-
-        /*
-           These profiles are intentionally labelled as
-           prototype demo data.
-
-           Their locations are based around Nashik-area
-           demo journeys so the matching logic can be
-           demonstrated without pretending they are real
-           Firebase users.
-        */
-
-        const DEMO_COMMUTERS = [
-
-            {
-                id: "demo-01",
-
-                name: "Demo Commuter 01",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "College Road",
-                    lat: 20.0059,
-                    lng: 73.7897
-                },
-
-                destination: {
-                    name: "Gangapur Road",
-                    lat: 20.0012,
-                    lng: 73.7618
-                },
-
-                departureTime: "07:30",
-
-                availableSeats: 2,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Sedan",
-
-                vehicleNumber: "DEMO-01",
-
-                mobile: "9XXXXXXXX1",
-
-                verified: true
-
-            },
-
-
-            {
-                id: "demo-02",
-
-                name: "Demo Commuter 02",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "Canada Corner",
-                    lat: 20.0078,
-                    lng: 73.7680
-                },
-
-                destination: {
-                    name: "Gangapur Road",
-                    lat: 20.0012,
-                    lng: 73.7618
-                },
-
-                departureTime: "07:40",
-
-                availableSeats: 2,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Hatchback",
-
-                vehicleNumber: "DEMO-02",
-
-                mobile: "9XXXXXXXX2",
-
-                verified: true
-
-            },
-
-
-            {
-                id: "demo-03",
-
-                name: "Demo Commuter 03",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "College Road",
-                    lat: 20.0059,
-                    lng: 73.7897
-                },
-
-                destination: {
-                    name: "Govind Nagar",
-                    lat: 19.9890,
-                    lng: 73.7805
-                },
-
-                departureTime: "07:35",
-
-                availableSeats: 3,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Compact",
-
-                vehicleNumber: "DEMO-03",
-
-                mobile: "9XXXXXXXX3",
-
-                verified: true
-
-            },
-
-
-            {
-                id: "demo-04",
-
-                name: "Demo Commuter 04",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "Indira Nagar",
-                    lat: 19.9718,
-                    lng: 73.8301
-                },
-
-                destination: {
-                    name: "Panchavati",
-                    lat: 20.0110,
-                    lng: 73.7950
-                },
-
-                departureTime: "08:00",
-
-                availableSeats: 1,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Sedan",
-
-                vehicleNumber: "DEMO-04",
-
-                mobile: "9XXXXXXXX4",
-
-                verified: true
-
-            },
-
-
-            {
-                id: "demo-05",
-
-                name: "Demo Commuter 05",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "Panchavati",
-                    lat: 20.0110,
-                    lng: 73.7950
-                },
-
-                destination: {
-                    name: "Nashik Road",
-                    lat: 19.9515,
-                    lng: 73.8348
-                },
-
-                departureTime: "07:25",
-
-                availableSeats: 2,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo SUV",
-
-                vehicleNumber: "DEMO-05",
-
-                mobile: "9XXXXXXXX5",
-
-                verified: false
-
-            },
-
-
-            {
-                id: "demo-06",
-
-                name: "Demo Commuter 06",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "College Road",
-                    lat: 20.0050,
-                    lng: 73.7860
-                },
-
-                destination: {
-                    name: "Govind Nagar",
-                    lat: 19.9890,
-                    lng: 73.7805
-                },
-
-                departureTime: "07:45",
-
-                availableSeats: 2,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Hatchback",
-
-                vehicleNumber: "DEMO-06",
-
-                mobile: "9XXXXXXXX6",
-
-                verified: true
-
-            },
-
-
-            {
-                id: "demo-07",
-
-                name: "Demo Commuter 07",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "CIDCO",
-                    lat: 19.9630,
-                    lng: 73.8065
-                },
-
-                destination: {
-                    name: "College Road",
-                    lat: 20.0059,
-                    lng: 73.7897
-                },
-
-                departureTime: "08:20",
-
-                availableSeats: 2,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Sedan",
-
-                vehicleNumber: "DEMO-07",
-
-                mobile: "9XXXXXXXX7",
-
-                verified: true
-
-            },
-
-
-            {
-                id: "demo-08",
-
-                name: "Demo Commuter 08",
-
-                initials: "DC",
-
-                pickup: {
-                    name: "College Road",
-                    lat: 20.0045,
-                    lng: 73.7880
-                },
-
-                destination: {
-                    name: "Gangapur Road",
-                    lat: 20.0020,
-                    lng: 73.7630
-                },
-
-                departureTime: "07:50",
-
-                availableSeats: 2,
-
-                vehicleType: "Car",
-
-                vehicleModel: "Demo Compact",
-
-                vehicleNumber: "DEMO-08",
-
-                mobile: "9XXXXXXXX8",
-
-                verified: true
-
-            }
-
-        ];
-
-
-
-        /* =================================================
-           GENERATE COMBINED ROUTE
-        ================================================== */
-
-        async function calculateBestSharedRoute(
-            user,
-            commuter
-        ) {
-
-            const orders = [
-
-                [
-                    user.pickup,
-                    commuter.pickup,
-                    commuter.destination,
-                    user.destination
-                ],
-
-                [
-                    user.pickup,
-                    commuter.pickup,
-                    user.destination,
-                    commuter.destination
-                ],
-
-                [
-                    commuter.pickup,
-                    user.pickup,
-                    user.destination,
-                    commuter.destination
-                ],
-
-                [
-                    commuter.pickup,
-                    user.pickup,
-                    commuter.destination,
-                    user.destination
-                ]
-
-            ];
-
-
-            let bestRoute =
-                null;
-
-
-            for (
-                const order
-                of orders
-            ) {
-
-                try {
-
-                    const route =
-                        await getGeoapifyRoute(
-                            order
-                        );
-
-
-                    const sharedDistance =
-                        Number(
-                            route.distance
-                        ) / 1000;
-
-
-                    const sharedTime =
-                        Number(
-                            route.time
-                        ) / 60;
-
-
-                    const userSoloDistance =
-                        Number(
-                            user.route.distanceKm
-                        );
-
-
-                    const userSoloTime =
-                        Number(
-                            user.route.timeMinutes
-                        );
-
-
-                    const extraTime =
-                        Math.max(
-                            0,
-                            sharedTime -
-                            userSoloTime
-                        );
-
-
-                    /*
-                       Do not accept a route that adds
-                       too much travel time.
-                    */
-
-                    if (
-                        extraTime >
-                        MAX_EXTRA_TIME_MIN
-                    ) {
-
-                        continue;
-
-                    }
-
-
-                    const extraDistance =
-                        Math.max(
-                            0,
-                            sharedDistance -
-                            userSoloDistance
-                        );
-
-
-                    const routeScore =
-                        calculateRouteCompatibility(
-                            userSoloDistance,
-                            extraDistance
-                        );
-
-
-                    if (
-                        !bestRoute ||
-                        routeScore >
-                        bestRoute.routeScore
-                    ) {
-
-                        bestRoute = {
-
-                            route: route,
-
-                            order: order,
-
-                            sharedDistance:
-                                sharedDistance,
-
-                            sharedTime:
-                                sharedTime,
-
-                            extraDistance:
-                                extraDistance,
-
-                            extraTime:
-                                extraTime,
-
-                            routeScore:
-                                routeScore
-
-                        };
-
-                    }
-
-                } catch (error) {
-
-                    console.warn(
-                        "Shared route attempt failed:",
-                        error
-                    );
-
-                }
-
-            }
-
-
-            return bestRoute;
-
-        }
-
-
-
-        /* =================================================
-           CALCULATE MATCH
-        ================================================== */
-
-        async function calculateMatch(
-            user,
-            commuter
-        ) {
-
-            if (
-                !commuter ||
-                !commuter.pickup ||
-                !commuter.destination
-            ) {
-
-                return null;
-
-            }
-
-
-            /* ---------------------------------------------
-               SEATS
-            ---------------------------------------------- */
-
-            if (
-                Number(
-                    commuter.availableSeats
-                ) <
-                Number(
-                    user.seats
-                )
-            ) {
-
-                return null;
-
-            }
-
-
-            /* ---------------------------------------------
-               PICKUP DISTANCE
-            ---------------------------------------------- */
-
-            const pickupDistance =
-                calculateDistanceKm(
-                    user.pickup.lat,
-                    user.pickup.lng,
-                    commuter.pickup.lat,
-                    commuter.pickup.lng
-                );
-
-
-            if (
-                pickupDistance >
-                MAX_PICKUP_DISTANCE_KM
-            ) {
-
-                return null;
-
-            }
-
-
-            const pickupScore =
-                calculateDistanceScore(
-                    pickupDistance,
-                    MAX_PICKUP_DISTANCE_KM
-                );
-
-
-            /* ---------------------------------------------
-               DESTINATION DISTANCE
-            ---------------------------------------------- */
-
-            const destinationDistance =
-                calculateDistanceKm(
-                    user.destination.lat,
-                    user.destination.lng,
-                    commuter.destination.lat,
-                    commuter.destination.lng
-                );
-
-
-            if (
-                destinationDistance >
-                MAX_DESTINATION_DISTANCE_KM
-            ) {
-
-                return null;
-
-            }
-
-
-            const destinationScore =
-                calculateDistanceScore(
-                    destinationDistance,
-                    MAX_DESTINATION_DISTANCE_KM
-                );
-
-
-            /* ---------------------------------------------
-               TIME
-            ---------------------------------------------- */
-
-            const timeDifference =
-                calculateTimeDifferenceMinutes(
-                    user.time,
-                    commuter.departureTime
-                );
-
-
-            if (
-                timeDifference >
-                MAX_TIME_DIFFERENCE_MIN
-            ) {
-
-                return null;
-
-            }
-
-
-            const timeScore =
-                calculateTimeScore(
-                    timeDifference
-                );
-
-
-            /* ---------------------------------------------
-               SHARED ROUTE
-            ---------------------------------------------- */
-
-            const shared =
-                await calculateBestSharedRoute(
-                    user,
+            const result =
+                await calculateMatch(
                     commuter
                 );
 
 
-            if (!shared) {
-
-                return null;
-
+            if (result) {
+                matches.push(result);
             }
 
+        } catch (error) {
 
-            /* ---------------------------------------------
-               FINAL SCORE
-            ---------------------------------------------- */
-
-            const finalScore =
-                (
-                    shared.routeScore * 0.50
-                ) +
-                (
-                    pickupScore * 0.20
-                ) +
-                (
-                    destinationScore * 0.15
-                ) +
-                (
-                    timeScore * 0.15
-                );
-
-
-            if (
-                finalScore <
-                MIN_MATCH_SCORE
-            ) {
-
-                return null;
-
-            }
-
-
-            /* ---------------------------------------------
-               ESTIMATED COST SHARE
-            ---------------------------------------------- */
-
-            const estimatedJourneyCost =
-                Number(
-                    user.estimatedJourneyCost
-                ) ||
-                Math.max(
-                    30,
-                    Math.round(
-                        user.route.distanceKm * 8 + 15
-                    )
-                );
-
-
-            const participants =
-                2;
-
-
-            const estimatedCostShare =
-                Math.ceil(
-                    estimatedJourneyCost /
-                    participants
-                );
-
-
-            return {
-
-                ...commuter,
-
-                matchScore:
-                    Math.round(
-                        finalScore
-                    ),
-
-                routeScore:
-                    Math.round(
-                        shared.routeScore
-                    ),
-
-                pickupScore:
-                    Math.round(
-                        pickupScore
-                    ),
-
-                destinationScore:
-                    Math.round(
-                        destinationScore
-                    ),
-
-                timeScore:
-                    Math.round(
-                        timeScore
-                    ),
-
-                pickupDistance:
-                    Number(
-                        pickupDistance.toFixed(2)
-                    ),
-
-                destinationDistance:
-                    Number(
-                        destinationDistance.toFixed(2)
-                    ),
-
-                timeDifference:
-                    timeDifference,
-
-                sharedDistance:
-                    Number(
-                        shared.sharedDistance.toFixed(2)
-                    ),
-
-                sharedTime:
-                    Number(
-                        shared.sharedTime.toFixed(1)
-                    ),
-
-                extraDistance:
-                    Number(
-                        shared.extraDistance.toFixed(2)
-                    ),
-
-                extraTime:
-                    Number(
-                        shared.extraTime.toFixed(1)
-                    ),
-
-                sharedRoute:
-                    shared.order,
-
-                sharedRouteGeoJSON:
-                    shared.route.geojson,
-
-                estimatedJourneyCost:
-                    estimatedJourneyCost,
-
-                estimatedCostShare:
-                    estimatedCostShare
-
-            };
+            console.error(error);
 
         }
 
+    }
 
 
-        /* =================================================
-           RENDER RESULT CARD
-        ================================================== */
+    matches.sort(
+        (a, b) =>
+            b.score - a.score
+    );
 
-        function renderMatchCard(
-            match,
-            index
-        ) {
+
+    const container =
+        document.getElementById(
+            "resultsContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    document.getElementById(
+        "resultCount"
+    ).textContent =
+        `${matches.length} matches`;
+
+
+    matches.forEach(
+        match => {
 
             const card =
-                document.createElement(
-                    "article"
-                );
+                document.createElement("article");
 
 
             card.className =
                 "match-card";
 
 
-            card.innerHTML =
-                `
+            card.innerHTML = `
 
-                <div class="match-rank">
-                    ${index + 1}
+                <div class="match-avatar">
+                    ${match.commuter.name
+                        .replace("Demo Commuter ", "")
+                    }
                 </div>
-
 
                 <div class="match-main">
 
+                    <div class="match-title-row">
 
-                    <div class="match-person">
+                        <div>
 
+                            <h3>
+                                ${match.commuter.name}
+                            </h3>
 
-                        <div class="match-avatar">
-                            ${escapeHTML(
-                                match.initials
-                            )}
-                        </div>
-
-
-                        <div class="match-person-info">
-
-                            <div class="match-name-row">
-
-                                <strong>
-                                    ${escapeHTML(
-                                        match.name
-                                    )}
-                                </strong>
-
-                                ${
-                                    match.verified
-                                        ? `
-                                        <span class="verified-badge">
-                                            ✓ Verified
-                                        </span>
-                                        `
-                                        : ""
-                                }
-
-                            </div>
-
-
-                            <span>
-                                Demo commuter • Prototype data
+                            <span class="verified-small">
+                                ✓ Verified user
                             </span>
 
                         </div>
 
                     </div>
-
-
 
                     <div class="match-route">
-
-
-                        <div class="match-route-point">
-
-                            <span class="mini-route-dot pickup">
-                            </span>
-
-                            <div>
-
-                                <small>
-                                    Pickup
-                                </small>
-
-                                <strong>
-                                    ${escapeHTML(
-                                        match.pickup.name
-                                    )}
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="match-route-line"></div>
-
-
-                        <div class="match-route-point">
-
-                            <span class="mini-route-dot destination">
-                            </span>
-
-                            <div>
-
-                                <small>
-                                    Destination
-                                </small>
-
-                                <strong>
-                                    ${escapeHTML(
-                                        match.destination.name
-                                    )}
-                                </strong>
-
-                            </div>
-
-                        </div>
-
+                        ${journey.pickup.name}
+                        →
+                        ${journey.destination.name}
                     </div>
 
-
-
-                    <div class="match-details-row">
-
+                    <div class="match-meta">
 
                         <span>
-                            🕐
-                            ${escapeHTML(
-                                formatTime(
-                                    match.departureTime
-                                )
-                            )}
+                            ${match.commuter.departure}
                         </span>
 
-
                         <span>
-                            📍
-                            ${match.pickupDistance.toFixed(1)}
-                            km pickup
+                            ${match.sharedDistance.toFixed(1)} km
                         </span>
 
-
                         <span>
-                            💺
-                            ${match.availableSeats}
-                            seats available
+                            ${Math.round(match.sharedTime)} min
                         </span>
 
-
                         <span>
-                            🚗
-                            ${escapeHTML(
-                                match.vehicleModel
-                            )}
+                            ${match.commuter.seats} seats
                         </span>
 
                     </div>
 
+                    <div class="cost-share-small">
 
-
-                    <div class="match-cost-row">
-
-                        <span>
-                            Estimated cost share
-                        </span>
-
+                        Estimated Cost Share:
                         <strong>
                             ₹${match.estimatedCostShare}
                         </strong>
 
-                        <small>
-                            Estimate
-                        </small>
-
                     </div>
-
 
                 </div>
 
-
-
                 <div class="match-score-box">
 
-                    <span>
-                        MATCH
-                    </span>
-
                     <strong>
-                        ${match.matchScore}%
+                        ${match.score}%
                     </strong>
 
-                    <small>
-                        route compatible
-                    </small>
-
+                    <span>
+                        Match
+                    </span>
 
                     <button
-                        type="button"
-                        class="btn btn-primary match-view-button"
-                        data-match-id="${escapeHTML(
-                            match.id
-                        )}"
+                        class="primary-btn small-btn"
+                        data-id="${match.commuter.id}"
                     >
                         View Match
                     </button>
 
                 </div>
-
-                `;
-
-
-            const button =
-                card.querySelector(
-                    ".match-view-button"
-                );
+            `;
 
 
-            button.addEventListener(
-                "click",
-                () => {
+            card
+                .querySelector("button")
+                .addEventListener(
+                    "click",
+                    () => {
 
-                    openMatch(
-                        match
-                    );
-
-                }
-            );
-
-
-            return card;
-
-        }
-
-
-
-        /* =================================================
-           FORMAT TIME
-        ================================================== */
-
-        function formatTime(
-            time
-        ) {
-
-            if (!time) {
-                return "—";
-            }
-
-
-            const parts =
-                time.split(":");
-
-
-            let hour =
-                Number(
-                    parts[0]
-                );
-
-
-            const minutes =
-                parts[1] ||
-                "00";
-
-
-            const period =
-                hour >= 12
-                    ? "PM"
-                    : "AM";
-
-
-            hour =
-                hour % 12 || 12;
-
-
-            return `${hour}:${minutes} ${period}`;
-
-        }
-
-
-
-        /* =================================================
-           OPEN MATCH
-        ================================================== */
-
-        function openMatch(
-            match
-        ) {
-
-            /*
-               Store the selected match for
-               match-details.html.
-            */
-
-            sessionStorage.setItem(
-                "smartCommuteSelectedMatch",
-                JSON.stringify(match)
-            );
-
-
-            window.location.href =
-                "match-details.html";
-
-        }
-
-
-
-        /* =================================================
-           RUN MATCHING
-        ================================================== */
-
-        async function runMatching() {
-
-            try {
-
-                currentUser =
-                    await protectPage();
-
-
-                if (!currentUser) {
-                    return;
-                }
-
-
-                const savedJourney =
-                    sessionStorage.getItem(
-                        "smartCommuteCurrentJourney"
-                    );
-
-
-                if (!savedJourney) {
-
-                    throw new Error(
-                        "Your journey details were not found. Please start again."
-                    );
-
-                }
-
-
-                try {
-
-                    currentJourney =
-                        JSON.parse(
-                            savedJourney
+                        sessionStorage.setItem(
+                            "smartCommuteSelectedMatch",
+                            JSON.stringify(match)
                         );
 
-                } catch (error) {
 
-                    throw new Error(
-                        "Your journey data is invalid. Please enter the journey again."
-                    );
-
-                }
-
-
-                if (
-                    !currentJourney.pickup ||
-                    !currentJourney.destination ||
-                    !currentJourney.route
-                ) {
-
-                    throw new Error(
-                        "Route information is incomplete. Please generate your route again."
-                    );
-
-                }
-
-
-                /* -----------------------------------------
-                   USER SUMMARY
-                ------------------------------------------ */
-
-                userPickup.textContent =
-                    currentJourney.pickup.name;
-
-
-                userDestination.textContent =
-                    currentJourney.destination.name;
-
-
-                userDistance.textContent =
-                    `${currentJourney.route.distanceKm.toFixed(1)} km`;
-
-
-                userTime.textContent =
-                    `${Math.round(
-                        currentJourney.route.timeMinutes
-                    )} min`;
-
-
-                userDeparture.textContent =
-                    formatTime(
-                        currentJourney.time
-                    );
-
-
-                /* -----------------------------------------
-                   STATUS
-                ------------------------------------------ */
-
-                matchingStatusTitle.textContent =
-                    "Comparing journeys...";
-
-
-                matchingStatusText.textContent =
-                    "Checking route, location and time compatibility.";
-
-
-                const matches = [];
-
-
-                /*
-                   Small delay makes the matching process
-                   visually understandable in the prototype.
-                */
-
-                await new Promise(
-                    (resolve) =>
-                        setTimeout(
-                            resolve,
-                            500
-                        )
-                );
-
-
-                for (
-                    const commuter
-                    of DEMO_COMMUTERS
-                ) {
-
-                    /*
-                       Don't match the same Firebase user
-                       if demo data happens to contain a
-                       matching identifier.
-                    */
-
-                    if (
-                        commuter.id ===
-                        currentUser.uid
-                    ) {
-
-                        continue;
-
-                    }
-
-
-                    try {
-
-                        const match =
-                            await calculateMatch(
-                                currentJourney,
-                                commuter
-                            );
-
-
-                        if (match) {
-
-                            matches.push(
-                                match
-                            );
-
-                        }
-
-                    } catch (error) {
-
-                        console.warn(
-                            `Could not evaluate ${commuter.id}:`,
-                            error
-                        );
-
-                    }
-
-                }
-
-
-                /* -----------------------------------------
-                   SORT
-                ------------------------------------------ */
-
-                matches.sort(
-                    (
-                        a,
-                        b
-                    ) =>
-                        b.matchScore -
-                        a.matchScore
-                );
-
-
-                /* -----------------------------------------
-                   DISPLAY
-                ------------------------------------------ */
-
-                matchingSpinner.style.display =
-                    "none";
-
-
-                matchingStatusTitle.textContent =
-                    "Matching complete";
-
-
-                matchingStatusText.textContent =
-                    `${matches.length} suitable ${
-                        matches.length === 1
-                            ? "commuter"
-                            : "commuters"
-                    } found.`;
-
-
-                resultsSection.style.display =
-                    "block";
-
-
-                resultCount.textContent =
-                    `${matches.length} ${
-                        matches.length === 1
-                            ? "match"
-                            : "matches"
-                    }`;
-
-
-                resultsContainer.innerHTML =
-                    "";
-
-
-                if (!matches.length) {
-
-                    noResults.style.display =
-                        "block";
-
-                    return;
-
-                }
-
-
-                noResults.style.display =
-                    "none";
-
-
-                matches.forEach(
-                    (
-                        match,
-                        index
-                    ) => {
-
-                        resultsContainer.appendChild(
-                            renderMatchCard(
-                                match,
-                                index
-                            )
-                        );
+                        window.location.href =
+                            "match-details.html";
 
                     }
                 );
 
 
-                /*
-                   Store the matches so the next page
-                   can access them if needed.
-                */
-
-                sessionStorage.setItem(
-                    "smartCommuteMatchResults",
-                    JSON.stringify(
-                        matches
-                    )
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Matching error:",
-                    error
-                );
-
-
-                matchingSpinner.style.display =
-                    "none";
-
-
-                matchingStatusTitle.textContent =
-                    "Matching could not be completed";
-
-
-                matchingStatusText.textContent =
-                    "Please check your journey details and try again.";
-
-
-                showError(
-                    error.message ||
-                    "Unable to calculate matches."
-                );
-
-            }
+            container.appendChild(card);
 
         }
+    );
 
 
-
-        /* =================================================
-           LOGOUT
-        ================================================== */
-
-        logoutButton.addEventListener(
-            "click",
-            async () => {
-
-                try {
-
-                    logoutButton.disabled =
-                        true;
+    document.getElementById(
+        "loading"
+    ).classList.add("hidden");
 
 
-                    logoutButton.textContent =
-                        "Logging out...";
+    document.getElementById(
+        "resultsSection"
+    ).classList.remove("hidden");
+
+}
 
 
-                    await logoutUser();
+setTimeout(
+    loadMatches,
+    700
+);
 
-
-                    sessionStorage.removeItem(
-                        "smartCommuteCurrentJourney"
-                    );
-
-
-                    sessionStorage.removeItem(
-                        "smartCommuteSelectedMatch"
-                    );
-
-
-                    sessionStorage.removeItem(
-                        "smartCommuteMatchResults"
-                    );
-
-
-                    window.location.replace(
-                        "index.html"
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
-
-
-                    logoutButton.disabled =
-                        false;
-
-
-                    logoutButton.textContent =
-                        "Logout";
-
-
-                    showError(
-                        "Unable to log out. Please try again."
-                    );
-
-                }
-
-            }
-        );
-
-
-
-        /* =================================================
-           START
-        ================================================== */
-
-        runMatching();
-
-    </script>
+</script>
 
 </body>
-
 </html>
