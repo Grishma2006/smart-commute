@@ -3,783 +3,630 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>Login | SmartCommute</title>
 
-    <title>Login | SmartCommute</title>
+<style>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f6f8f6;
+    color:#14221c;
+}
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+.navbar{
+    height:78px;
+    background:white;
+    border-bottom:1px solid #e2e8e4;
+    display:flex;
+    align-items:center;
+}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+.nav-inner{
+    width:min(1180px,92%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#14221c;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:#087a52;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+}
+
+.brand h2{
+    font-size:19px;
+}
+
+.brand p{
+    font-size:11px;
+    color:#748078;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#17231e;
+    font-size:14px;
+}
+
+.nav-btn{
+    background:#087a52;
+    color:white!important;
+    padding:11px 19px;
+    border-radius:10px;
+    font-weight:700;
+}
+
+.page{
+    min-height:calc(100vh - 78px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:35px 20px;
+    background:
+        radial-gradient(circle at 50% 10%,#e6f5ed,transparent 38%),
+        #f6f8f6;
+}
+
+.login-card{
+    width:min(430px,100%);
+    background:white;
+    border:1px solid #e0e7e3;
+    border-radius:22px;
+    padding:34px;
+    box-shadow:0 20px 55px rgba(18,52,40,.09);
+}
+
+.back{
+    color:#68756e;
+    font-size:13px;
+    text-decoration:none;
+}
+
+.icon{
+    width:53px;
+    height:53px;
+    border-radius:15px;
+    background:#e5f4ed;
+    color:#087a52;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    margin:22px auto 17px;
+}
+
+h1{
+    text-align:center;
+    font-size:28px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#6c7872;
+    font-size:13px;
+    margin:5px 0 27px;
+}
+
+.form-group{
+    margin-bottom:17px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.input{
+    position:relative;
+}
+
+.input span{
+    position:absolute;
+    left:13px;
+    top:13px;
+}
+
+input{
+    width:100%;
+    height:47px;
+    border:1px solid #d8e1dc;
+    border-radius:10px;
+    padding:0 13px 0 39px;
+    outline:none;
+    font-size:13px;
+}
+
+input:focus{
+    border-color:#087a52;
+    box-shadow:0 0 0 3px rgba(8,122,82,.08);
+}
+
+.password{
+    position:relative;
+}
+
+.password button{
+    position:absolute;
+    right:12px;
+    top:11px;
+    border:0;
+    background:none;
+    cursor:pointer;
+}
+
+.password input{
+    padding-right:42px;
+}
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:11px;
+    color:#69766f;
+    margin:5px 0 18px;
+}
+
+.remember{
+    display:flex;
+    gap:6px;
+    align-items:center;
+}
+
+.remember input{
+    width:14px;
+    height:14px;
+    padding:0;
+}
+
+.options a{
+    color:#087a52;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.login-btn{
+    width:100%;
+    height:47px;
+    border:0;
+    border-radius:10px;
+    background:#087a52;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    background:#075d40;
+}
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:21px 0;
+    color:#9aa39f;
+    font-size:11px;
+}
+
+.divider::before,
+.divider::after{
+    content:"";
+    height:1px;
+    background:#e3e8e5;
+    flex:1;
+}
+
+.google{
+    width:100%;
+    height:45px;
+    border:1px solid #dce3df;
+    background:white;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.signup{
+    text-align:center;
+    margin-top:21px;
+    font-size:12px;
+    color:#69766f;
+}
+
+.signup a{
+    color:#087a52;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.message{
+    display:none;
+    padding:11px;
+    border-radius:9px;
+    font-size:12px;
+    margin-bottom:15px;
+}
+
+.error{
+    display:block;
+    background:#fff0ef;
+    color:#a33b36;
+}
+
+.success{
+    display:block;
+    background:#e9f7f0;
+    color:#087a52;
+}
+
+.security{
+    margin-top:20px;
+    padding:12px;
+    background:#f1f7f4;
+    color:#587068;
+    border-radius:10px;
+    font-size:10px;
+    text-align:center;
+}
+
+@media(max-width:550px){
+
+    .navbar{
+        height:auto;
+        padding:11px 0;
+    }
+
+    .nav-inner{
+        flex-wrap:wrap;
+    }
+
+    .nav-links{
+        width:100%;
+        justify-content:flex-end;
+    }
+
+    .login-card{
+        padding:25px 20px;
+    }
+
+}
+
+</style>
 
 </head>
 
 
-<body class="auth-page">
+<body>
 
 
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+<header class="navbar">
 
-    <header class="navbar">
+<div class="nav-inner">
 
-        <a
-            href="index.html"
-            class="brand"
-        >
+<a href="index.html" class="logo-area">
 
-            <div class="brand-icon">
-                SC
-            </div>
+<div class="logo">SC</div>
 
-            <div class="brand-text">
+<div class="brand">
 
-                <strong>
-                    SmartCommute
-                </strong>
+<h2>SmartCommute</h2>
 
-                <span>
-                    Hyperlocal Travel Matching
-                </span>
+<p>Hyperlocal Travel Matching</p>
 
-            </div>
+</div>
 
-        </a>
+</a>
 
 
-        <nav class="nav-links">
+<div class="nav-links">
 
-            <a href="index.html">
-                Home
-            </a>
+<a href="index.html">
+Home
+</a>
 
-            <a
-                href="register.html"
-                class="nav-register"
-            >
-                Register
-            </a>
+<a href="register.html" class="nav-btn">
+Get Started
+</a>
 
-        </nav>
+</div>
 
-    </header>
+</div>
 
+</header>
 
 
-    <!-- =====================================================
-         LOGIN AREA
-    ====================================================== -->
+<main class="page">
 
-    <main class="auth-main">
+<div class="login-card">
 
-        <section class="auth-container">
+<a href="index.html" class="back">
+← Back to Home
+</a>
 
 
-            <!-- =================================================
-                 LEFT INFORMATION PANEL
-            ================================================== -->
+<div class="icon">
+🔐
+</div>
 
-            <div class="auth-info">
 
-                <div class="auth-info-badge">
-                    WELCOME BACK
-                </div>
+<h1>
+Welcome back
+</h1>
 
+<p class="subtitle">
+Login to your SmartCommute account
+</p>
 
-                <h1>
-                    Your daily commute,
-                    <span>made smarter.</span>
-                </h1>
 
+<div id="message" class="message"></div>
 
-                <p>
-                    Log in to find commuters travelling on
-                    similar routes and at similar times.
-                </p>
 
+<form id="loginForm">
 
 
-                <div class="auth-benefits">
+<div class="form-group">
 
+<label>
+Email Address
+</label>
 
-                    <div class="auth-benefit">
+<div class="input">
 
-                        <div class="benefit-icon">
-                            📍
-                        </div>
+<span>✉️</span>
 
-                        <div>
+<input
+type="email"
+id="email"
+placeholder="Enter your email address"
+required
+>
 
-                            <strong>
-                                Find a Ride
-                            </strong>
+</div>
 
-                            <span>
-                                Search for suitable nearby commuters.
-                            </span>
+</div>
 
-                        </div>
 
-                    </div>
+<div class="form-group">
 
+<label>
+Password
+</label>
 
+<div class="password">
 
-                    <div class="auth-benefit">
+<input
+type="password"
+id="password"
+placeholder="Enter your password"
+required
+>
 
-                        <div class="benefit-icon">
-                            🚗
-                        </div>
+<button
+type="button"
+onclick="togglePassword()">
 
-                        <div>
+👁
 
-                            <strong>
-                                Offer a Ride
-                            </strong>
+</button>
 
-                            <span>
-                                Create your journey and receive requests.
-                            </span>
+</div>
 
-                        </div>
+</div>
 
-                    </div>
 
+<div class="options">
 
+<label class="remember">
 
-                    <div class="auth-benefit">
+<input type="checkbox">
 
-                        <div class="benefit-icon">
-                            🗺️
-                        </div>
+Remember me
 
-                        <div>
+</label>
 
-                            <strong>
-                                Compare Routes
-                            </strong>
+<a href="#">
+Forgot password?
+</a>
 
-                            <span>
-                                Matching considers route and timing.
-                            </span>
+</div>
 
-                        </div>
 
-                    </div>
+<button
+type="submit"
+id="loginBtn"
+class="login-btn">
 
-                </div>
+Login
 
-            </div>
+</button>
 
 
+</form>
 
-            <!-- =================================================
-                 LOGIN CARD
-            ================================================== -->
 
-            <div class="auth-card">
+<div class="divider">
+OR
+</div>
 
 
-                <div class="auth-card-header">
+<button
+class="google"
+onclick="alert('Google Sign-In can be enabled later.')">
 
-                    <div class="auth-card-icon">
-                        🔐
-                    </div>
+🌐 &nbsp; Continue with Google
 
+</button>
 
-                    <h2>
-                        Welcome back
-                    </h2>
 
+<div class="signup">
 
-                    <p>
-                        Log in to continue to SmartCommute.
-                    </p>
+Don't have an account?
 
-                </div>
+<a href="register.html">
+Create account
+</a>
 
+</div>
 
 
-                <!-- =================================================
-                     ERROR MESSAGE
-                ================================================== -->
+<div class="security">
 
-                <div
-                    id="loginError"
-                    class="form-message error-message"
-                    style="display:none;"
-                ></div>
+🔒 Your account is protected using Firebase Authentication.
 
+</div>
 
 
-                <!-- =================================================
-                     SUCCESS MESSAGE
-                ================================================== -->
+</div>
 
-                <div
-                    id="loginSuccess"
-                    class="form-message success-message"
-                    style="display:none;"
-                ></div>
+</main>
 
 
+<script type="module">
 
-                <!-- =================================================
-                     LOGIN FORM
-                ================================================== -->
+import { loginUser } from "./firebase-auth.js";
 
-                <form
-                    id="loginForm"
-                    novalidate
-                >
 
+const form =
+document.getElementById("loginForm");
 
-                    <!-- EMAIL -->
+const button =
+document.getElementById("loginBtn");
 
-                    <div class="form-group">
+const message =
+document.getElementById("message");
 
-                        <label for="email">
-                            Email Address
-                        </label>
 
+function showMessage(text,type){
 
-                        <div class="input-wrapper">
+message.textContent=text;
 
-                            <span class="input-icon">
-                                ✉️
-                            </span>
+message.className="message "+type;
 
+}
 
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Enter your email address"
-                                autocomplete="email"
-                                required
-                            >
 
-                        </div>
+form.addEventListener("submit",async function(e){
 
-                    </div>
+e.preventDefault();
 
 
+const email =
+document.getElementById("email").value.trim();
 
-                    <!-- PASSWORD -->
+const password =
+document.getElementById("password").value;
 
-                    <div class="form-group">
 
-                        <label for="password">
-                            Password
-                        </label>
+button.disabled=true;
 
+button.textContent="Logging in...";
 
-                        <div class="input-wrapper">
 
-                            <span class="input-icon">
-                                🔒
-                            </span>
+try{
 
+await loginUser(email,password);
 
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
-                                required
-                            >
 
+showMessage(
+"Login successful. Redirecting...",
+"success"
+);
 
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="togglePassword"
-                                aria-label="Show password"
-                            >
-                                Show
-                            </button>
 
-                        </div>
+setTimeout(()=>{
 
-                    </div>
+window.location.href="dashboard.html";
 
+},700);
 
 
-                    <!-- REMEMBER / INFO -->
+}catch(error){
 
-                    <div class="login-info-row">
+console.error(error);
 
-                        <span>
-                            🔒 Secure Firebase authentication
-                        </span>
 
-                    </div>
+let text="Invalid email or password.";
 
 
+if(error.code==="auth/user-not-found"){
 
-                    <!-- SUBMIT BUTTON -->
+text="No account found with this email.";
 
-                    <button
-                        type="submit"
-                        id="loginButton"
-                        class="btn btn-primary btn-full"
-                    >
+}
 
-                        <span id="loginButtonText">
-                            Login
-                        </span>
+if(error.code==="auth/wrong-password"){
 
+text="Incorrect password.";
 
-                        <span
-                            id="loginLoader"
-                            class="button-loader"
-                            style="display:none;"
-                        >
-                            Logging in...
-                        </span>
+}
 
-                    </button>
+if(error.code==="auth/invalid-credential"){
 
-                </form>
+text="Incorrect email or password.";
 
+}
 
 
-                <!-- =================================================
-                     REGISTER LINK
-                ================================================== -->
+showMessage(text,"error");
 
-                <div class="auth-switch">
 
-                    <span>
-                        Don't have an account?
-                    </span>
+button.disabled=false;
 
+button.textContent="Login";
 
-                    <a href="register.html">
-                        Create an account
-                    </a>
+}
 
-                </div>
+});
 
-            </div>
 
-        </section>
+window.togglePassword=function(){
 
-    </main>
+const input =
+document.getElementById("password");
 
+input.type =
+input.type==="password"
+? "text"
+: "password";
 
+};
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+</script>
 
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <p class="footer-copy">
-                SmartCommute • Hyperlocal Commute Matching Prototype
-            </p>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- =====================================================
-         FIREBASE LOGIN SCRIPT
-    ====================================================== -->
-
-    <script type="module">
-
-        import {
-            loginUser
-        } from "./firebase-auth.js";
-
-
-
-        /* =================================================
-           GET ELEMENTS
-        ================================================== */
-
-        const loginForm =
-            document.getElementById("loginForm");
-
-
-        const emailInput =
-            document.getElementById("email");
-
-
-        const passwordInput =
-            document.getElementById("password");
-
-
-        const loginButton =
-            document.getElementById("loginButton");
-
-
-        const loginButtonText =
-            document.getElementById("loginButtonText");
-
-
-        const loginLoader =
-            document.getElementById("loginLoader");
-
-
-        const loginError =
-            document.getElementById("loginError");
-
-
-        const loginSuccess =
-            document.getElementById("loginSuccess");
-
-
-        const togglePassword =
-            document.getElementById("togglePassword");
-
-
-
-        /* =================================================
-           MESSAGE HELPERS
-        ================================================== */
-
-        function showError(message) {
-
-            loginSuccess.style.display = "none";
-
-            loginError.textContent = message;
-
-            loginError.style.display = "block";
-
-        }
-
-
-
-        function showSuccess(message) {
-
-            loginError.style.display = "none";
-
-            loginSuccess.textContent = message;
-
-            loginSuccess.style.display = "block";
-
-        }
-
-
-
-        function clearMessages() {
-
-            loginError.style.display = "none";
-
-            loginSuccess.style.display = "none";
-
-            loginError.textContent = "";
-
-            loginSuccess.textContent = "";
-
-        }
-
-
-
-        /* =================================================
-           PASSWORD VISIBILITY
-        ================================================== */
-
-        togglePassword.addEventListener(
-            "click",
-            () => {
-
-                const isPassword =
-                    passwordInput.type === "password";
-
-
-                passwordInput.type =
-                    isPassword
-                        ? "text"
-                        : "password";
-
-
-                togglePassword.textContent =
-                    isPassword
-                        ? "Hide"
-                        : "Show";
-
-            }
-        );
-
-
-
-        /* =================================================
-           BUTTON LOADING STATE
-        ================================================== */
-
-        function setLoading(loading) {
-
-            loginButton.disabled =
-                loading;
-
-
-            loginButtonText.style.display =
-                loading
-                    ? "none"
-                    : "inline";
-
-
-            loginLoader.style.display =
-                loading
-                    ? "inline"
-                    : "none";
-
-        }
-
-
-
-        /* =================================================
-           FORM VALIDATION
-        ================================================== */
-
-        function validateLoginForm() {
-
-            const email =
-                emailInput.value.trim();
-
-
-            const password =
-                passwordInput.value;
-
-
-            if (!email) {
-
-                throw new Error(
-                    "Please enter your email address."
-                );
-
-            }
-
-
-            if (!password) {
-
-                throw new Error(
-                    "Please enter your password."
-                );
-
-            }
-
-
-            const emailPattern =
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-            if (!emailPattern.test(email)) {
-
-                throw new Error(
-                    "Please enter a valid email address."
-                );
-
-            }
-
-        }
-
-
-
-        /* =================================================
-           LOGIN
-        ================================================== */
-
-        loginForm.addEventListener(
-            "submit",
-            async (event) => {
-
-                event.preventDefault();
-
-                clearMessages();
-
-
-                try {
-
-                    validateLoginForm();
-
-                    setLoading(true);
-
-
-                    const email =
-                        emailInput.value
-                            .trim()
-                            .toLowerCase();
-
-
-                    const password =
-                        passwordInput.value;
-
-
-                    /*
-                       Firebase Authentication happens
-                       inside loginUser().
-                    */
-
-                    await loginUser(
-                        email,
-                        password
-                    );
-
-
-                    showSuccess(
-                        "Login successful. Redirecting..."
-                    );
-
-
-                    /*
-                       Give Firebase a moment to finish
-                       updating the authentication state.
-                    */
-
-                    setTimeout(
-                        () => {
-
-                            window.location.replace(
-                                "dashboard.html"
-                            );
-
-                        },
-                        700
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Login error:",
-                        error
-                    );
-
-
-                    let message =
-                        "Unable to log in. Please try again.";
-
-
-                    /*
-                       Firebase error handling
-                    */
-
-                    if (error.code) {
-
-                        switch (error.code) {
-
-
-                            case "auth/invalid-credential":
-
-                                message =
-                                    "Incorrect email or password.";
-
-                                break;
-
-
-                            case "auth/invalid-login-credentials":
-
-                                message =
-                                    "Incorrect email or password.";
-
-                                break;
-
-
-                            case "auth/user-not-found":
-
-                                message =
-                                    "No account was found with this email.";
-
-                                break;
-
-
-                            case "auth/wrong-password":
-
-                                message =
-                                    "Incorrect password.";
-
-                                break;
-
-
-                            case "auth/invalid-email":
-
-                                message =
-                                    "Please enter a valid email address.";
-
-                                break;
-
-
-                            case "auth/user-disabled":
-
-                                message =
-                                    "This account has been disabled.";
-
-                                break;
-
-
-                            case "auth/too-many-requests":
-
-                                message =
-                                    "Too many login attempts. Please try again later.";
-
-                                break;
-
-
-                            case "auth/network-request-failed":
-
-                                message =
-                                    "Network error. Check your internet connection.";
-
-                                break;
-
-
-                            default:
-
-                                message =
-                                    error.message ||
-                                    message;
-
-                        }
-
-                    } else {
-
-                        message =
-                            error.message ||
-                            message;
-
-                    }
-
-
-                    showError(message);
-
-                    setLoading(false);
-
-                }
-
-            }
-        );
-
-    </script>
 
 </body>
 
