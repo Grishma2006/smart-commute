@@ -1,164 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Offer a Ride | Smart Commute</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Offer a Ride | SmartCommute</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
-<body class="dashboard-body">
+<body>
 
-<!-- =====================================================
-     NAVIGATION
-     ===================================================== -->
+<header class="main-header">
 
-<header class="app-navbar">
+    <div class="nav-container">
 
-    <a href="dashboard.html" class="app-brand">
+        <a href="dashboard.html" class="brand">
 
-        <div class="brand-icon">SC</div>
+            <span class="brand-icon">
+                SC
+            </span>
 
-        <div>
-            <strong>Smart Commute</strong>
-            <span>Hyperlocal Route Matching</span>
-        </div>
+            <span>
+                <strong>SmartCommute</strong>
+                <small>Hyperlocal Matching</small>
+            </span>
 
-    </a>
-
-
-    <div class="offer-nav-right">
-
-        <a href="dashboard.html" class="back-dashboard">
-            ← Dashboard
         </a>
 
-        <div class="app-user">
+        <nav class="nav-links">
 
-            <div class="user-avatar" id="userAvatar">
-                U
-            </div>
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-            <div class="user-info">
+            <a href="find-ride.html">
+                Find a Ride
+            </a>
 
-                <strong id="dashboardUserName">
-                    User
-                </strong>
+            <a href="offer-ride.html" class="active">
+                Offer a Ride
+            </a>
 
-                <span>Offer a Ride</span>
-
-            </div>
-
-            <button
-                type="button"
-                id="logoutBtn"
-                class="logout-btn"
-            >
-                Log out
-            </button>
-
-        </div>
+        </nav>
 
     </div>
 
 </header>
 
 
+<main class="journey-page">
 
-<!-- =====================================================
-     MAIN
-     ===================================================== -->
+    <section class="page-intro">
 
-<main class="offer-ride-main">
+        <p class="eyebrow">
+            OFFER A RIDE
+        </p>
 
+        <h1>
+            Create your journey
+        </h1>
 
-    <!-- =================================================
-         PAGE INTRO
-         ================================================= -->
-
-    <section class="offer-ride-heading">
-
-        <div>
-
-            <span class="eyebrow">
-                OFFER A RIDE
-            </span>
-
-            <h1>
-                Share your journey<br>
-                with nearby commuters.
-            </h1>
-
-            <p>
-                Add your journey and vehicle details to create
-                a ride that can be matched with commuters
-                travelling along a similar route.
-            </p>
-
-        </div>
-
-
-        <div class="journey-step">
-
-            <div class="step-number active">
-                01
-            </div>
-
-            <div class="step-line"></div>
-
-            <div class="step-number">
-                02
-            </div>
-
-            <div class="step-line"></div>
-
-            <div class="step-number">
-                03
-            </div>
-
-            <div class="step-labels">
-
-                <span>Journey</span>
-                <span>Vehicle</span>
-                <span>Publish</span>
-
-            </div>
-
-        </div>
+        <p>
+            Add your travel and vehicle details so suitable commuters
+            can request an available seat.
+        </p>
 
     </section>
 
 
-
-    <!-- =================================================
-         FORM + PREVIEW
-         ================================================= -->
-
     <section class="offer-layout">
 
+        <form
+            id="offerRideForm"
+            class="form-panel"
+        >
 
-        <!-- =================================================
-             LEFT: FORM
-             ================================================= -->
+            <div class="panel-heading">
 
-        <div class="offer-form-card">
-
-            <div class="card-heading">
-
-                <div class="card-icon">
-                    ↗
-                </div>
+                <span class="step-number">
+                    01
+                </span>
 
                 <div>
 
                     <h2>
-                        Create your journey
+                        Journey Details
                     </h2>
 
                     <p>
-                        Add the details commuters will use for matching.
+                        Tell us about your planned journey.
                     </p>
 
                 </div>
@@ -166,183 +104,144 @@
             </div>
 
 
-            <form id="offerRideForm">
+            <div class="form-group">
+
+                <label for="offerPickup">
+                    Pickup Location
+                </label>
+
+                <input
+                    type="text"
+                    id="offerPickup"
+                    placeholder="Enter pickup location"
+                    required
+                >
+
+            </div>
 
 
-                <!-- =================================================
-                     JOURNEY DETAILS
-                     ================================================= -->
+            <div class="form-group">
 
-                <div class="section-label">
-                    JOURNEY DETAILS
-                </div>
+                <label for="offerDestination">
+                    Destination
+                </label>
+
+                <input
+                    type="text"
+                    id="offerDestination"
+                    placeholder="Enter destination"
+                    required
+                >
+
+            </div>
 
 
-                <!-- PICKUP -->
+            <div class="form-row">
 
-                <div class="input-group journey-input">
+                <div class="form-group">
 
-                    <label for="offerPickup">
-                        Pickup location
+                    <label for="offerDate">
+                        Date
                     </label>
 
-                    <div class="location-input">
-
-                        <span class="location-dot pickup-dot">
-                            ●
-                        </span>
-
-                        <input
-                            type="text"
-                            id="offerPickup"
-                            name="offerPickup"
-                            placeholder="Enter pickup location"
-                            autocomplete="off"
-                            required
-                        >
-
-                    </div>
-
-                    <small class="input-hint">
-                        Example: College Road, Nashik
-                    </small>
+                    <input
+                        type="date"
+                        id="offerDate"
+                        required
+                    >
 
                 </div>
 
 
+                <div class="form-group">
 
-                <!-- DESTINATION -->
-
-                <div class="input-group journey-input">
-
-                    <label for="offerDestination">
-                        Destination
+                    <label for="offerTime">
+                        Departure Time
                     </label>
 
-                    <div class="location-input">
-
-                        <span class="location-dot destination-dot">
-                            ●
-                        </span>
-
-                        <input
-                            type="text"
-                            id="offerDestination"
-                            name="offerDestination"
-                            placeholder="Enter destination"
-                            autocomplete="off"
-                            required
-                        >
-
-                    </div>
-
-                    <small class="input-hint">
-                        Example: Gangapur Road, Nashik
-                    </small>
+                    <input
+                        type="time"
+                        id="offerTime"
+                        required
+                    >
 
                 </div>
 
+            </div>
 
 
-                <!-- DATE / TIME -->
+            <div class="form-group">
 
-                <div class="form-row journey-row">
+                <label for="offerSeats">
+                    Available Seats
+                </label>
 
-                    <div class="input-group">
+                <select
+                    id="offerSeats"
+                    required
+                >
 
-                        <label for="offerDate">
-                            Departure date
-                        </label>
+                    <option value="1">
+                        1 Seat
+                    </option>
 
-                        <input
-                            type="date"
-                            id="offerDate"
-                            name="offerDate"
-                            required
-                        >
+                    <option value="2">
+                        2 Seats
+                    </option>
 
-                    </div>
+                    <option value="3">
+                        3 Seats
+                    </option>
 
+                </select>
 
-                    <div class="input-group">
-
-                        <label for="offerTime">
-                            Departure time
-                        </label>
-
-                        <input
-                            type="time"
-                            id="offerTime"
-                            name="offerTime"
-                            required
-                        >
-
-                    </div>
-
-                </div>
+            </div>
 
 
+            <div class="panel-heading vehicle-heading">
 
-                <!-- =================================================
-                     VEHICLE DETAILS
-                     ================================================= -->
+                <span class="step-number">
+                    02
+                </span>
 
-                <div class="section-label vehicle-section-label">
-                    VEHICLE DETAILS
-                </div>
+                <div>
 
+                    <h2>
+                        Vehicle Details
+                    </h2>
 
-                <div class="vehicle-notice">
-
-                    <div class="vehicle-notice-icon">
-                        ✓
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Vehicle information is required here
-                        </strong>
-
-                        <p>
-                            These details are collected only because
-                            you are offering a ride.
-                        </p>
-
-                    </div>
+                    <p>
+                        Only ride providers need to enter these details.
+                    </p>
 
                 </div>
 
+            </div>
 
 
-                <!-- VEHICLE TYPE -->
+            <div class="form-row">
 
-                <div class="input-group">
+                <div class="form-group">
 
                     <label for="vehicleType">
-                        Vehicle type
+                        Vehicle Type
                     </label>
 
                     <select
                         id="vehicleType"
-                        name="vehicleType"
                         required
                     >
 
                         <option value="">
-                            Select vehicle type
+                            Select type
                         </option>
 
                         <option value="Car">
                             Car
                         </option>
 
-                        <option value="Bike">
-                            Bike / Two-wheeler
-                        </option>
-
-                        <option value="Other">
-                            Other
+                        <option value="SUV">
+                            SUV
                         </option>
 
                     </select>
@@ -350,1201 +249,386 @@
                 </div>
 
 
+                <div class="form-group">
 
-                <!-- VEHICLE MODEL -->
-
-                <div class="form-row journey-row">
-
-                    <div class="input-group">
-
-                        <label for="vehicleModel">
-                            Vehicle model
-                        </label>
-
-                        <input
-                            type="text"
-                            id="vehicleModel"
-                            name="vehicleModel"
-                            placeholder="e.g. Hyundai i20"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="input-group">
-
-                        <label for="vehicleNumber">
-                            Vehicle number
-                        </label>
-
-                        <input
-                            type="text"
-                            id="vehicleNumber"
-                            name="vehicleNumber"
-                            placeholder="e.g. MH 15 AB 1234"
-                            autocomplete="off"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- AVAILABLE SEATS -->
-
-                <div class="input-group">
-
-                    <label for="availableSeats">
-                        Available passenger seats
+                    <label for="vehicleModel">
+                        Vehicle Model
                     </label>
 
-                    <div class="seat-selector">
-
-                        <button
-                            type="button"
-                            class="seat-btn"
-                            id="decreaseOfferSeats"
-                        >
-                            −
-                        </button>
-
-
-                        <div class="seat-count">
-
-                            <strong id="offerSeatCount">
-                                1
-                            </strong>
-
-                            <span>
-                                passenger
-                            </span>
-
-                        </div>
-
-
-                        <button
-                            type="button"
-                            class="seat-btn"
-                            id="increaseOfferSeats"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
                     <input
-                        type="hidden"
-                        id="availableSeats"
-                        name="availableSeats"
-                        value="1"
+                        type="text"
+                        id="vehicleModel"
+                        placeholder="e.g. Swift"
+                        required
                     >
 
-                    <small class="input-hint">
-                        Number of passengers you are willing to take.
-                    </small>
-
                 </div>
 
+            </div>
 
 
-                <!-- =================================================
-                     COST SHARING
-                     ================================================= -->
+            <div class="form-group">
 
-                <div class="section-label cost-section-label">
-                    COST SHARING
-                </div>
+                <label for="vehicleNumber">
+                    Vehicle Number
+                </label>
 
-
-                <div class="cost-input-box">
-
-                    <div class="input-group">
-
-                        <label for="estimatedCost">
-                            Estimated journey cost
-                        </label>
-
-                        <div class="rupee-input">
-
-                            <span>₹</span>
-
-                            <input
-                                type="number"
-                                id="estimatedCost"
-                                name="estimatedCost"
-                                placeholder="e.g. 80"
-                                min="1"
-                                max="100000"
-                                step="1"
-                                required
-                            >
-
-                        </div>
-
-                        <small class="input-hint">
-                            Enter an estimated vehicle/journey cost
-                            for this trip.
-                        </small>
-
-                    </div>
-
-
-                    <div class="cost-share-preview">
-
-                        <span>
-                            ESTIMATED COST SHARE
-                        </span>
-
-                        <strong id="costShare">
-                            ₹—
-                        </strong>
-
-                        <small>
-                            If all available seats are used
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MESSAGE -->
-
-                <div
-                    id="offerRideMessage"
-                    class="form-message"
-                ></div>
-
-
-
-                <!-- SUBMIT -->
-
-                <button
-                    type="submit"
-                    class="journey-submit-btn"
+                <input
+                    type="text"
+                    id="vehicleNumber"
+                    placeholder="e.g. MH 15 AB 1234"
+                    required
                 >
 
-                    <span>
-                        Publish My Journey
-                    </span>
-
-                    <span>
-                        →
-                    </span>
-
-                </button>
-
-
-            </form>
-
-        </div>
-
-
-
-        <!-- =================================================
-             RIGHT: PREVIEW
-             ================================================= -->
-
-        <div class="offer-preview-column">
-
-
-            <!-- JOURNEY PREVIEW -->
-
-            <div class="offer-preview-card">
-
-                <div class="preview-card-header">
-
-                    <div>
-
-                        <span class="preview-label">
-                            JOURNEY PREVIEW
-                        </span>
-
-                        <h3>
-                            Your offered ride
-                        </h3>
-
-                    </div>
-
-                    <div class="provider-badge">
-                        RIDE PROVIDER
-                    </div>
-
-                </div>
-
-
-
-                <div class="offer-route-preview">
-
-                    <div class="offer-route-point">
-
-                        <span class="offer-route-dot start-summary"></span>
-
-                        <div>
-
-                            <small>
-                                PICKUP
-                            </small>
-
-                            <strong id="previewOfferPickup">
-                                Not selected
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="offer-route-line"></div>
-
-
-                    <div class="offer-route-point">
-
-                        <span class="offer-route-dot end-summary"></span>
-
-                        <div>
-
-                            <small>
-                                DESTINATION
-                            </small>
-
-                            <strong id="previewOfferDestination">
-                                Not selected
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="offer-preview-details">
-
-                    <div>
-
-                        <span>Departure</span>
-
-                        <strong id="previewOfferDateTime">
-                            Not selected
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Available seats</span>
-
-                        <strong id="previewOfferSeats">
-                            1
-                        </strong>
-
-                    </div>
-
-                </div>
-
             </div>
 
 
+            <div class="panel-heading vehicle-heading">
 
-            <!-- VEHICLE PREVIEW -->
-
-            <div class="vehicle-preview-card">
-
-                <div class="vehicle-preview-top">
-
-                    <div class="vehicle-icon">
-                        🚗
-                    </div>
-
-                    <div>
-
-                        <span class="preview-label">
-                            YOUR VEHICLE
-                        </span>
-
-                        <h3 id="previewVehicleModel">
-                            Vehicle not added
-                        </h3>
-
-                    </div>
-
-                </div>
-
-
-                <div class="vehicle-preview-info">
-
-                    <div>
-
-                        <span>Type</span>
-
-                        <strong id="previewVehicleType">
-                            —
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>Vehicle number</span>
-
-                        <strong id="previewVehicleNumber">
-                            —
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="verified-note">
-
-                    <span class="verified-check">
-                        ✓
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Verified profile
-                        </strong>
-
-                        <p>
-                            Your account details are associated
-                            with this journey.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- COST PREVIEW -->
-
-            <div class="cost-preview-card">
+                <span class="step-number">
+                    03
+                </span>
 
                 <div>
 
-                    <span class="preview-label">
-                        COST SHARING
-                    </span>
+                    <h2>
+                        Cost Sharing
+                    </h2>
 
-                    <h3>
-                        Keep the journey economical
-                    </h3>
+                    <p>
+                        Display an estimated shared journey cost.
+                    </p>
 
                 </div>
 
+            </div>
 
-                <div class="cost-large">
+
+            <div class="cost-preview">
+
+                <div>
 
                     <span>
-                        Estimated journey cost
+                        Estimated Journey Cost
                     </span>
 
-                    <strong id="previewEstimatedCost">
-                        ₹—
+                    <strong id="estimatedCost">
+                        ₹--
                     </strong>
 
                 </div>
 
 
-                <p>
-                    The amount is an estimate for demonstration.
-                    Actual cost may vary depending on the journey.
-                </p>
+                <div>
 
-            </div>
+                    <span>
+                        Estimated Cost Share / Passenger
+                    </span>
 
-        </div>
+                    <strong id="estimatedShare">
+                        ₹--
+                    </strong>
 
-    </section>
-
-
-
-    <!-- =================================================
-         HOW OFFERING WORKS
-         ================================================= -->
-
-    <section class="provider-info">
-
-        <div class="provider-info-title">
-
-            <span class="eyebrow">
-                AFTER PUBLISHING
-            </span>
-
-            <h2>
-                What happens next?
-            </h2>
-
-        </div>
-
-
-        <div class="provider-steps">
-
-
-            <div class="provider-step">
-
-                <div class="provider-step-number">
-                    01
                 </div>
 
-                <strong>
-                    Journey published
-                </strong>
-
-                <p>
-                    Your route, timing and available seats
-                    become available for matching.
-                </p>
-
             </div>
 
 
-            <div class="provider-step">
-
-                <div class="provider-step-number">
-                    02
-                </div>
-
-                <strong>
-                    Matching commuter found
-                </strong>
-
-                <p>
-                    The system compares routes and timings
-                    with ride requests.
-                </p>
-
-            </div>
-
-
-            <div class="provider-step">
-
-                <div class="provider-step-number">
-                    03
-                </div>
-
-                <strong>
-                    Receive a request
-                </strong>
-
-                <p>
-                    Review the request before deciding
-                    whether to accept it.
-                </p>
-
-            </div>
-
-
-            <div class="provider-step">
-
-                <div class="provider-step-number">
-                    04
-                </div>
-
-                <strong>
-                    Confirm the journey
-                </strong>
-
-                <p>
-                    After acceptance, both users can see
-                    the confirmed journey details.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- SAFETY NOTE -->
-
-    <section class="journey-note">
-
-        <div class="info-icon">
-            i
-        </div>
-
-        <div>
-
-            <strong>
-                Your vehicle details are used for ride identification.
-            </strong>
-
-            <p>
-                In the final system, complete provider contact and
-                vehicle information will be shown to a requester
-                only after the ride request is accepted.
+            <p class="estimate-note">
+                Estimate for demonstration. Actual cost may vary.
+                This system is designed for cost sharing between journey participants.
             </p>
 
-        </div>
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Publish Journey →
+            </button>
+
+        </form>
+
+
+        <aside class="offer-preview-card">
+
+            <p class="eyebrow">
+                JOURNEY PREVIEW
+            </p>
+
+            <h2>
+                Your offered journey
+            </h2>
+
+            <div class="preview-item">
+
+                <span>
+                    From
+                </span>
+
+                <strong id="previewPickup">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="preview-item">
+
+                <span>
+                    To
+                </span>
+
+                <strong id="previewDestination">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="preview-item">
+
+                <span>
+                    Departure
+                </span>
+
+                <strong id="previewTime">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="preview-item">
+
+                <span>
+                    Available Seats
+                </span>
+
+                <strong id="previewSeats">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="provider-note">
+
+                <strong>
+                    Your details remain controlled
+                </strong>
+
+                <p>
+                    Contact and vehicle details are shared with a
+                    requester after you accept their journey request.
+                </p>
+
+            </div>
+
+        </aside>
 
     </section>
 
 </main>
 
 
-
-<!-- =====================================================
-     SHARED APP SCRIPT
-     ===================================================== -->
-
 <script src="app.js"></script>
 
 
-<script>
+<script type="module">
 
-document.addEventListener("DOMContentLoaded", function () {
+import {
+    protectPage
+} from "./firebase-auth.js";
 
 
-    /* =================================================
-       AUTHENTICATION CHECK
-       ================================================= */
+await protectPage();
 
-    const currentUser =
-        JSON.parse(
-            localStorage.getItem("smartCommuteCurrentUser")
+
+const form =
+    document.getElementById(
+        "offerRideForm"
+    );
+
+
+const pickup =
+    document.getElementById(
+        "offerPickup"
+    );
+
+
+const destination =
+    document.getElementById(
+        "offerDestination"
+    );
+
+
+const time =
+    document.getElementById(
+        "offerTime"
+    );
+
+
+const seats =
+    document.getElementById(
+        "offerSeats"
+    );
+
+
+function updatePreview() {
+
+    document.getElementById(
+        "previewPickup"
+    ).textContent =
+        pickup.value || "—";
+
+
+    document.getElementById(
+        "previewDestination"
+    ).textContent =
+        destination.value || "—";
+
+
+    document.getElementById(
+        "previewTime"
+    ).textContent =
+        time.value || "—";
+
+
+    document.getElementById(
+        "previewSeats"
+    ).textContent =
+        seats.value ?
+        `${seats.value} seat(s)` :
+        "—";
+
+}
+
+
+[
+    pickup,
+    destination,
+    time,
+    seats
+].forEach(
+    element => {
+
+        element.addEventListener(
+            "input",
+            updatePreview
         );
 
-
-    if (!currentUser) {
-
-        window.location.href = "login.html";
-
-        return;
-
     }
+);
 
 
+form.addEventListener(
+    "submit",
+    event => {
 
-    /* =================================================
-       USER INFORMATION
-       ================================================= */
+        event.preventDefault();
 
-    const userName =
-        document.getElementById("dashboardUserName");
 
-    const userAvatar =
-        document.getElementById("userAvatar");
+        const totalCost =
+            100;
 
 
-    if (userName) {
-
-        userName.textContent =
-            currentUser.fullName;
-
-    }
-
-
-    if (userAvatar) {
-
-        userAvatar.textContent =
-            currentUser.fullName
-                .charAt(0)
-                .toUpperCase();
-
-    }
-
-
-
-    /* =================================================
-       DATE
-       ================================================= */
-
-    const dateInput =
-        document.getElementById("offerDate");
-
-
-    if (dateInput) {
-
-        const today =
-            new Date();
-
-        const year =
-            today.getFullYear();
-
-        const month =
-            String(today.getMonth() + 1)
-                .padStart(2, "0");
-
-        const day =
-            String(today.getDate())
-                .padStart(2, "0");
-
-        const todayString =
-            `${year}-${month}-${day}`;
-
-
-        dateInput.min =
-            todayString;
-
-        dateInput.value =
-            todayString;
-
-    }
-
-
-
-    /* =================================================
-       SEAT CONTROL
-       ================================================= */
-
-    let availableSeats = 1;
-
-
-    const seatCount =
-        document.getElementById("offerSeatCount");
-
-    const hiddenSeats =
-        document.getElementById("availableSeats");
-
-    const previewSeats =
-        document.getElementById("previewOfferSeats");
-
-
-    function updateOfferSeats() {
-
-        seatCount.textContent =
-            availableSeats;
-
-        hiddenSeats.value =
-            availableSeats;
-
-        previewSeats.textContent =
-            availableSeats;
-
-        updateCostShare();
-
-    }
-
-
-    document
-        .getElementById("decreaseOfferSeats")
-        .addEventListener("click", function () {
-
-            if (availableSeats > 1) {
-
-                availableSeats--;
-
-                updateOfferSeats();
-
-            }
-
-        });
-
-
-    document
-        .getElementById("increaseOfferSeats")
-        .addEventListener("click", function () {
-
-            if (availableSeats < 6) {
-
-                availableSeats++;
-
-                updateOfferSeats();
-
-            }
-
-        });
-
-
-
-    /* =================================================
-       JOURNEY LIVE PREVIEW
-       ================================================= */
-
-    const pickup =
-        document.getElementById("offerPickup");
-
-    const destination =
-        document.getElementById("offerDestination");
-
-    const previewPickup =
-        document.getElementById("previewOfferPickup");
-
-    const previewDestination =
-        document.getElementById("previewOfferDestination");
-
-
-    pickup.addEventListener("input", function () {
-
-        previewPickup.textContent =
-            pickup.value.trim() ||
-            "Not selected";
-
-    });
-
-
-    destination.addEventListener("input", function () {
-
-        previewDestination.textContent =
-            destination.value.trim() ||
-            "Not selected";
-
-    });
-
-
-
-    /* =================================================
-       DATE + TIME PREVIEW
-       ================================================= */
-
-    const offerTime =
-        document.getElementById("offerTime");
-
-    const previewDateTime =
-        document.getElementById("previewOfferDateTime");
-
-
-    function updateDateTimePreview() {
-
-        if (!dateInput.value ||
-            !offerTime.value) {
-
-            previewDateTime.textContent =
-                "Not selected";
-
-            return;
-
-        }
-
-
-        const date =
-            new Date(
-                `${dateInput.value}T${offerTime.value}`
+        const availableSeats =
+            Number(
+                seats.value
             );
 
 
-        if (Number.isNaN(date.getTime())) {
-
-            previewDateTime.textContent =
-                "Not selected";
-
-            return;
-
-        }
-
-
-        const formattedDate =
-            date.toLocaleDateString(
-                "en-IN",
-                {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric"
-                }
-            );
-
-
-        const formattedTime =
-            date.toLocaleTimeString(
-                "en-IN",
-                {
-                    hour: "numeric",
-                    minute: "2-digit"
-                }
-            );
-
-
-        previewDateTime.textContent =
-            `${formattedDate} • ${formattedTime}`;
-
-    }
-
-
-    dateInput.addEventListener(
-        "change",
-        updateDateTimePreview
-    );
-
-
-    offerTime.addEventListener(
-        "input",
-        updateDateTimePreview
-    );
-
-
-
-    /* =================================================
-       VEHICLE PREVIEW
-       ================================================= */
-
-    const vehicleType =
-        document.getElementById("vehicleType");
-
-    const vehicleModel =
-        document.getElementById("vehicleModel");
-
-    const vehicleNumber =
-        document.getElementById("vehicleNumber");
-
-
-    const previewVehicleType =
-        document.getElementById("previewVehicleType");
-
-    const previewVehicleModel =
-        document.getElementById("previewVehicleModel");
-
-    const previewVehicleNumber =
-        document.getElementById("previewVehicleNumber");
-
-
-    vehicleType.addEventListener("change", function () {
-
-        previewVehicleType.textContent =
-            vehicleType.value || "—";
-
-    });
-
-
-    vehicleModel.addEventListener("input", function () {
-
-        previewVehicleModel.textContent =
-            vehicleModel.value.trim() ||
-            "Vehicle not added";
-
-    });
-
-
-    vehicleNumber.addEventListener("input", function () {
-
-        const value =
-            vehicleNumber.value
-                .trim()
-                .toUpperCase();
-
-        previewVehicleNumber.textContent =
-            value || "—";
-
-    });
-
-
-
-    /* =================================================
-       COST SHARE
-       ================================================= */
-
-    const estimatedCost =
-        document.getElementById("estimatedCost");
-
-    const costShare =
-        document.getElementById("costShare");
-
-    const previewEstimatedCost =
-        document.getElementById("previewEstimatedCost");
-
-
-    function updateCostShare() {
-
-        const cost =
-            Number(estimatedCost.value);
-
-
-        if (!cost || cost <= 0) {
-
-            costShare.textContent =
-                "₹—";
-
-            previewEstimatedCost.textContent =
-                "₹—";
-
-            return;
-
-        }
-
-
-        previewEstimatedCost.textContent =
-            `₹${cost.toLocaleString("en-IN")}`;
-
-
-        /*
-         * Driver is not charged as a passenger.
-         * If all available passenger seats are used,
-         * the estimated journey cost is divided among
-         * the passengers.
-         */
-
-        const passengers =
-            availableSeats;
+        const participants =
+            availableSeats + 1;
 
 
         const share =
-            cost / passengers;
-
-
-        costShare.textContent =
-            `₹${Math.round(share).toLocaleString("en-IN")}`;
-
-    }
-
-
-    estimatedCost.addEventListener(
-        "input",
-        updateCostShare
-    );
-
-
-
-    /* =================================================
-       FORM SUBMISSION
-       ================================================= */
-
-    const form =
-        document.getElementById("offerRideForm");
-
-
-    form.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-
-            const pickupValue =
-                pickup.value.trim();
-
-            const destinationValue =
-                destination.value.trim();
-
-            const dateValue =
-                dateInput.value;
-
-            const timeValue =
-                offerTime.value;
-
-            const vehicleTypeValue =
-                vehicleType.value;
-
-            const vehicleModelValue =
-                vehicleModel.value.trim();
-
-            const vehicleNumberValue =
-                vehicleNumber.value
-                    .trim()
-                    .toUpperCase();
-
-            const estimatedCostValue =
-                Number(estimatedCost.value);
-
-
-
-            /* -----------------------------------------
-               Validation
-               ----------------------------------------- */
-
-            if (
-                !pickupValue ||
-                !destinationValue ||
-                !dateValue ||
-                !timeValue ||
-                !vehicleTypeValue ||
-                !vehicleModelValue ||
-                !vehicleNumberValue ||
-                !estimatedCostValue
-            ) {
-
-                showOfferMessage(
-                    "Please complete all journey and vehicle details."
-                );
-
-                return;
-
-            }
-
-
-            if (
-                pickupValue.toLowerCase() ===
-                destinationValue.toLowerCase()
-            ) {
-
-                showOfferMessage(
-                    "Pickup and destination cannot be the same."
-                );
-
-                return;
-
-            }
-
-
-            if (estimatedCostValue <= 0) {
-
-                showOfferMessage(
-                    "Please enter a valid estimated journey cost."
-                );
-
-                return;
-
-            }
-
-
-
-            /* -----------------------------------------
-               Journey object
-               ----------------------------------------- */
-
-            const offeredJourney = {
-
-                id: Date.now(),
-
-                providerId:
-                    currentUser.id,
-
-                providerName:
-                    currentUser.fullName,
-
-                providerMobile:
-                    currentUser.mobile,
-
-                pickup:
-                    pickupValue,
-
-                destination:
-                    destinationValue,
-
-                departureDate:
-                    dateValue,
-
-                departureTime:
-                    timeValue,
-
-                vehicle: {
-
-                    type:
-                        vehicleTypeValue,
-
-                    model:
-                        vehicleModelValue,
-
-                    number:
-                        vehicleNumberValue
-
-                },
-
-                availableSeats:
-                    availableSeats,
-
-                estimatedJourneyCost:
-                    estimatedCostValue,
-
-                estimatedCostShare:
-                    Math.round(
-                        estimatedCostValue /
-                        availableSeats
-                    ),
-
-                status:
-                    "published",
-
-                createdAt:
-                    new Date().toISOString()
-
-            };
-
-
-
-            /* -----------------------------------------
-               Save prototype journey
-               ----------------------------------------- */
-
-            const existingJourneys =
-                JSON.parse(
-                    localStorage.getItem(
-                        "smartCommuteOfferedJourneys"
-                    )
-                ) || [];
-
-
-            existingJourneys.push(
-                offeredJourney
+            calculateCostShare(
+                totalCost,
+                participants
             );
 
 
-            localStorage.setItem(
-                "smartCommuteOfferedJourneys",
-                JSON.stringify(
-                    existingJourneys
-                )
-            );
-
-
-            localStorage.setItem(
-                "smartCommuteCurrentOfferedJourney",
-                JSON.stringify(
-                    offeredJourney
-                )
-            );
-
-
-
-            /* -----------------------------------------
-               Success
-               ----------------------------------------- */
-
-            showOfferMessage(
-                "Journey published successfully. Opening your provider dashboard...",
-                "success"
-            );
-
-
-            /*
-             * This page will be replaced by the
-             * provider journey/request management page
-             * in the next stage.
-             */
-
-            setTimeout(function () {
-
-                window.location.href =
-                    "provider-journey.html";
-
-            }, 900);
-
-        }
-    );
-
-});
-
-
-
-/* =====================================================
-   MESSAGE
-   ===================================================== */
-
-function showOfferMessage(
-    message,
-    type = "error"
-) {
-
-    const element =
         document.getElementById(
-            "offerRideMessage"
+            "estimatedCost"
+        ).textContent =
+            `₹${totalCost}`;
+
+
+        document.getElementById(
+            "estimatedShare"
+        ).textContent =
+            `₹${share}`;
+
+
+        const offeredJourney = {
+
+            id:
+                `JRN-${Date.now()}`,
+
+            providerName:
+                "Current User",
+
+            pickup:
+                pickup.value.trim(),
+
+            destination:
+                destination.value.trim(),
+
+            date:
+                document.getElementById(
+                    "offerDate"
+                ).value,
+
+            time:
+                time.value,
+
+            availableSeats,
+
+            vehicleType:
+                document.getElementById(
+                    "vehicleType"
+                ).value,
+
+            vehicleModel:
+                document.getElementById(
+                    "vehicleModel"
+                ).value.trim(),
+
+            vehicleNumber:
+                document.getElementById(
+                    "vehicleNumber"
+                ).value.trim(),
+
+            estimatedJourneyCost:
+                totalCost,
+
+            estimatedCostShare:
+                share,
+
+            status:
+                "active",
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+
+        sessionStorage.setItem(
+            "smartCommuteCurrentOfferedJourney",
+            JSON.stringify(
+                offeredJourney
+            )
         );
 
 
-    if (!element) return;
+        window.location.href =
+            "journey-provider.html";
 
-
-    element.textContent =
-        message;
-
-    element.className =
-        `form-message ${type}`;
-
-}
+    }
+);
 
 </script>
 
