@@ -3,1016 +3,244 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Route Preview | SmartCommute</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<!-- Leaflet -->
-<link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+    <title>Route Preview | SmartCommute</title>
 
-<link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 
-<style>
-
-/* =====================================================
-   ROUTE PREVIEW PAGE
-   ===================================================== */
-
-.route-page{
-    min-height:calc(100vh - 78px);
-    background:#f6f8f6;
-    padding:25px 0 45px;
-}
-
-.route-container{
-    width:min(1200px,94%);
-    margin:auto;
-}
-
-
-/* =====================================================
-   TOP
-   ===================================================== */
-
-.route-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:20px;
-}
-
-.back-link{
-    color:#68756e;
-    text-decoration:none;
-    font-size:12px;
-}
-
-.back-link:hover{
-    color:#087a52;
-}
-
-.route-heading{
-    margin-top:12px;
-}
-
-.route-heading h1{
-    font-size:28px;
-    margin-bottom:4px;
-}
-
-.route-heading p{
-    color:#6c7872;
-    font-size:13px;
-}
-
-
-/* =====================================================
-   STEPPER
-   ===================================================== */
-
-.progress{
-    display:flex;
-    align-items:center;
-    margin:15px 0 28px;
-}
-
-.progress-step{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    min-width:105px;
-    color:#8a9590;
-    font-size:10px;
-    font-weight:600;
-}
-
-.progress-circle{
-    width:27px;
-    height:27px;
-    border-radius:50%;
-    background:#dce3df;
-    color:#69756f;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:11px;
-    font-weight:800;
-    margin-bottom:6px;
-}
-
-.progress-step.completed,
-.progress-step.active{
-    color:#087a52;
-}
-
-.progress-step.completed .progress-circle,
-.progress-step.active .progress-circle{
-    background:#087a52;
-    color:white;
-}
-
-.progress-line{
-    flex:1;
-    height:2px;
-    background:#dfe5e1;
-    margin:0 -8px;
-    margin-bottom:18px;
-}
-
-.progress-line.active{
-    background:#087a52;
-}
-
-
-/* =====================================================
-   MAIN ROUTE LAYOUT
-   ===================================================== */
-
-.route-layout{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 320px;
-    gap:18px;
-    align-items:start;
-}
-
-
-/* =====================================================
-   MAP
-   ===================================================== */
-
-.map-card{
-    position:relative;
-    background:white;
-    border:1px solid #dfe7e3;
-    border-radius:18px;
-    overflow:hidden;
-    box-shadow:0 5px 22px rgba(20,45,35,.05);
-}
-
-#map{
-    width:100%;
-    height:500px;
-    background:#e9efec;
-}
-
-
-/* Map loading overlay */
-
-.map-loading{
-    position:absolute;
-    z-index:1000;
-    top:15px;
-    left:50%;
-    transform:translateX(-50%);
-    background:white;
-    border:1px solid #e1e8e4;
-    border-radius:20px;
-    padding:9px 15px;
-    box-shadow:0 8px 25px rgba(20,45,35,.12);
-    font-size:11px;
-    color:#59665f;
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.loading-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#087a52;
-}
-
-
-/* Map bottom information */
-
-.map-bottom{
-    padding:13px 17px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    border-top:1px solid #e4e9e6;
-}
-
-.map-route-label{
-    font-size:11px;
-    color:#6e7974;
-}
-
-.map-route-label strong{
-    color:#26342e;
-}
-
-
-/* =====================================================
-   MAP MARKERS
-   ===================================================== */
-
-.custom-marker{
-    width:31px;
-    height:31px;
-    border-radius:50% 50% 50% 0;
-    transform:rotate(-45deg);
-    background:#087a52;
-    border:3px solid white;
-    box-shadow:0 3px 10px rgba(0,0,0,.2);
-}
-
-.custom-marker span{
-    display:block;
-    transform:rotate(45deg);
-    color:white;
-    text-align:center;
-    line-height:25px;
-    font-size:11px;
-    font-weight:800;
-}
-
-
-/* =====================================================
-   SIDE SUMMARY
-   ===================================================== */
-
-.summary-card{
-    background:white;
-    border:1px solid #dfe7e3;
-    border-radius:18px;
-    padding:21px;
-    box-shadow:0 5px 22px rgba(20,45,35,.05);
-}
-
-.summary-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:19px;
-}
-
-.summary-header h2{
-    font-size:17px;
-}
-
-.route-badge{
-    background:#e5f4ed;
-    color:#087a52;
-    padding:6px 9px;
-    border-radius:9px;
-    font-size:10px;
-    font-weight:800;
-}
-
-
-/* =====================================================
-   ROUTE POINTS
-   ===================================================== */
-
-.route-points{
-    padding:2px 0 5px;
-}
-
-.route-point{
-    display:flex;
-    gap:11px;
-    align-items:flex-start;
-}
-
-.point-column{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.point-dot{
-    width:13px;
-    height:13px;
-    border-radius:50%;
-    border:3px solid #087a52;
-    background:white;
-    flex-shrink:0;
-}
-
-.point-line{
-    width:2px;
-    height:42px;
-    background:#cfe0d8;
-}
-
-.point-info{
-    padding-bottom:4px;
-}
-
-.point-info .label{
-    color:#7b8580;
-    font-size:10px;
-    margin-bottom:2px;
-}
-
-.point-info .location{
-    font-size:12px;
-    font-weight:700;
-}
-
-
-/* =====================================================
-   SUMMARY STATS
-   ===================================================== */
-
-.summary-stats{
-    border-top:1px solid #e5e9e7;
-    margin-top:18px;
-    padding-top:6px;
-}
-
-.stat{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    padding:13px 0;
-    border-bottom:1px solid #edf0ee;
-}
-
-.stat:last-child{
-    border-bottom:0;
-}
-
-.stat-icon{
-    width:36px;
-    height:36px;
-    border-radius:10px;
-    background:#e5f4ed;
-    color:#087a52;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:16px;
-}
-
-.stat-label{
-    color:#7a8580;
-    font-size:10px;
-}
-
-.stat-value{
-    font-size:14px;
-    font-weight:800;
-    margin-top:1px;
-}
-
-
-/* =====================================================
-   COST
-   ===================================================== */
-
-.cost-box{
-    margin-top:17px;
-    background:#f1f7f4;
-    border:1px solid #d7ebe1;
-    border-radius:13px;
-    padding:15px;
-}
-
-.cost-title{
-    color:#087a52;
-    font-size:11px;
-    font-weight:800;
-    margin-bottom:5px;
-}
-
-.cost-amount{
-    font-size:24px;
-    font-weight:800;
-    color:#14221c;
-}
-
-.cost-share{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:9px;
-    padding-top:9px;
-    border-top:1px solid #d9e8e1;
-}
-
-.cost-share span{
-    font-size:10px;
-    color:#6e7974;
-}
-
-.cost-share strong{
-    color:#087a52;
-    font-size:14px;
-}
-
-
-/* =====================================================
-   NOTE
-   ===================================================== */
-
-.cost-note{
-    margin-top:8px;
-    color:#75817b;
-    font-size:9px;
-    line-height:1.4;
-}
-
-
-/* =====================================================
-   BUTTONS
-   ===================================================== */
-
-.route-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:9px;
-    margin-top:18px;
-}
-
-.edit-btn{
-    height:43px;
-    border:1px solid #087a52;
-    background:white;
-    color:#087a52;
-    border-radius:9px;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.edit-btn:hover{
-    background:#e5f4ed;
-}
-
-.matches-btn{
-    height:43px;
-    border:0;
-    background:#087a52;
-    color:white;
-    border-radius:9px;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.matches-btn:hover{
-    background:#075d40;
-}
-
-.matches-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-
-/* =====================================================
-   ERROR
-   ===================================================== */
-
-.route-error{
-    display:none;
-    margin-top:15px;
-    padding:12px;
-    border-radius:10px;
-    background:#fff0ef;
-    border:1px solid #f0d2cf;
-    color:#a13d38;
-    font-size:11px;
-}
-
-.route-error.show{
-    display:block;
-}
-
-
-/* =====================================================
-   MOBILE
-   ===================================================== */
-
-@media(max-width:850px){
-
-    .route-layout{
-        grid-template-columns:1fr;
-    }
-
-    #map{
-        height:420px;
-    }
-
-}
-
-@media(max-width:600px){
-
-    .route-page{
-        padding-top:18px;
-    }
-
-    .route-heading h1{
-        font-size:23px;
-    }
-
-    .progress-step{
-        min-width:70px;
-        font-size:8px;
-    }
-
-    .progress-line{
-        margin-left:-5px;
-        margin-right:-5px;
-    }
-
-    .route-layout{
-        gap:13px;
-    }
-
-    #map{
-        height:350px;
-    }
-
-    .route-actions{
-        grid-template-columns:1fr;
-    }
-
-    .map-bottom{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-}
-
-</style>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
-
 <body>
 
+<header class="main-header">
 
-<!-- =====================================================
-     NAVBAR
-     ===================================================== -->
+    <div class="nav-container">
 
-<header class="navbar">
+        <a href="dashboard.html" class="brand">
 
-    <div class="nav-inner">
-
-        <a href="dashboard.html" class="logo-area">
-
-            <div class="logo">
+            <span class="brand-icon">
                 SC
-            </div>
+            </span>
 
-            <div class="brand">
-
-                <h2>SmartCommute</h2>
-
-                <p>
-                    Hyperlocal Travel Matching
-                </p>
-
-            </div>
+            <span>
+                <strong>SmartCommute</strong>
+                <small>Hyperlocal Matching</small>
+            </span>
 
         </a>
 
+        <nav class="nav-links">
 
-        <div class="user-menu">
+            <a href="dashboard.html">
+                Dashboard
+            </a>
 
-            <span
-                id="navUserName"
-                class="user-name">
-                Commuter
-            </span>
+            <a href="find-ride.html">
+                Find a Ride
+            </a>
 
-            <button
-                id="logoutBtn"
-                class="logout-btn">
+            <a href="offer-ride.html">
+                Offer a Ride
+            </a>
 
-                Logout
-
-            </button>
-
-        </div>
+        </nav>
 
     </div>
 
 </header>
 
 
-<!-- =====================================================
-     PAGE
-     ===================================================== -->
-
 <main class="route-page">
 
-<div class="route-container">
+    <section class="page-intro">
 
-
-    <!-- BACK -->
-
-    <a
-        href="find-ride.html"
-        class="back-link">
-
-        ← Back to Journey Details
-
-    </a>
-
-
-    <!-- HEADING -->
-
-    <div class="route-heading">
+        <p class="eyebrow">
+            STEP 2 · ROUTE PREVIEW
+        </p>
 
         <h1>
-            Route preview
+            Your route is ready
         </h1>
 
         <p>
-            Here is the route calculated for your journey.
+            Check your journey before we search for matching commuters.
         </p>
 
-    </div>
+    </section>
 
 
-    <!-- =================================================
-         PROGRESS
-         ================================================= -->
+    <section class="route-layout">
 
-    <div class="progress">
-
-        <div class="progress-step completed">
-
-            <div class="progress-circle">
-                ✓
-            </div>
-
-            Journey Details
-
-        </div>
+        <div
+            id="routeMap"
+            class="route-map"
+        ></div>
 
 
-        <div class="progress-line active"></div>
+        <aside class="route-summary">
 
+            <div class="summary-heading">
 
-        <div class="progress-step active">
-
-            <div class="progress-circle">
-                2
-            </div>
-
-            Route Preview
-
-        </div>
-
-
-        <div class="progress-line"></div>
-
-
-        <div class="progress-step">
-
-            <div class="progress-circle">
-                3
-            </div>
-
-            Find Matches
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         ROUTE LAYOUT
-         ================================================= -->
-
-    <div class="route-layout">
-
-
-        <!-- =================================================
-             MAP
-             ================================================= -->
-
-        <section class="map-card">
-
-            <div
-                id="mapLoading"
-                class="map-loading">
-
-                <span class="loading-dot"></span>
-
-                Calculating route...
-
-            </div>
-
-
-            <div id="map"></div>
-
-
-            <div class="map-bottom">
-
-                <div class="map-route-label">
-
-                    <strong id="mapDistance">
-                        Calculating...
-                    </strong>
-
-                    <br>
-
-                    <span>
-                        Actual road route
-                    </span>
-
-                </div>
-
-
-                <div class="map-route-label">
-
-                    Powered by
-                    <strong>
-                        Geoapify
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SUMMARY
-             ================================================= -->
-
-        <aside class="summary-card">
-
-
-            <div class="summary-header">
+                <p class="eyebrow">
+                    JOURNEY SUMMARY
+                </p>
 
                 <h2>
-                    Route summary
+                    Route Details
                 </h2>
 
-                <span class="route-badge">
-                    ROUTE FOUND
+            </div>
+
+
+            <div class="route-point">
+
+                <span class="route-marker pickup-marker">
+                    A
                 </span>
 
-            </div>
+                <div>
 
+                    <small>
+                        Pickup
+                    </small>
 
-            <!-- ROUTE POINTS -->
-
-            <div class="route-points">
-
-
-                <div class="route-point">
-
-                    <div class="point-column">
-
-                        <div class="point-dot"></div>
-
-                        <div class="point-line"></div>
-
-                    </div>
-
-
-                    <div class="point-info">
-
-                        <div class="label">
-                            PICKUP
-                        </div>
-
-                        <div
-                            id="pickupName"
-                            class="location">
-
-                            Loading...
-
-                        </div>
-
-                    </div>
+                    <strong id="pickupName">
+                        Loading...
+                    </strong>
 
                 </div>
-
-
-                <div class="route-point">
-
-                    <div class="point-column">
-
-                        <div class="point-dot"></div>
-
-                    </div>
-
-
-                    <div class="point-info">
-
-                        <div class="label">
-                            DESTINATION
-                        </div>
-
-                        <div
-                            id="destinationName"
-                            class="location">
-
-                            Loading...
-
-                        </div>
-
-                    </div>
-
-                </div>
-
 
             </div>
 
 
-            <!-- STATS -->
+            <div class="route-connector"></div>
+
+
+            <div class="route-point">
+
+                <span class="route-marker destination-marker">
+                    B
+                </span>
+
+                <div>
+
+                    <small>
+                        Destination
+                    </small>
+
+                    <strong id="destinationName">
+                        Loading...
+                    </strong>
+
+                </div>
+
+            </div>
+
 
             <div class="summary-stats">
 
+                <div>
 
-                <div class="stat">
+                    <span>Distance</span>
 
-                    <div class="stat-icon">
-                        📏
-                    </div>
-
-                    <div>
-
-                        <div class="stat-label">
-                            Distance
-                        </div>
-
-                        <div
-                            id="distanceValue"
-                            class="stat-value">
-
-                            —
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-icon">
-                        🕐
-                    </div>
-
-                    <div>
-
-                        <div class="stat-label">
-                            Travel time
-                        </div>
-
-                        <div
-                            id="durationValue"
-                            class="stat-value">
-
-                            —
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-icon">
-                        📅
-                    </div>
-
-                    <div>
-
-                        <div class="stat-label">
-                            Departure
-                        </div>
-
-                        <div
-                            id="departureValue"
-                            class="stat-value">
-
-                            —
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- COST -->
-
-            <div class="cost-box">
-
-                <div class="cost-title">
-                    💰 ESTIMATED JOURNEY COST
-                </div>
-
-                <div
-                    id="totalCost"
-                    class="cost-amount">
-
-                    ₹—
-
-                </div>
-
-
-                <div class="cost-share">
-
-                    <span>
-                        Estimated cost share
-                    </span>
-
-                    <strong id="costShare">
-                        ₹—
+                    <strong id="routeDistance">
+                        --
                     </strong>
 
                 </div>
 
 
-                <div class="cost-note">
+                <div>
 
-                    Estimate for demonstration.
-                    Actual cost may vary.
+                    <span>Travel Time</span>
+
+                    <strong id="routeTime">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Estimated Journey Cost</span>
+
+                    <strong id="estimatedCost">
+                        --
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Your Estimated Cost Share</span>
+
+                    <strong id="costShare">
+                        --
+                    </strong>
 
                 </div>
 
             </div>
 
 
-            <!-- ERROR -->
+            <p class="estimate-note">
+                Estimate for demonstration. Actual cost may vary.
+                This is a cost-sharing estimate, not a commercial taxi fare.
+            </p>
 
-            <div
-                id="routeError"
-                class="route-error">
-
-            </div>
-
-
-            <!-- ACTIONS -->
 
             <div class="route-actions">
 
                 <button
-                    id="editJourneyBtn"
-                    class="edit-btn">
-
+                    id="editBtn"
+                    class="secondary-btn"
+                >
                     ← Edit Journey
-
                 </button>
 
-
                 <button
-                    id="findMatchesBtn"
-                    class="matches-btn"
-                    disabled>
-
-                    Find Matches →
-
+                    id="continueBtn"
+                    class="primary-btn"
+                    disabled
+                >
+                    Find Matching Journeys →
                 </button>
 
             </div>
 
-
         </aside>
 
-
-    </div>
-
-</div>
+    </section>
 
 </main>
 
 
-<!-- =====================================================
-     LEAFLET
-     ===================================================== -->
+<script src="app.js"></script>
 
 <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
 
-
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
 
 <script type="module">
 
 import {
-    protectPage,
-    logoutUser
+    protectPage
 } from "./firebase-auth.js";
+
 
 import {
     getGeoapifyRoute,
@@ -1021,862 +249,232 @@ import {
 } from "./geoapify.js";
 
 
-/* =====================================================
-   AUTH
-   ===================================================== */
-
-const user =
-    await protectPage();
+await protectPage();
 
 
-if(!user){
-
-    throw new Error(
-        "User is not authenticated."
-    );
-
-}
-
-
-document.getElementById(
-    "navUserName"
-).textContent =
-    user.displayName || "Commuter";
-
-
-/* =====================================================
-   LOGOUT
-   ===================================================== */
-
-document.getElementById(
-    "logoutBtn"
-).addEventListener(
-    "click",
-    async () => {
-
-        await logoutUser();
-
-        window.location.href =
-            "login.html";
-
-    }
-);
-
-
-/* =====================================================
-   GET JOURNEY FROM SESSION STORAGE
-   ===================================================== */
-
-const storedJourney =
-    sessionStorage.getItem(
-        "smartCommuteCurrentJourney"
+const journey =
+    JSON.parse(
+        sessionStorage.getItem(
+            "smartCommuteCurrentJourney"
+        )
     );
 
 
-if(!storedJourney){
-
-    alert(
-        "Journey details were not found. Please enter your journey again."
-    );
-
-    window.location.href =
-        "find-ride.html";
-
-    throw new Error(
-        "No journey found in sessionStorage."
-    );
-
-}
-
-
-let journey;
-
-
-try{
-
-    journey =
-        JSON.parse(storedJourney);
-
-}catch(error){
-
-    console.error(error);
-
-    alert(
-        "Journey data is invalid. Please try again."
-    );
-
-    window.location.href =
-        "find-ride.html";
-
-    throw error;
-
-}
-
-
-/* =====================================================
-   CHECK LOCATION DATA
-   ===================================================== */
-
-if(
+if (
+    !journey ||
     !journey.pickup ||
-    !journey.destination ||
-    !Number.isFinite(Number(journey.pickup.lat)) ||
-    !Number.isFinite(Number(journey.pickup.lng)) ||
-    !Number.isFinite(Number(journey.destination.lat)) ||
-    !Number.isFinite(Number(journey.destination.lng))
-){
-
-    alert(
-        "Pickup or destination location is missing. Please select locations again."
-    );
+    !journey.destination
+) {
 
     window.location.href =
         "find-ride.html";
 
     throw new Error(
-        "Invalid journey locations."
+        "Journey information missing."
     );
-
 }
 
-
-/* =====================================================
-   ELEMENTS
-   ===================================================== */
-
-const mapLoading =
-    document.getElementById(
-        "mapLoading"
-    );
-
-const routeError =
-    document.getElementById(
-        "routeError"
-    );
-
-const findMatchesBtn =
-    document.getElementById(
-        "findMatchesBtn"
-    );
-
-
-/* =====================================================
-   SHOW JOURNEY INFORMATION
-   ===================================================== */
 
 document.getElementById(
     "pickupName"
 ).textContent =
-    journey.pickup.name ||
-    journey.pickup.formatted ||
-    "Pickup location";
+    journey.pickup.formatted;
 
 
 document.getElementById(
     "destinationName"
 ).textContent =
-    journey.destination.name ||
-    journey.destination.formatted ||
-    "Destination";
+    journey.destination.formatted;
 
 
-document.getElementById(
-    "departureValue"
-).textContent =
-    formatDeparture(
-        journey.date,
-        journey.time
-    );
-
-
-/* =====================================================
-   FORMAT DEPARTURE
-   ===================================================== */
-
-function formatDeparture(
-    date,
-    time
-){
-
-    if(!date && !time){
-
-        return "—";
-
-    }
-
-
-    if(!time){
-
-        return date || "—";
-
-    }
-
-
-    const parts =
-        time.split(":");
-
-
-    let hour =
-        Number(parts[0]);
-
-    const minute =
-        parts[1] || "00";
-
-
-    const period =
-        hour >= 12
-            ? "PM"
-            : "AM";
-
-
-    hour =
-        hour % 12 || 12;
-
-
-    return `${date || ""} ${hour}:${minute} ${period}`;
-
-}
-
-
-/* =====================================================
-   INITIALIZE MAP
-   ===================================================== */
+// --------------------------------------------------
+// MAP
+// --------------------------------------------------
 
 const map =
-    L.map(
-        "map",
-        {
-            zoomControl:true
-        }
-    );
+    L.map("routeMap");
 
-
-/*
- * Do not use an incorrect Leaflet integrity hash.
- */
 
 L.tileLayer(
     `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${window.GEOAPIFY_API_KEY}`,
     {
-        maxZoom:20,
+        maxZoom: 20,
         attribution:
-            '© OpenStreetMap contributors © Geoapify'
+            "© OpenStreetMap contributors © Geoapify"
     }
 ).addTo(map);
-
-
-/* Initial view */
-
-map.setView(
-    [
-        Number(journey.pickup.lat),
-        Number(journey.pickup.lng)
-    ],
-    14
-);
-
-
-/* =====================================================
-   MARKER ICONS
-   ===================================================== */
-
-const pickupIcon =
-    L.divIcon({
-
-        className:"",
-        
-        html:`
-            <div class="custom-marker">
-                <span>A</span>
-            </div>
-        `,
-
-        iconSize:[31,31],
-
-        iconAnchor:[8,29],
-
-        popupAnchor:[8,-28]
-
-    });
-
-
-const destinationIcon =
-    L.divIcon({
-
-        className:"",
-
-        html:`
-            <div
-                class="custom-marker"
-                style="background:#d94b45;">
-                <span>B</span>
-            </div>
-        `,
-
-        iconSize:[31,31],
-
-        iconAnchor:[8,29],
-
-        popupAnchor:[8,-28]
-
-    });
 
 
 const pickupMarker =
     L.marker(
         [
-            Number(journey.pickup.lat),
-            Number(journey.pickup.lng)
-        ],
-        {
-            icon:pickupIcon
-        }
+            journey.pickup.lat,
+            journey.pickup.lng
+        ]
     )
     .addTo(map)
-    .bindPopup(
-        `<strong>Pickup</strong><br>${escapeHtml(
-            journey.pickup.name ||
-            journey.pickup.formatted ||
-            ""
-        )}`
-    );
+    .bindPopup("Pickup");
 
 
 const destinationMarker =
     L.marker(
         [
-            Number(journey.destination.lat),
-            Number(journey.destination.lng)
-        ],
-        {
-            icon:destinationIcon
-        }
+            journey.destination.lat,
+            journey.destination.lng
+        ]
     )
     .addTo(map)
-    .bindPopup(
-        `<strong>Destination</strong><br>${escapeHtml(
-            journey.destination.name ||
-            journey.destination.formatted ||
-            ""
-        )}`
+    .bindPopup("Destination");
+
+
+const bounds =
+    L.latLngBounds(
+        [
+            journey.pickup.lat,
+            journey.pickup.lng
+        ],
+        [
+            journey.destination.lat,
+            journey.destination.lng
+        ]
     );
 
 
-/* =====================================================
-   ROUTE LAYER
-   ===================================================== */
-
-let routeLayer = null;
-
-
-/* =====================================================
-   LOAD ROUTE
-   ===================================================== */
-
-async function loadRoute(){
-
-    try{
-
-        mapLoading.style.display =
-            "flex";
-
-
-        routeError.classList.remove(
-            "show"
-        );
-
-
-        /*
-         * Geoapify routing.
-         *
-         * The helper function from geoapify.js
-         * handles the API request.
-         */
-
-        const route =
-            await getGeoapifyRoute(
-                [
-                    journey.pickup,
-                    journey.destination
-                ]
-            );
-
-
-        if(!route){
-
-            throw new Error(
-                "No route was returned by Geoapify."
-            );
-
-        }
-
-
-        console.log(
-            "Geoapify route:",
-            route
-        );
-
-
-        /* =================================================
-           GET DISTANCE
-           ================================================= */
-
-        let distanceKm = 0;
-
-        let durationMin = 0;
-
-
-        /*
-         * Support the common Geoapify response
-         * formats used by the helper.
-         */
-
-        if(route.distance != null){
-
-            distanceKm =
-                Number(route.distance) / 1000;
-
-        }
-
-        if(route.time != null){
-
-            durationMin =
-                Number(route.time) / 60;
-
-        }
-
-
-        /*
-         * If helper returns a feature,
-         * read values from properties.
-         */
-
-        if(
-            route.properties &&
-            route.properties.distance != null
-        ){
-
-            distanceKm =
-                Number(
-                    route.properties.distance
-                ) / 1000;
-
-        }
-
-
-        if(
-            route.properties &&
-            route.properties.time != null
-        ){
-
-            durationMin =
-                Number(
-                    route.properties.time
-                ) / 60;
-
-        }
-
-
-        if(
-            (!distanceKm || !durationMin) &&
-            route.features &&
-            route.features.length
-        ){
-
-            const properties =
-                route.features[0].properties || {};
-
-
-            if(properties.distance != null){
-
-                distanceKm =
-                    Number(
-                        properties.distance
-                    ) / 1000;
-
-            }
-
-
-            if(properties.time != null){
-
-                durationMin =
-                    Number(
-                        properties.time
-                    ) / 60;
-
-            }
-
-        }
-
-
-        /* =================================================
-           DRAW GEOJSON
-           ================================================= */
-
-        let geojson = null;
-
-
-        if(route.type === "FeatureCollection"){
-
-            geojson =
-                route;
-
-        }
-
-        else if(
-            route.geojson &&
-            route.geojson.type
-        ){
-
-            geojson =
-                route.geojson;
-
-        }
-
-        else if(
-            route.geometry
-        ){
-
-            geojson = {
-
-                type:"Feature",
-
-                properties:{},
-
-                geometry:
-                    route.geometry
-
-            };
-
-        }
-
-        else if(
-            route.features &&
-            route.features.length
-        ){
-
-            geojson = {
-
-                type:"FeatureCollection",
-
-                features:
-                    route.features
-
-            };
-
-        }
-
-
-        if(geojson){
-
-            routeLayer =
-                L.geoJSON(
-                    geojson,
-                    {
-                        style:{
-                            color:"#087a52",
-                            weight:6,
-                            opacity:.9
-                        }
-                    }
-                ).addTo(map);
-
-
-            const bounds =
-                routeLayer.getBounds();
-
-
-            if(bounds.isValid()){
-
-                map.fitBounds(
-                    bounds,
-                    {
-                        padding:[40,40]
-                    }
-                );
-
-            }
-
-        }
-
-
-        /* =================================================
-           FORMAT VALUES
-           ================================================= */
-
-        let distanceText;
-
-        let durationText;
-
-
-        if(
-            typeof formatDistance ===
-            "function"
-        ){
-
-            distanceText =
-                formatDistance(
-                    distanceKm * 1000
-                );
-
-        }else{
-
-            distanceText =
-                `${distanceKm.toFixed(1)} km`;
-
-        }
-
-
-        if(
-            typeof formatDuration ===
-            "function"
-        ){
-
-            durationText =
-                formatDuration(
-                    durationMin * 60
-                );
-
-        }else{
-
-            durationText =
-                `${Math.round(durationMin)} min`;
-
-        }
-
-
-        /* =================================================
-           ESTIMATED COST
-           ================================================= */
-
-        const estimatedCost =
-            calculateEstimatedCost(
-                distanceKm
-            );
-
-
-        const seats =
-            Number(
-                journey.seats || 1
-            );
-
-
-        /*
-         * For the requester, demonstrate
-         * cost sharing across two participants.
-         */
-
-        const participants =
-            Math.max(
-                2,
-                seats + 1
-            );
-
-
-        const costShare =
-            Math.ceil(
-                estimatedCost /
-                participants
-            );
-
-
-        /* =================================================
-           UPDATE UI
-           ================================================= */
-
-        document.getElementById(
-            "distanceValue"
-        ).textContent =
-            distanceText;
-
-
-        document.getElementById(
-            "durationValue"
-        ).textContent =
-            durationText;
-
-
-        document.getElementById(
-            "mapDistance"
-        ).textContent =
-            distanceText;
-
-
-        document.getElementById(
-            "totalCost"
-        ).textContent =
-            `₹${estimatedCost}`;
-
-
-        document.getElementById(
-            "costShare"
-        ).textContent =
-            `₹${costShare}`;
-
-
-        /* =================================================
-           SAVE ROUTE DATA
-           ================================================= */
-
-        const updatedJourney = {
-
-            ...journey,
-
-            routeDistanceKm:
-                distanceKm,
-
-            routeDurationMin:
-                durationMin,
-
-            estimatedJourneyCost:
-                estimatedCost,
-
-            estimatedCostShare:
-                costShare,
-
-            routeGeoJSON:
-                geojson || null
-
-        };
-
-
-        sessionStorage.setItem(
-            "smartCommuteCurrentJourney",
-            JSON.stringify(
-                updatedJourney
-            )
-        );
-
-
-        /* =================================================
-           ENABLE NEXT BUTTON
-           ================================================= */
-
-        findMatchesBtn.disabled =
-            false;
-
-
-        findMatchesBtn.textContent =
-            "Find Matches →";
-
-
-        mapLoading.style.display =
-            "none";
-
-
-        /*
-         * Make sure Leaflet calculates its
-         * container size correctly.
-         */
-
-        setTimeout(
-            () => {
-
-                map.invalidateSize();
-
-            },
-            150
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "Route loading failed:",
-            error
-        );
-
-
-        mapLoading.style.display =
-            "none";
-
-
-        routeError.textContent =
-            "We could not calculate the route. Please go back and check your pickup and destination.";
-
-
-        routeError.classList.add(
-            "show"
-        );
-
-
-        findMatchesBtn.disabled =
-            true;
-
-    }
-
-}
-
-
-/* =====================================================
-   COST CALCULATION
-   ===================================================== */
-
-function calculateEstimatedCost(
-    distanceKm
-){
-
-    /*
-     * Prototype cost estimate.
-     * This is NOT a taxi fare.
-     *
-     * Approximate vehicle/fuel cost
-     * used only to demonstrate cost sharing.
-     */
-
-    const baseCost = 25;
-
-    const perKm = 11;
-
-
-    const cost =
-        baseCost +
-        (distanceKm * perKm);
-
-
-    return Math.max(
-        30,
-        Math.round(cost)
-    );
-
-}
-
-
-/* =====================================================
-   FIND MATCHES
-   ===================================================== */
-
-findMatchesBtn.addEventListener(
-    "click",
-    () => {
-
-        if(findMatchesBtn.disabled){
-
-            return;
-
-        }
-
-
-        findMatchesBtn.disabled =
-            true;
-
-        findMatchesBtn.textContent =
-            "Finding matches...";
-
-
-        window.location.href =
-            "match-results.html";
-
+map.fitBounds(
+    bounds,
+    {
+        padding: [50, 50]
     }
 );
 
 
-/* =====================================================
-   EDIT JOURNEY
-   ===================================================== */
+// --------------------------------------------------
+// ROUTE
+// --------------------------------------------------
+
+try {
+
+    const route =
+        await getGeoapifyRoute(
+            [
+                journey.pickup,
+                journey.destination
+            ]
+        );
+
+
+    const distance =
+        Number(route.distance || 0);
+
+
+    const time =
+        Number(route.time || 0);
+
+
+    if (!distance) {
+
+        throw new Error(
+            "Route distance could not be calculated."
+        );
+
+    }
+
+
+    L.geoJSON(
+        route.geojson,
+        {
+            style: {
+                weight: 6,
+                opacity: 0.85
+            }
+        }
+    ).addTo(map);
+
+
+    document.getElementById(
+        "routeDistance"
+    ).textContent =
+        formatDistance(distance);
+
+
+    document.getElementById(
+        "routeTime"
+    ).textContent =
+        formatDuration(time);
+
+
+    const distanceKm =
+        distance / 1000;
+
+
+    const estimatedCost =
+        calculateEstimatedJourneyCost(
+            distanceKm
+        );
+
+
+    const costShare =
+        calculateCostShare(
+            estimatedCost,
+            2
+        );
+
+
+    document.getElementById(
+        "estimatedCost"
+    ).textContent =
+        `₹${estimatedCost}`;
+
+
+    document.getElementById(
+        "costShare"
+    ).textContent =
+        `₹${costShare}`;
+
+
+    journey.route = {
+
+        distance,
+
+        time,
+
+        distanceKm,
+
+        estimatedCost,
+
+        estimatedCostShare: costShare
+
+    };
+
+
+    sessionStorage.setItem(
+        "smartCommuteCurrentJourney",
+        JSON.stringify(journey)
+    );
+
+
+    document.getElementById(
+        "continueBtn"
+    ).disabled = false;
+
+
+} catch (error) {
+
+    console.error(error);
+
+    alert(
+        "Unable to calculate the route. Please check your Geoapify API key and try again."
+    );
+
+}
+
+
+// --------------------------------------------------
+// BUTTONS
+// --------------------------------------------------
 
 document.getElementById(
-    "editJourneyBtn"
+    "editBtn"
 ).addEventListener(
     "click",
     () => {
@@ -1888,45 +486,19 @@ document.getElementById(
 );
 
 
-/* =====================================================
-   ESCAPE HTML
-   ===================================================== */
+document.getElementById(
+    "continueBtn"
+).addEventListener(
+    "click",
+    () => {
 
-function escapeHtml(value){
+        window.location.href =
+            "match-results.html";
 
-    return String(value)
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
-
-}
-
-
-/* =====================================================
-   START
-   ===================================================== */
-
-loadRoute();
+    }
+);
 
 </script>
-
 
 </body>
 </html>
