@@ -1,390 +1,218 @@
 /* =========================================================
-   SMART COMMUTE - GEOAPIFY
-   Address search + real road routing
-   ========================================================= */
+   SMART COMMUTE - GEOAPIFY INTEGRATION
+========================================================= */
+
+/*
+   Replace this with your NEW Geoapify browser API key.
+
+   Do not use the old key if you previously exposed it publicly.
+*/
 
 const GEOAPIFY_API_KEY = "89398d24d2e345349d6755ab088d4f3d";
 
 
 /* =========================================================
    ADDRESS AUTOCOMPLETE
-   ========================================================= */
+========================================================= */
 
-async function geoapifyAutocomplete(text) {
+async function searchGeoapifyPlaces(text) {
 
-    if (!text || text.trim().length < 3) {
+    if (!text || text.trim().length < 2) {
         return [];
     }
 
-    const url =
-        "https://api.geoapify.com/v1/geocode/autocomplete?" +
-        "text=" + encodeURIComponent(text) +
-        "&format=json" +
-        "&limit=5" +
-        "&filter=countrycode:in" +
-        "&apiKey=" + GEOAPIFY_API_KEY;
+    if (
+        !GEOAPIFY_API_KEY ||
+        GEOAPIFY_API_KEY === "YOUR_NEW_GEOAPIFY_API_KEY"
+    ) {
+        throw new Error("Geoapify API key is not configured.");
+    }
 
-    try {
+    const params = new URLSearchParams({
+        text: text.trim(),
+        format: "json",
+        limit: "5",
+        filter: "countrycode:in",
+        apiKey: GEOAPIFY_API_KEY
+    });
 
-        const response = await fetch(url);
+    const response = await fetch(
+        `https://api.geoapify.com/v1/geocode/autocomplete?${params}`
+    );
 
-        if (!response.ok) {
-            throw new Error("Geoapify autocomplete failed");
-        }
-
-        const data = await response.json();
-
-        return data.results || [];
-
-    } catch (error) {
-
-        console.error(
-            "Geoapify autocomplete error:",
-            error
+    if (!response.ok) {
+        throw new Error(
+            `Geoapify geocoding failed: ${response.status}`
         );
-
-        return [];
     }
-}
 
+    const data = await response.json();
 
-/* =========================================================
-   AUTOCOMPLETE UI
-   ========================================================= */
+    return (data.results || []).map((place) => ({
+        name:
+            place.formatted ||
+            place.address_line1 ||
+            "Unknown location",
 
-function setupGeoapifyAutocomplete(inputId) {
+        address:
+            place.formatted ||
+            place.address_line1 ||
+            "",
 
-    const input =
-        document.getElementById(inputId);
+        lat: Number(place.lat),
+        lng: Number(place.lon),
 
-    if (!input) return;
+        city:
+            place.city ||
+            place.county ||
+            "",
 
-    const wrapper =
-        input.parentElement;
+        state:
+            place.state ||
+            "",
 
-    wrapper.style.position = "relative";
-
-    const box =
-        document.createElement("div");
-
-    box.className =
-        "geoapify-suggestions";
-
-    box.style.position = "absolute";
-    box.style.left = "0";
-    box.style.right = "0";
-    box.style.top = "100%";
-    box.style.background = "#ffffff";
-    box.style.border = "1px solid #ddd";
-    box.style.borderRadius = "12px";
-    box.style.marginTop = "5px";
-    box.style.zIndex = "9999";
-    box.style.boxShadow =
-        "0 12px 30px rgba(0,0,0,.12)";
-    box.style.display = "none";
-    box.style.overflow = "hidden";
-
-    wrapper.appendChild(box);
-
-    let timer = null;
-
-    input.addEventListener(
-        "input",
-        function () {
-
-            clearTimeout(timer);
-
-            const value =
-                input.value.trim();
-
-            if (value.length < 3) {
-
-                box.innerHTML = "";
-                box.style.display = "none";
-
-                return;
-            }
-
-            timer = setTimeout(
-                async function () {
-
-                    const results =
-                        await geoapifyAutocomplete(value);
-
-                    box.innerHTML = "";
-
-                    if (!results.length) {
-                        box.style.display = "none";
-                        return;
-                    }
-
-                    results.forEach(
-                        function (place) {
-
-                            const item =
-                                document.createElement("div");
-
-                            item.style.padding =
-                                "13px 15px";
-
-                            item.style.cursor =
-                                "pointer";
-
-                            item.style.borderBottom =
-                                "1px solid #eee";
-
-                            item.style.fontSize =
-                                "14px";
-
-                            item.textContent =
-                                place.formatted ||
-                                place.address_line1 ||
-                                "Location";
-
-                            item.addEventListener(
-                                "mouseenter",
-                                function () {
-                                    item.style.background =
-                                        "#f5f7fb";
-                                }
-                            );
-
-                            item.addEventListener(
-                                "mouseleave",
-                                function () {
-                                    item.style.background =
-                                        "#fff";
-                                }
-                            );
-
-                            item.addEventListener(
-                                "click",
-                                function () {
-
-                                    input.value =
-                                        place.formatted ||
-                                        place.address_line1 ||
-                                        "";
-
-                                    input.dataset.lat =
-                                        place.lat;
-
-                                    input.dataset.lng =
-                                        place.lon;
-
-                                    input.dataset.formatted =
-                                        place.formatted || "";
-
-                                    input.dataset.city =
-                                        place.city || "";
-
-                                    box.innerHTML = "";
-
-                                    box.style.display =
-                                        "none";
-
-                                    input.dispatchEvent(
-                                        new Event(
-                                            "change",
-                                            {
-                                                bubbles: true
-                                            }
-                                        )
-                                    );
-                                }
-                            );
-
-                            box.appendChild(item);
-                        }
-                    );
-
-                    box.style.display = "block";
-
-                },
-                350
-            );
-        }
-    );
-
-    document.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                !wrapper.contains(event.target)
-            ) {
-                box.style.display =
-                    "none";
-            }
-        }
-    );
+        country:
+            place.country ||
+            "India"
+    }));
 }
 
 
 /* =========================================================
    ROUTING
-   ========================================================= */
+========================================================= */
 
-async function getGeoapifyRoute(
-    points
-) {
+async function getGeoapifyRoute(locations) {
 
-    if (
-        !points ||
-        points.length < 2
-    ) {
-        throw new Error(
-            "At least two route points are required."
-        );
+    if (!Array.isArray(locations) || locations.length < 2) {
+        throw new Error("At least two locations are required.");
     }
 
-    const waypoints =
-        points
-            .map(
-                function (point) {
-                    return (
-                        point.lat +
-                        "," +
-                        point.lng
-                    );
-                }
-            )
-            .join("|");
+    if (
+        !GEOAPIFY_API_KEY ||
+        GEOAPIFY_API_KEY === "YOUR_NEW_GEOAPIFY_API_KEY"
+    ) {
+        throw new Error("Geoapify API key is not configured.");
+    }
 
-    const url =
-        "https://api.geoapify.com/v1/routing?" +
-        "waypoints=" +
-        encodeURIComponent(waypoints) +
-        "&mode=drive" +
-        "&format=geojson" +
-        "&intermediate_waypoint_mode=stopover" +
-        "&apiKey=" +
-        GEOAPIFY_API_KEY;
+    const waypoints = locations
+        .map((location) => {
+            return `${Number(location.lat)},${Number(location.lng)}`;
+        })
+        .join("|");
 
-    const response =
-        await fetch(url);
+    const params = new URLSearchParams({
+        waypoints: waypoints,
+        mode: "drive",
+        format: "geojson",
+        intermediate_waypoint_mode: "stopover",
+        apiKey: GEOAPIFY_API_KEY
+    });
+
+    const response = await fetch(
+        `https://api.geoapify.com/v1/routing?${params}`
+    );
 
     if (!response.ok) {
         throw new Error(
-            "Unable to calculate road route."
+            `Geoapify routing failed: ${response.status}`
         );
     }
 
-    const data =
-        await response.json();
+    const geojson = await response.json();
+
+    let distanceMeters = 0;
+    let timeSeconds = 0;
 
     if (
-        !data.features ||
-        !data.features.length
+        geojson &&
+        geojson.properties &&
+        Array.isArray(geojson.properties.legs)
     ) {
-        throw new Error(
-            "No route found."
-        );
+
+        for (const leg of geojson.properties.legs) {
+
+            if (typeof leg.distance === "number") {
+                distanceMeters += leg.distance;
+            }
+
+            if (typeof leg.time === "number") {
+                timeSeconds += leg.time;
+            }
+        }
     }
 
-    const feature =
-        data.features[0];
+    /*
+       Some Geoapify responses provide summary information.
+       Use it when available.
+    */
 
-    const properties =
-        feature.properties || {};
+    if (
+        geojson.properties &&
+        geojson.properties.distance !== undefined
+    ) {
+        distanceMeters =
+            Number(geojson.properties.distance) ||
+            distanceMeters;
+    }
+
+    if (
+        geojson.properties &&
+        geojson.properties.time !== undefined
+    ) {
+        timeSeconds =
+            Number(geojson.properties.time) ||
+            timeSeconds;
+    }
 
     return {
-
-        geojson: feature,
-
-        distance:
-            properties.distance || 0,
-
-        time:
-            properties.time || 0,
-
-        distanceKm:
-            (properties.distance || 0) / 1000,
-
-        timeMinutes:
-            (properties.time || 0) / 60
+        geojson: geojson,
+        distance: distanceMeters,
+        time: timeSeconds
     };
 }
 
 
 /* =========================================================
-   SAVE SELECTED LOCATION
-   ========================================================= */
+   FORMAT HELPERS
+========================================================= */
 
-function getSelectedGeoLocation(
-    inputId
-) {
+function formatDistance(km) {
 
-    const input =
-        document.getElementById(inputId);
+    const value = Number(km) || 0;
 
-    if (!input) return null;
-
-    const lat =
-        parseFloat(input.dataset.lat);
-
-    const lng =
-        parseFloat(input.dataset.lng);
-
-    if (
-        Number.isNaN(lat) ||
-        Number.isNaN(lng)
-    ) {
-        return null;
+    if (value < 1) {
+        return `${Math.round(value * 1000)} m`;
     }
 
-    return {
-
-        lat: lat,
-        lng: lng,
-
-        name:
-            input.value.trim(),
-
-        formatted:
-            input.dataset.formatted ||
-            input.value.trim()
-    };
+    return `${value.toFixed(1)} km`;
 }
 
 
-/* =========================================================
-   INITIALIZE AUTOCOMPLETE
-   ========================================================= */
+function formatDuration(minutes) {
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    const total = Math.max(
+        0,
+        Math.round(Number(minutes) || 0)
+    );
 
-        setupGeoapifyAutocomplete(
-            "pickup"
-        );
+    const hours = Math.floor(total / 60);
+    const mins = total % 60;
 
-        setupGeoapifyAutocomplete(
-            "destination"
-        );
-
-        setupGeoapifyAutocomplete(
-            "offerPickup"
-        );
-
-        setupGeoapifyAutocomplete(
-            "offerDestination"
-        );
-
+    if (hours > 0) {
+        return `${hours} hr ${mins} min`;
     }
-);
+
+    return `${mins} min`;
+}
 
 
 /* =========================================================
    EXPORT
-   ========================================================= */
+========================================================= */
 
-window.geoapifyAutocomplete =
-    geoapifyAutocomplete;
-
-window.getGeoapifyRoute =
-    getGeoapifyRoute;
-
-window.getSelectedGeoLocation =
-    getSelectedGeoLocation;
+window.GEOAPIFY_API_KEY = GEOAPIFY_API_KEY;
+window.searchGeoapifyPlaces = searchGeoapifyPlaces;
+window.getGeoapifyRoute = getGeoapifyRoute;
+window.formatDistance = formatDistance;
+window.formatDuration = formatDuration;
