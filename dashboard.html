@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,9 @@
 
     <a href="dashboard.html" class="app-brand">
 
-        <div class="brand-icon">SC</div>
+        <div class="brand-icon">
+            SC
+        </div>
 
         <div>
             <strong>Smart Commute</strong>
@@ -41,7 +44,11 @@
 
         </div>
 
-        <button id="logoutBtn" class="logout-btn">
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+            type="button"
+        >
             Log out
         </button>
 
@@ -73,10 +80,13 @@
         </div>
 
         <div class="dashboard-date">
+
             <span>YOUR ACCOUNT</span>
+
             <strong id="dashboardEmail">
                 —
             </strong>
+
         </div>
 
     </section>
@@ -88,6 +98,7 @@
         <!-- FIND A RIDE -->
 
         <button
+            type="button"
             class="action-card find-card"
             onclick="goToFindRide()"
         >
@@ -137,6 +148,7 @@
         <!-- OFFER A RIDE -->
 
         <button
+            type="button"
             class="action-card offer-card"
             onclick="goToOfferRide()"
         >
@@ -187,18 +199,23 @@
 
     <section class="dashboard-info">
 
-        <div class="info-icon">i</div>
+        <div class="info-icon">
+            i
+        </div>
 
         <div>
+
             <strong>
                 Your account works for both options
             </strong>
 
             <p>
                 You don't need to select a permanent role.
-                Choose <b>Find a Ride</b> or <b>Offer a Ride</b>
+                Choose <b>Find a Ride</b> or
+                <b>Offer a Ride</b>
                 whenever you need it.
             </p>
+
         </div>
 
     </section>
@@ -206,85 +223,151 @@
 </main>
 
 
+<!-- =====================================================
+     EXISTING WEBSITE JAVASCRIPT
+     IMPORTANT: KEEP THIS
+     ===================================================== -->
+
+<script src="app.js"></script>
+
+
+<!-- =====================================================
+     FIREBASE AUTHENTICATION
+     ===================================================== -->
+
 <script type="module">
 
-import {
-    auth,
-    protectPage,
-    getUserProfile
-} from "./firebase-auth.js";
+    import {
+        auth,
+        protectPage,
+        getUserProfile
+    } from "./firebase-auth.js";
 
 
-protectPage();
+    /*
+     * Protect this page.
+     *
+     * If the user is not logged in,
+     * firebase-auth.js redirects them
+     * to login.html.
+     */
+
+    protectPage();
 
 
-import {
-    onAuthStateChanged
-} from
-"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+    import {
+        onAuthStateChanged
+    } from
+    "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-onAuthStateChanged(
-    auth,
-    async function (user) {
+    /*
+     * Load the authenticated user's
+     * Firestore profile.
+     */
 
-        if (!user) return;
+    onAuthStateChanged(
+        auth,
+        async function (user) {
 
+            /*
+             * No authenticated user.
+             */
 
-        const profile =
-            await getUserProfile(
-                user.uid
-            );
-
-
-        if (!profile) return;
-
-
-        const nameElement =
-            document.getElementById(
-                "dashboardUserName"
-            );
+            if (!user) {
+                return;
+            }
 
 
-        const emailElement =
-            document.getElementById(
-                "dashboardEmail"
-            );
+            /*
+             * Get profile from Firestore.
+             */
+
+            const profile =
+                await getUserProfile(user.uid);
 
 
-        const avatarElement =
-            document.getElementById(
-                "userAvatar"
-            );
+            /*
+             * If profile doesn't exist,
+             * don't try to display it.
+             */
+
+            if (!profile) {
+                return;
+            }
 
 
-        if (nameElement) {
+            /*
+             * Dashboard elements.
+             */
 
-            nameElement.textContent =
-                profile.fullName;
-
-        }
-
-
-        if (emailElement) {
-
-            emailElement.textContent =
-                profile.email;
-
-        }
+            const nameElement =
+                document.getElementById(
+                    "dashboardUserName"
+                );
 
 
-        if (avatarElement) {
+            const emailElement =
+                document.getElementById(
+                    "dashboardEmail"
+                );
 
-            avatarElement.textContent =
+
+            const avatarElement =
+                document.getElementById(
+                    "userAvatar"
+                );
+
+
+            /*
+             * Display user's name.
+             */
+
+            if (
+                nameElement &&
                 profile.fullName
-                    .charAt(0)
-                    .toUpperCase();
+            ) {
+
+                nameElement.textContent =
+                    profile.fullName;
+
+            }
+
+
+            /*
+             * Display user's email.
+             */
+
+            if (
+                emailElement &&
+                profile.email
+            ) {
+
+                emailElement.textContent =
+                    profile.email;
+
+            }
+
+
+            /*
+             * Display first letter
+             * of user's name.
+             */
+
+            if (
+                avatarElement &&
+                profile.fullName
+            ) {
+
+                avatarElement.textContent =
+                    profile.fullName
+                        .charAt(0)
+                        .toUpperCase();
+
+            }
 
         }
-
-    }
-);
+    );
 
 </script>
 
