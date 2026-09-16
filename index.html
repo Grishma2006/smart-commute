@@ -2,173 +2,637 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Smart Commute | Hyperlocal Ride Matching</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>
+        Smart Hyperlocal Commute Matching System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 </head>
 
-<body>
+<body class="landing-page">
 
-<header class="navbar">
-    <div class="brand">
-        <div class="brand-icon">SC</div>
-        <div>
-            <h2>Smart Commute</h2>
-            <span>Hyperlocal Route Matching</span>
-        </div>
-    </div>
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
 
-    <div class="nav-actions">
-        <a href="login.html" class="nav-login">Log in</a>
-        <a href="register.html" class="nav-register">Get Started</a>
-    </div>
-</header>
+    <header class="navbar">
 
+        <a
+            href="index.html"
+            class="brand"
+        >
+            <div class="brand-icon">
+                SC
+            </div>
 
-<main class="hero">
+            <div class="brand-text">
+                <strong>SmartCommute</strong>
+                <span>Hyperlocal Travel Matching</span>
+            </div>
+        </a>
 
-    <section class="hero-content">
+        <nav class="nav-links">
 
-        <div class="eyebrow">
-            SMART • LOCAL • SIMPLE
-        </div>
-
-        <h1>
-            Find people travelling
-            <span>your way.</span>
-        </h1>
-
-        <p class="hero-text">
-            Smart Commute matches commuters travelling on similar
-            routes and at similar times using route similarity.
-        </p>
-
-        <div class="hero-buttons">
-            <a href="register.html" class="primary-btn">
-                Create Account
-                <span>→</span>
+            <a href="index.html" class="active">
+                Home
             </a>
 
-            <a href="login.html" class="secondary-btn">
-                I already have an account
+            <a href="login.html">
+                Login
             </a>
-        </div>
 
-        <div class="trust-row">
-            <div>
-                <strong>01</strong>
-                <span>Register once</span>
-            </div>
+            <a
+                href="register.html"
+                class="nav-register"
+            >
+                Get Started
+            </a>
 
-            <div>
-                <strong>02</strong>
-                <span>Choose your journey</span>
-            </div>
+        </nav>
 
-            <div>
-                <strong>03</strong>
-                <span>Find your match</span>
-            </div>
-        </div>
-
-    </section>
+    </header>
 
 
-    <section class="hero-visual">
+    <!-- =====================================================
+         HERO SECTION
+    ====================================================== -->
 
-        <div class="route-card">
+    <main>
 
-            <div class="route-top">
-                <div>
-                    <span class="small-label">TODAY'S JOURNEY</span>
-                    <h3>Smart Route Match</h3>
+        <section class="hero-section">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    <span class="status-dot"></span>
+                    Hyperlocal • Route-Based • Simple
                 </div>
 
-                <div class="match-badge">92% Match</div>
+                <h1>
+                    Find people travelling
+                    <span>your way.</span>
+                </h1>
+
+                <p class="hero-description">
+                    SmartCommute helps commuters find people
+                    travelling on similar routes and at similar
+                    times within their local area.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        href="register.html"
+                        class="btn btn-primary btn-large"
+                    >
+                        Get Started
+                        <span>→</span>
+                    </a>
+
+                    <a
+                        href="login.html"
+                        class="btn btn-secondary btn-large"
+                    >
+                        Login
+                    </a>
+
+                </div>
+
+                <div class="hero-note">
+                    <span>✓</span>
+                    Simple web-based prototype
+                </div>
+
             </div>
 
 
-            <div class="route-line">
+            <!-- =================================================
+                 HERO VISUAL
+            ================================================== -->
 
-                <div class="route-point">
-                    <div class="point start"></div>
+            <div class="hero-visual">
+
+                <div class="route-card">
+
+                    <div class="route-card-header">
+
+                        <div>
+                            <span class="small-label">
+                                DAILY COMMUTE
+                            </span>
+
+                            <h3>
+                                Similar route found
+                            </h3>
+                        </div>
+
+                        <div class="match-percentage">
+                            92%
+                        </div>
+
+                    </div>
+
+
+                    <div class="route-line">
+
+                        <div class="route-point start-point">
+                            <span></span>
+                        </div>
+
+                        <div class="route-details">
+
+                            <div>
+                                <strong>
+                                    Your Pickup
+                                </strong>
+
+                                <small>
+                                    College Road
+                                </small>
+                            </div>
+
+                            <div class="route-connector"></div>
+
+                            <div>
+                                <strong>
+                                    Destination
+                                </strong>
+
+                                <small>
+                                    Gangapur Road
+                                </small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="route-match">
+
+                        <div class="mini-avatar">
+                            DC
+                        </div>
+
+                        <div class="commuter-info">
+
+                            <strong>
+                                Demo Commuter
+                            </strong>
+
+                            <span>
+                                Similar route • Similar time
+                            </span>
+
+                        </div>
+
+                        <span class="match-tag">
+                            92% Match
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card floating-card-one">
+
+                    <span class="floating-icon">
+                        📍
+                    </span>
 
                     <div>
-                        <span>Pickup</span>
-                        <strong>College Road</strong>
+                        <strong>
+                            Nearby routes
+                        </strong>
+
+                        <small>
+                            Hyperlocal matching
+                        </small>
                     </div>
+
                 </div>
 
 
-                <div class="route-path">
-                    <div class="path-line"></div>
-                    <div class="path-dot"></div>
-                    <div class="path-line"></div>
-                </div>
+                <div class="floating-card floating-card-two">
 
-
-                <div class="route-point">
-                    <div class="point end"></div>
+                    <span class="floating-icon">
+                        ⏱
+                    </span>
 
                     <div>
-                        <span>Destination</span>
-                        <strong>Gangapur Road</strong>
+                        <strong>
+                            Similar timing
+                        </strong>
+
+                        <small>
+                            Match within a time window
+                        </small>
                     </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HOW IT WORKS
+        ====================================================== -->
+
+        <section class="section how-section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    HOW IT WORKS
+                </span>
+
+                <h2>
+                    Three simple steps
+                </h2>
+
+                <p>
+                    Enter your journey, compare routes and
+                    connect with a suitable commuter.
+                </p>
+
+            </div>
+
+
+            <div class="steps-grid">
+
+                <article class="step-card">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div class="step-icon">
+                        📍
+                    </div>
+
+                    <h3>
+                        Enter your journey
+                    </h3>
+
+                    <p>
+                        Add your pickup location, destination,
+                        departure time and available seats.
+                    </p>
+
+                </article>
+
+
+                <article class="step-card">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div class="step-icon">
+                        🗺️
+                    </div>
+
+                    <h3>
+                        Compare routes
+                    </h3>
+
+                    <p>
+                        The system compares route similarity,
+                        pickup distance, destination distance
+                        and time.
+                    </p>
+
+                </article>
+
+
+                <article class="step-card">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div class="step-icon">
+                        🤝
+                    </div>
+
+                    <h3>
+                        Connect
+                    </h3>
+
+                    <p>
+                        View suitable matches and send a request
+                        to start a shared journey.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FEATURES
+        ====================================================== -->
+
+        <section class="section features-section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    KEY FEATURES
+                </span>
+
+                <h2>
+                    Designed for everyday local travel
+                </h2>
+
+            </div>
+
+
+            <div class="features-grid">
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        🗺️
+                    </div>
+
+                    <h3>
+                        Route Similarity
+                    </h3>
+
+                    <p>
+                        Compare actual road routes instead of
+                        matching only by starting and ending
+                        locations.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        📍
+                    </div>
+
+                    <h3>
+                        Hyperlocal Matching
+                    </h3>
+
+                    <p>
+                        Focus on commuters travelling within
+                        nearby local areas.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        ⏰
+                    </div>
+
+                    <h3>
+                        Time Matching
+                    </h3>
+
+                    <p>
+                        Consider departure times so that
+                        commuters have compatible schedules.
+                    </p>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="feature-icon">
+                        💰
+                    </div>
+
+                    <h3>
+                        Cost Sharing
+                    </h3>
+
+                    <p>
+                        Show an estimated cost share for a
+                        shared journey.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROJECT CONCEPT
+        ====================================================== -->
+
+        <section class="section concept-section">
+
+            <div class="concept-card">
+
+                <div class="concept-content">
+
+                    <span class="section-label">
+                        PROJECT CONCEPT
+                    </span>
+
+                    <h2>
+                        A route-first approach to
+                        commute matching
+                    </h2>
+
+                    <p>
+                        Instead of simply checking whether two
+                        people live in the same area, SmartCommute
+                        compares their journey routes and travel
+                        times to identify possible matches.
+                    </p>
+
+                    <div class="concept-points">
+
+                        <div>
+                            <span>✓</span>
+                            Pickup proximity
+                        </div>
+
+                        <div>
+                            <span>✓</span>
+                            Destination proximity
+                        </div>
+
+                        <div>
+                            <span>✓</span>
+                            Route similarity
+                        </div>
+
+                        <div>
+                            <span>✓</span>
+                            Departure-time similarity
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="concept-visual">
+
+                    <div class="concept-route">
+
+                        <div class="concept-location">
+                            <span class="location-dot"></span>
+                            Person A
+                        </div>
+
+                        <div class="concept-road"></div>
+
+                        <div class="concept-location">
+                            <span class="location-dot"></span>
+                            Person B
+                        </div>
+
+                        <div class="concept-road"></div>
+
+                        <div class="concept-location">
+                            <span class="destination-dot"></span>
+                            Common Direction
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CALL TO ACTION
+        ====================================================== -->
+
+        <section class="cta-section">
+
+            <div class="cta-card">
+
+                <div>
+
+                    <span class="section-label">
+                        START YOUR JOURNEY
+                    </span>
+
+                    <h2>
+                        Ready to find a similar route?
+                    </h2>
+
+                    <p>
+                        Create an account and try the
+                        SmartCommute prototype.
+                    </p>
+
+                </div>
+
+                <a
+                    href="register.html"
+                    class="btn btn-primary btn-large"
+                >
+                    Create Account
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+
+                <div class="brand-icon">
+                    SC
+                </div>
+
+                <div>
+                    <strong>
+                        SmartCommute
+                    </strong>
+
+                    <span>
+                        Smart Hyperlocal Commute Matching
+                    </span>
                 </div>
 
             </div>
 
 
-            <div class="route-stats">
+            <div class="footer-links">
 
-                <div>
-                    <span>Route</span>
-                    <strong>7.9 km</strong>
-                </div>
+                <a href="index.html">
+                    Home
+                </a>
 
-                <div>
-                    <span>Time</span>
-                    <strong>07:35 AM</strong>
-                </div>
+                <a href="login.html">
+                    Login
+                </a>
 
-                <div>
-                    <span>Similarity</span>
-                    <strong>92%</strong>
-                </div>
+                <a href="register.html">
+                    Register
+                </a>
 
             </div>
+
+
+            <p class="footer-copy">
+                Web-based prototype for local commute matching.
+            </p>
 
         </div>
 
-
-        <div class="floating-card floating-one">
-            <div class="floating-icon">⌁</div>
-            <div>
-                <strong>Similar route found</strong>
-                <span>2.1 km overlap</span>
-            </div>
-        </div>
-
-
-        <div class="floating-card floating-two">
-            <div class="avatar">D</div>
-            <div>
-                <strong>Nearby commuter</strong>
-                <span>Ready to connect</span>
-            </div>
-        </div>
-
-    </section>
-
-</main>
-
-
-<footer class="landing-footer">
-    <span>Smart Hyperlocal Commute Matching System</span>
-    <span>Route-based matching • Prototype</span>
-</footer>
+    </footer>
 
 
 </body>
