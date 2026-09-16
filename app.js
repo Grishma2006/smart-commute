@@ -1,114 +1,387 @@
-/* =========================================================
-   SMART COMMUTE
-   Main Website JavaScript
-   Authentication is handled by firebase-auth.js
-   ========================================================= */
+// ==================================================
+// SMART COMMUTE - COMMON APP FUNCTIONS
+// ==================================================
 
 
-/* ---------------------------------------------------------
-   Helper: Show Message
-   --------------------------------------------------------- */
+// --------------------------------------------------
+// STORAGE KEYS
+// --------------------------------------------------
 
-function showMessage(elementId, message, type = "error") {
+const STORAGE = {
 
-    const element =
-        document.getElementById(elementId);
+    currentJourney: "smartCommuteCurrentJourney",
 
-    if (!element) return;
+    currentOfferedJourney: "smartCommuteCurrentOfferedJourney",
 
-    element.textContent = message;
+    offeredJourneys: "smartCommuteOfferedJourneys",
 
-    element.className =
-        `form-message ${type}`;
+    selectedMatch: "smartCommuteSelectedMatch",
+
+    currentRequest: "smartCommuteCurrentRequest",
+
+    confirmedJourney: "smartCommuteConfirmedJourney",
+
+    history: "smartCommuteHistory"
+
+};
+
+
+// --------------------------------------------------
+// JSON STORAGE HELPERS
+// --------------------------------------------------
+
+function saveData(key, value) {
+
+    sessionStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
 }
 
 
-/* ---------------------------------------------------------
-   Password Show / Hide
-   --------------------------------------------------------- */
+function getData(key) {
 
-document
-    .querySelectorAll(".password-toggle")
-    .forEach(button => {
+    const value = sessionStorage.getItem(key);
 
-        button.addEventListener("click", () => {
+    if (!value) {
+        return null;
+    }
 
-            const targetId =
-                button.dataset.target;
-
-            const input =
-                document.getElementById(targetId);
-
-            if (!input) return;
+    try {
+        return JSON.parse(value);
+    } catch {
+        return null;
+    }
+}
 
 
-            if (input.type === "password") {
+function saveLocalData(key, value) {
 
-                input.type = "text";
-
-                button.textContent = "Hide";
-
-            } else {
-
-                input.type = "password";
-
-                button.textContent = "Show";
-
-            }
-
-        });
-
-    });
+    localStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
+}
 
 
-/* ---------------------------------------------------------
-   DASHBOARD OPTIONS
-   --------------------------------------------------------- */
+function getLocalData(key) {
 
-function goToFindRide() {
+    const value = localStorage.getItem(key);
 
-    window.location.href =
-        "find-ride.html";
+    if (!value) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(value);
+    } catch {
+        return null;
+    }
+}
+
+
+// --------------------------------------------------
+// DELETE DATA
+// --------------------------------------------------
+
+function removeData(key) {
+
+    sessionStorage.removeItem(key);
 
 }
 
 
-function goToOfferRide() {
+// --------------------------------------------------
+// DISTANCE BETWEEN TWO LOCATIONS
+// --------------------------------------------------
 
-    window.location.href =
-        "offer-ride.html";
+function calculateDistanceKm(
+    lat1,
+    lon1,
+    lat2,
+    lon2
+) {
 
+    const earthRadius = 6371;
+
+    const dLat =
+        (lat2 - lat1) * Math.PI / 180;
+
+    const dLon =
+        (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat / 2) *
+        Math.sin(dLat / 2) +
+
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+    const c =
+        2 *
+        Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1 - a)
+        );
+
+    return earthRadius * c;
 }
 
 
-/* ---------------------------------------------------------
-   LOGOUT
-   ---------------------------------------------------------
+// --------------------------------------------------
+// TIME DIFFERENCE
+// --------------------------------------------------
 
-   Logout is now handled by Firebase.
+function timeDifferenceMinutes(time1, time2) {
 
-   Do NOT use localStorage authentication here.
-   firebase-auth.js handles the logout button.
-   --------------------------------------------------------- */
+    const first = parseTime(time1);
+
+    const second = parseTime(time2);
+
+    if (first === null || second === null) {
+        return 999;
+    }
+
+    return Math.abs(first - second);
+}
 
 
-/* ---------------------------------------------------------
-   Make Dashboard Functions Available
-   ---------------------------------------------------------
+function parseTime(time) {
 
-   Because dashboard.html uses:
+    if (!time) {
+        return null;
+    }
 
-       onclick="goToFindRide()"
+    const parts = time.split(":");
 
-   and:
+    if (parts.length < 2) {
+        return null;
+    }
 
-       onclick="goToOfferRide()"
+    const hour = Number(parts[0]);
 
-   we expose the functions globally.
-   --------------------------------------------------------- */
+    const minute = Number(parts[1]);
 
-window.goToFindRide =
-    goToFindRide;
+    return hour * 60 + minute;
+}
 
-window.goToOfferRide =
-    goToOfferRide;
+
+// --------------------------------------------------
+// MATCH SCORE
+// --------------------------------------------------
+
+function calculateTimeScore(minutesDifference) {
+
+    const maxDifference = 30;
+
+    if (minutesDifference >= maxDifference) {
+        return 0;
+    }
+
+    return Math.max(
+        0,
+        100 -
+        (minutesDifference / maxDifference) * 100
+    );
+}
+
+
+function calculateDistanceScore(distanceKm, maximumKm = 5) {
+
+    if (distanceKm >= maximumKm) {
+        return 0;
+    }
+
+    return Math.max(
+        0,
+        100 -
+        (distanceKm / maximumKm) * 100
+    );
+}
+
+
+// --------------------------------------------------
+// COST ESTIMATION
+// --------------------------------------------------
+
+function calculateEstimatedJourneyCost(distanceKm) {
+
+    if (!distanceKm || distanceKm <= 0) {
+        return 0;
+    }
+
+    // Prototype estimation only.
+    const baseRate = 10;
+
+    const minimumCost = 30;
+
+    return Math.max(
+        minimumCost,
+        Math.round(distanceKm * baseRate)
+    );
+}
+
+
+function calculateCostShare(
+    totalCost,
+    participants = 2
+) {
+
+    if (!totalCost || participants <= 0) {
+        return 0;
+    }
+
+    return Math.round(
+        totalCost / participants
+    );
+}
+
+
+// --------------------------------------------------
+// DATE FORMAT
+// --------------------------------------------------
+
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return "-";
+    }
+
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
+
+// --------------------------------------------------
+// NOTIFICATION
+// --------------------------------------------------
+
+function showToast(message, type = "success") {
+
+    let toast =
+        document.getElementById("appToast");
+
+    if (!toast) {
+
+        toast = document.createElement("div");
+
+        toast.id = "appToast";
+
+        toast.className = "app-toast";
+
+        document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+
+    toast.dataset.type = type;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2800);
+}
+
+
+// --------------------------------------------------
+// NAVBAR MOBILE
+// --------------------------------------------------
+
+function initializeMobileMenu() {
+
+    const button =
+        document.querySelector(
+            ".mobile-menu-btn"
+        );
+
+    const nav =
+        document.querySelector(
+            ".nav-links"
+        );
+
+    if (!button || !nav) {
+        return;
+    }
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            nav.classList.toggle("open");
+
+        }
+    );
+}
+
+
+// --------------------------------------------------
+// PAGE INITIALIZATION
+// --------------------------------------------------
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initializeMobileMenu();
+
+    }
+);
+
+
+// --------------------------------------------------
+// EXPORT TO WINDOW
+// --------------------------------------------------
+
+window.STORAGE = STORAGE;
+
+window.saveData = saveData;
+
+window.getData = getData;
+
+window.saveLocalData = saveLocalData;
+
+window.getLocalData = getLocalData;
+
+window.removeData = removeData;
+
+window.calculateDistanceKm =
+    calculateDistanceKm;
+
+window.timeDifferenceMinutes =
+    timeDifferenceMinutes;
+
+window.calculateTimeScore =
+    calculateTimeScore;
+
+window.calculateDistanceScore =
+    calculateDistanceScore;
+
+window.calculateEstimatedJourneyCost =
+    calculateEstimatedJourneyCost;
+
+window.calculateCostShare =
+    calculateCostShare;
+
+window.formatDate =
+    formatDate;
+
+window.showToast =
+    showToast;
