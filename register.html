@@ -1,63 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Register | SmartCommute</title>
+<title>Create Account | SmartCommute</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+<style>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f6f8f6;
+    color:#14221c;
+}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+/* ================= NAVBAR ================= */
+
+.navbar{
+    height:78px;
+    background:#ffffff;
+    border-bottom:1px solid #e3e8e5;
+    display:flex;
+    align-items:center;
+}
+
+.nav-inner{
+    width:min(1180px,92%);
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#14221c;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:#087a52;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+}
+
+.brand h2{
+    font-size:19px;
+}
+
+.brand p{
+    font-size:11px;
+    color:#748078;
+    margin-top:2px;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.nav-right a{
+    text-decoration:none;
+    color:#17231e;
+    font-size:14px;
+}
+
+.nav-right a:hover{
+    color:#087a52;
+}
+
+.nav-btn{
+    background:#087a52;
+    color:white!important;
+    padding:11px 19px;
+    border-radius:10px;
+    font-weight:700;
+}
+
+/* ================= PAGE ================= */
+
+.page{
+    min-height:calc(100vh - 78px);
+    padding:45px 20px;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #e7f5ee 0,
+            transparent 38%
+        ),
+        #f6f8f6;
+}
+
+/* ================= REGISTER CARD ================= */
+
+.register-card{
+    width:min(510px,100%);
+    margin:auto;
+    background:white;
+    border:1px solid #e0e7e3;
+    border-radius:22px;
+    padding:32px;
+    box-shadow:0 20px 55px rgba(18,52,40,.09);
+}
+
+.back{
+    display:inline-block;
+    text-decoration:none;
+    color:#69766f;
+    font-size:13px;
+    margin-bottom:22px;
+}
+
+.back:hover{
+    color:#087a52;
+}
+
+.register-icon{
+    width:52px;
+    height:52px;
+    background:#e5f4ed;
+    color:#087a52;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:23px;
+    margin-bottom:17px;
+}
+
+h1{
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.subtitle{
+    color:#69766f;
+    font-size:13px;
+    margin-bottom:27px;
+}
+
+/* ================= FORM ================= */
+
+.form-group{
+    margin-bottom:17px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.input-wrapper{
+    position:relative;
+}
+
+.input-icon{
+    position:absolute;
+    left:13px;
+    top:13px;
+    font-size:15px;
+    color:#748078;
+}
+
+input{
+    width:100%;
+    height:47px;
+    border:1px solid #d8e1dc;
+    border-radius:10px;
+    padding:0 14px 0 39px;
+    font-size:13px;
+    outline:none;
+    color:#17231e;
+    background:#fff;
+}
+
+input:focus{
+    border-color:#087a52;
+    box-shadow:0 0 0 3px rgba(8,122,82,.08);
+}
+
+.helper{
+    color:#8a948f;
+    font-size:11px;
+    margin-top:5px;
+}
+
+/* ================= PASSWORD ================= */
+
+.password-wrapper{
+    position:relative;
+}
+
+.password-wrapper input{
+    padding-right:45px;
+}
+
+.show-password{
+    position:absolute;
+    right:13px;
+    top:13px;
+    border:0;
+    background:none;
+    color:#718079;
+    cursor:pointer;
+    font-size:15px;
+}
+
+/* ================= TERMS ================= */
+
+.terms{
+    display:flex;
+    gap:9px;
+    align-items:flex-start;
+    margin:18px 0;
+    font-size:12px;
+    color:#69766f;
+}
+
+.terms input{
+    width:16px;
+    height:16px;
+    margin-top:1px;
+    padding:0;
+    accent-color:#087a52;
+}
+
+.terms a{
+    color:#087a52;
+    font-weight:700;
+    text-decoration:none;
+}
+
+/* ================= BUTTON ================= */
+
+.create-btn{
+    width:100%;
+    height:47px;
+    border:0;
+    border-radius:10px;
+    background:#087a52;
+    color:white;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.create-btn:hover{
+    background:#075d40;
+    transform:translateY(-1px);
+}
+
+.create-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* ================= DIVIDER ================= */
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:22px 0;
+    color:#9aa39f;
+    font-size:11px;
+}
+
+.divider::before,
+.divider::after{
+    content:"";
+    height:1px;
+    background:#e3e8e5;
+    flex:1;
+}
+
+/* ================= GOOGLE ================= */
+
+.google-btn{
+    width:100%;
+    height:45px;
+    background:#fff;
+    border:1px solid #dce3df;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+    font-size:13px;
+}
+
+/* ================= LOGIN ================= */
+
+.login-text{
+    text-align:center;
+    margin-top:21px;
+    font-size:12px;
+    color:#69766f;
+}
+
+.login-text a{
+    color:#087a52;
+    font-weight:700;
+    text-decoration:none;
+}
+
+/* ================= SECURITY ================= */
+
+.security{
+    margin-top:22px;
+    padding:13px;
+    border-radius:11px;
+    background:#f1f7f4;
+    color:#557067;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.security strong{
+    color:#087a52;
+}
+
+/* ================= ERROR ================= */
+
+.message{
+    display:none;
+    padding:12px;
+    border-radius:10px;
+    font-size:12px;
+    margin-bottom:17px;
+}
+
+.message.error{
+    display:block;
+    background:#fff0ef;
+    color:#a33b36;
+    border:1px solid #f3d4d1;
+}
+
+.message.success{
+    display:block;
+    background:#e9f7f0;
+    color:#087a52;
+    border:1px solid #cfe9dc;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    color:#89938e;
+    font-size:10px;
+    margin-top:25px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+    .navbar{
+        height:auto;
+        padding:12px 0;
+    }
+
+    .nav-inner{
+        flex-wrap:wrap;
+        gap:10px;
+    }
+
+    .nav-right{
+        width:100%;
+        justify-content:flex-end;
+        gap:14px;
+    }
+
+    .register-card{
+        padding:24px 20px;
+    }
+
+    .page{
+        padding:25px 15px;
+    }
+
+    h1{
+        font-size:25px;
+    }
+}
+
+</style>
+
 </head>
 
-<body class="auth-page">
 
-    <!-- =====================================================
-         NAVBAR
-    ====================================================== -->
+<body>
 
-    <header class="navbar">
+<!-- ================= NAVBAR ================= -->
 
-        <a
-            href="index.html"
-            class="brand"
-        >
-            <div class="brand-icon">
+<header class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="index.html" class="logo-area">
+
+            <div class="logo">
                 SC
             </div>
 
-            <div class="brand-text">
-                <strong>SmartCommute</strong>
-
-                <span>
-                    Hyperlocal Travel Matching
-                </span>
+            <div class="brand">
+                <h2>SmartCommute</h2>
+                <p>Hyperlocal Travel Matching</p>
             </div>
+
         </a>
 
-        <nav class="nav-links">
+
+        <div class="nav-right">
 
             <a href="index.html">
                 Home
@@ -67,748 +440,470 @@
                 Login
             </a>
 
-        </nav>
-
-    </header>
-
-
-    <!-- =====================================================
-         REGISTRATION AREA
-    ====================================================== -->
-
-    <main class="auth-main">
-
-        <section class="auth-container">
-
-            <!-- LEFT INFORMATION PANEL -->
-
-            <div class="auth-info">
-
-                <div class="auth-info-badge">
-                    SMARTCOMMUTE
-                </div>
-
-                <h1>
-                    Travel smarter,
-                    <span>together.</span>
-                </h1>
-
-                <p>
-                    Create your SmartCommute account and
-                    find commuters travelling on similar
-                    routes and at similar times.
-                </p>
-
-
-                <div class="auth-benefits">
-
-                    <div class="auth-benefit">
-
-                        <div class="benefit-icon">
-                            📍
-                        </div>
-
-                        <div>
-                            <strong>
-                                Hyperlocal matching
-                            </strong>
-
-                            <span>
-                                Find suitable commuters nearby.
-                            </span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="auth-benefit">
-
-                        <div class="benefit-icon">
-                            🗺️
-                        </div>
-
-                        <div>
-                            <strong>
-                                Route-based matching
-                            </strong>
-
-                            <span>
-                                Compare actual travel routes.
-                            </span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="auth-benefit">
-
-                        <div class="benefit-icon">
-                            🔐
-                        </div>
-
-                        <div>
-                            <strong>
-                                Protected account
-                            </strong>
-
-                            <span>
-                                Your account uses Firebase Authentication.
-                            </span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- REGISTRATION FORM -->
-
-            <div class="auth-card">
-
-                <div class="auth-card-header">
-
-                    <div class="auth-card-icon">
-                        👋
-                    </div>
-
-                    <h2>
-                        Create your account
-                    </h2>
-
-                    <p>
-                        Enter your basic details to get started.
-                    </p>
-
-                </div>
-
-
-                <!-- ERROR MESSAGE -->
-
-                <div
-                    id="registerError"
-                    class="form-message error-message"
-                    style="display:none;"
-                ></div>
-
-
-                <!-- SUCCESS MESSAGE -->
-
-                <div
-                    id="registerSuccess"
-                    class="form-message success-message"
-                    style="display:none;"
-                ></div>
-
-
-                <form
-                    id="registerForm"
-                    novalidate
-                >
-
-                    <!-- FULL NAME -->
-
-                    <div class="form-group">
-
-                        <label for="fullName">
-                            Full Name
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                👤
-                            </span>
-
-                            <input
-                                type="text"
-                                id="fullName"
-                                name="fullName"
-                                placeholder="Enter your full name"
-                                autocomplete="name"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- MOBILE -->
-
-                    <div class="form-group">
-
-                        <label for="mobile">
-                            Mobile Number
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                📱
-                            </span>
-
-                            <input
-                                type="tel"
-                                id="mobile"
-                                name="mobile"
-                                placeholder="Enter 10-digit mobile number"
-                                autocomplete="tel"
-                                inputmode="numeric"
-                                maxlength="10"
-                                required
-                            >
-
-                        </div>
-
-                        <small class="field-hint">
-                            Enter a valid 10-digit mobile number.
-                        </small>
-
-                    </div>
-
-
-                    <!-- EMAIL -->
-
-                    <div class="form-group">
-
-                        <label for="email">
-                            Email Address
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                ✉️
-                            </span>
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Enter your email address"
-                                autocomplete="email"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- PASSWORD -->
-
-                    <div class="form-group">
-
-                        <label for="password">
-                            Password
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                🔒
-                            </span>
-
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Create a password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required
-                            >
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="togglePassword"
-                                aria-label="Show password"
-                            >
-                                Show
-                            </button>
-
-                        </div>
-
-                        <small class="field-hint">
-                            Password must contain at least 6 characters.
-                        </small>
-
-                    </div>
-
-
-                    <!-- CONFIRM PASSWORD -->
-
-                    <div class="form-group">
-
-                        <label for="confirmPassword">
-                            Confirm Password
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                🔒
-                            </span>
-
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                placeholder="Re-enter your password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- TERMS -->
-
-                    <div class="terms-row">
-
-                        <input
-                            type="checkbox"
-                            id="terms"
-                            required
-                        >
-
-                        <label for="terms">
-                            I agree to use SmartCommute responsibly
-                            and provide accurate account information.
-                        </label>
-
-                    </div>
-
-
-                    <!-- SUBMIT -->
-
-                    <button
-                        type="submit"
-                        id="registerButton"
-                        class="btn btn-primary btn-full"
-                    >
-
-                        <span id="registerButtonText">
-                            Create Account
-                        </span>
-
-                        <span
-                            id="registerLoader"
-                            class="button-loader"
-                            style="display:none;"
-                        >
-                            Creating...
-                        </span>
-
-                    </button>
-
-                </form>
-
-
-                <!-- LOGIN LINK -->
-
-                <div class="auth-switch">
-
-                    <span>
-                        Already have an account?
-                    </span>
-
-                    <a href="login.html">
-                        Login here
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <p class="footer-copy">
-                SmartCommute • Hyperlocal Commute Matching Prototype
-            </p>
+            <a href="register.html" class="nav-btn">
+                Get Started
+            </a>
 
         </div>
 
-    </footer>
+    </div>
+
+</header>
 
 
-    <!-- =====================================================
-         FIREBASE REGISTRATION SCRIPT
-    ====================================================== -->
+<!-- ================= PAGE ================= -->
 
-    <script type="module">
+<main class="page">
 
-        import {
-            registerUser
-        } from "./firebase-auth.js";
+    <div class="register-card">
 
-
-        const registerForm =
-            document.getElementById("registerForm");
-
-        const fullNameInput =
-            document.getElementById("fullName");
-
-        const mobileInput =
-            document.getElementById("mobile");
-
-        const emailInput =
-            document.getElementById("email");
-
-        const passwordInput =
-            document.getElementById("password");
-
-        const confirmPasswordInput =
-            document.getElementById("confirmPassword");
-
-        const termsInput =
-            document.getElementById("terms");
-
-        const registerButton =
-            document.getElementById("registerButton");
-
-        const registerButtonText =
-            document.getElementById("registerButtonText");
-
-        const registerLoader =
-            document.getElementById("registerLoader");
-
-        const registerError =
-            document.getElementById("registerError");
-
-        const registerSuccess =
-            document.getElementById("registerSuccess");
-
-        const togglePassword =
-            document.getElementById("togglePassword");
+        <a href="index.html" class="back">
+            ← Back to Home
+        </a>
 
 
-        /* =================================================
-           MESSAGE HELPERS
-        ================================================== */
-
-        function showError(message) {
-
-            registerSuccess.style.display = "none";
-
-            registerError.textContent = message;
-
-            registerError.style.display = "block";
-        }
+        <div class="register-icon">
+            👋
+        </div>
 
 
-        function showSuccess(message) {
+        <h1>
+            Create your account
+        </h1>
 
-            registerError.style.display = "none";
-
-            registerSuccess.textContent = message;
-
-            registerSuccess.style.display = "block";
-        }
-
-
-        function clearMessages() {
-
-            registerError.style.display = "none";
-
-            registerSuccess.style.display = "none";
-
-            registerError.textContent = "";
-
-            registerSuccess.textContent = "";
-        }
+        <p class="subtitle">
+            Enter your basic details to get started with SmartCommute.
+        </p>
 
 
-        /* =================================================
-           PASSWORD VISIBILITY
-        ================================================== */
+        <!-- ERROR / SUCCESS -->
 
-        togglePassword.addEventListener(
-            "click",
-            () => {
+        <div id="message" class="message"></div>
 
-                const isPassword =
-                    passwordInput.type === "password";
 
-                passwordInput.type =
-                    isPassword
-                        ? "text"
-                        : "password";
+        <!-- ================= FORM ================= -->
 
-                togglePassword.textContent =
-                    isPassword
-                        ? "Hide"
-                        : "Show";
+        <form id="registerForm">
 
-            }
+
+            <!-- FULL NAME -->
+
+            <div class="form-group">
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- MOBILE -->
+
+            <div class="form-group">
+
+                <label for="mobile">
+                    Mobile Number
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        📱
+                    </span>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        placeholder="Enter 10-digit mobile number"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+                <div class="helper">
+                    Enter a valid 10-digit mobile number.
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ✉️
+                    </span>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create a password"
+                        minlength="6"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        onclick="togglePassword('password',this)">
+                        👁
+                    </button>
+
+                </div>
+
+                <div class="helper">
+                    Password must contain at least 6 characters.
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Re-enter your password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        onclick="togglePassword('confirmPassword',this)">
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TERMS -->
+
+            <div class="terms">
+
+                <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                >
+
+                <label for="terms">
+                    I agree to use SmartCommute responsibly and provide
+                    accurate information.
+                </label>
+
+            </div>
+
+
+            <!-- CREATE ACCOUNT -->
+
+            <button
+                type="submit"
+                id="registerBtn"
+                class="create-btn">
+
+                Create Account
+
+            </button>
+
+
+        </form>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+            OR
+        </div>
+
+
+        <button
+            type="button"
+            class="google-btn"
+            onclick="alert('Google Sign-In can be enabled later.')">
+
+            🌐 &nbsp; Continue with Google
+
+        </button>
+
+
+        <!-- LOGIN -->
+
+        <div class="login-text">
+
+            Already have an account?
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="security">
+
+            🔒 <strong>Protected account</strong><br>
+
+            Your account is secured using Firebase Authentication.
+            Your contact and vehicle details can be controlled
+            through the journey request process.
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        © 2026 SmartCommute • Hyperlocal Commute Matching Prototype
+
+    </div>
+
+</main>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+import { registerUser } from "./firebase-auth.js";
+
+
+const form = document.getElementById("registerForm");
+
+const message = document.getElementById("message");
+
+const button = document.getElementById("registerBtn");
+
+
+function showMessage(text,type){
+
+    message.textContent = text;
+
+    message.className = "message " + type;
+
+}
+
+
+form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+
+    const fullName =
+        document.getElementById("fullName").value.trim();
+
+    const mobile =
+        document.getElementById("mobile").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+    /* MOBILE VALIDATION */
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        showMessage(
+            "Please enter a valid 10-digit mobile number.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* PASSWORD */
+
+    if(password.length < 6){
+
+        showMessage(
+            "Password must contain at least 6 characters.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /* CONFIRM PASSWORD */
+
+    if(password !== confirmPassword){
+
+        showMessage(
+            "Passwords do not match.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+    button.textContent = "Creating account...";
+
+
+    try{
+
+        await registerUser(
+            fullName,
+            mobile,
+            email,
+            password
         );
 
 
-        /* =================================================
-           MOBILE INPUT
-        ================================================== */
-
-        mobileInput.addEventListener(
-            "input",
-            () => {
-
-                mobileInput.value =
-                    mobileInput.value
-                        .replace(/\D/g, "")
-                        .slice(0, 10);
-
-            }
+        showMessage(
+            "Account created successfully. Redirecting...",
+            "success"
         );
 
 
-        /* =================================================
-           VALIDATION
-        ================================================== */
+        setTimeout(() => {
 
-        function validateForm() {
+            window.location.href = "dashboard.html";
 
-            const fullName =
-                fullNameInput.value.trim();
-
-            const mobile =
-                mobileInput.value.trim();
-
-            const email =
-                emailInput.value.trim();
-
-            const password =
-                passwordInput.value;
-
-            const confirmPassword =
-                confirmPasswordInput.value;
+        },800);
 
 
-            if (!fullName) {
-                throw new Error(
-                    "Please enter your full name."
-                );
-            }
+    }catch(error){
+
+        console.error(error);
 
 
-            if (!/^[0-9]{10}$/.test(mobile)) {
-                throw new Error(
-                    "Please enter a valid 10-digit mobile number."
-                );
-            }
+        let text =
+            "Unable to create account. Please try again.";
 
 
-            if (!email) {
-                throw new Error(
-                    "Please enter your email address."
-                );
-            }
+        if(error.code === "auth/email-already-in-use"){
 
+            text =
+                "This email is already registered. Please login.";
 
-            if (password.length < 6) {
-                throw new Error(
-                    "Password must contain at least 6 characters."
-                );
-            }
+        }
 
+        else if(error.code === "auth/invalid-email"){
 
-            if (password !== confirmPassword) {
-                throw new Error(
-                    "Passwords do not match."
-                );
-            }
+            text =
+                "Please enter a valid email address.";
 
+        }
 
-            if (!termsInput.checked) {
-                throw new Error(
-                    "Please agree to the terms before creating your account."
-                );
-            }
+        else if(error.code === "auth/weak-password"){
+
+            text =
+                "Password is too weak.";
 
         }
 
 
-        /* =================================================
-           BUTTON STATE
-        ================================================== */
+        showMessage(text,"error");
 
-        function setLoading(loading) {
 
-            registerButton.disabled =
-                loading;
+        button.disabled = false;
 
-            registerButtonText.style.display =
-                loading
-                    ? "none"
-                    : "inline";
+        button.textContent = "Create Account";
 
-            registerLoader.style.display =
-                loading
-                    ? "inline"
-                    : "none";
+    }
 
-        }
+});
 
 
-        /* =================================================
-           REGISTER
-        ================================================== */
+window.togglePassword = function(id,button){
 
-        registerForm.addEventListener(
-            "submit",
-            async (event) => {
+    const input =
+        document.getElementById(id);
 
-                event.preventDefault();
 
-                clearMessages();
+    if(input.type === "password"){
 
+        input.type = "text";
 
-                try {
+        button.textContent = "🙈";
 
-                    validateForm();
+    }else{
 
-                    setLoading(true);
+        input.type = "password";
 
+        button.textContent = "👁";
 
-                    const fullName =
-                        fullNameInput.value.trim();
+    }
 
-                    const mobile =
-                        mobileInput.value.trim();
+};
 
-                    const email =
-                        emailInput.value.trim();
-
-                    const password =
-                        passwordInput.value;
-
-
-                    await registerUser(
-                        fullName,
-                        mobile,
-                        email,
-                        password
-                    );
-
-
-                    showSuccess(
-                        "Account created successfully. Redirecting..."
-                    );
-
-
-                    registerForm.reset();
-
-
-                    setTimeout(
-                        () => {
-
-                            window.location.replace(
-                                "dashboard.html"
-                            );
-
-                        },
-                        1000
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Registration error:",
-                        error
-                    );
-
-
-                    let message =
-                        "Unable to create your account. Please try again.";
-
-
-                    if (error.code) {
-
-                        switch (error.code) {
-
-                            case "auth/email-already-in-use":
-
-                                message =
-                                    "An account with this email already exists.";
-
-                                break;
-
-
-                            case "auth/invalid-email":
-
-                                message =
-                                    "Please enter a valid email address.";
-
-                                break;
-
-
-                            case "auth/weak-password":
-
-                                message =
-                                    "Password is too weak. Use at least 6 characters.";
-
-                                break;
-
-
-                            case "auth/network-request-failed":
-
-                                message =
-                                    "Network error. Check your internet connection.";
-
-                                break;
-
-
-                            case "permission-denied":
-
-                                message =
-                                    "Firestore permission denied. Check your Firestore rules.";
-
-                                break;
-
-                            default:
-
-                                message =
-                                    error.message ||
-                                    message;
-
-                        }
-
-                    } else {
-
-                        message =
-                            error.message ||
-                            message;
-
-                    }
-
-
-                    showError(message);
-
-                    setLoading(false);
-
-                }
-
-            }
-        );
-
-    </script>
+</script>
 
 </body>
 </html>
