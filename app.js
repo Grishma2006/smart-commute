@@ -166,25 +166,8 @@ if (registerForm) {
 
         users.push(newUser);
 
-        localStorage.setItem(
-            "smartCommuteUsers",
-            JSON.stringify(users)
-        );
-
 
         /* Automatically log in */
-
-        localStorage.setItem(
-            "smartCommuteCurrentUser",
-            JSON.stringify({
-                id: newUser.id,
-                fullName: newUser.fullName,
-                mobile: newUser.mobile,
-                email: newUser.email
-            })
-        );
-
-
         showMessage(
             "registerMessage",
             "Account created successfully. Redirecting...",
@@ -248,16 +231,7 @@ if (loginForm) {
 
         /* Store current logged-in user */
 
-        localStorage.setItem(
-            "smartCommuteCurrentUser",
-            JSON.stringify({
-                id: user.id,
-                fullName: user.fullName,
-                mobile: user.mobile,
-                email: user.email
-            })
-        );
-
+       
 
         showMessage(
             "loginMessage",
