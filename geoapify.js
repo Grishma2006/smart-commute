@@ -1,19 +1,11 @@
-/* =========================================================
-   SMART COMMUTE - GEOAPIFY INTEGRATION
-========================================================= */
-
-/*
-   Replace this with your NEW Geoapify browser API key.
-
-   Do not use the old key if you previously exposed it publicly.
-*/
-
 const GEOAPIFY_API_KEY = "89398d24d2e345349d6755ab088d4f3d";
 
+window.GEOAPIFY_API_KEY = GEOAPIFY_API_KEY;
 
-/* =========================================================
-   ADDRESS AUTOCOMPLETE
-========================================================= */
+
+// --------------------------------------------------
+// ADDRESS SEARCH
+// --------------------------------------------------
 
 async function searchGeoapifyPlaces(text) {
 
@@ -21,198 +13,128 @@ async function searchGeoapifyPlaces(text) {
         return [];
     }
 
-    if (
-        !GEOAPIFY_API_KEY ||
-        GEOAPIFY_API_KEY === "YOUR_NEW_GEOAPIFY_API_KEY"
-    ) {
-        throw new Error("Geoapify API key is not configured.");
-    }
+    const url =
+        `https://api.geoapify.com/v1/geocode/autocomplete` +
+        `?text=${encodeURIComponent(text)}` +
+        `&format=json` +
+        `&limit=6` +
+        `&apiKey=${GEOAPIFY_API_KEY}`;
 
-    const params = new URLSearchParams({
-        text: text.trim(),
-        format: "json",
-        limit: "5",
-        filter: "countrycode:in",
-        apiKey: GEOAPIFY_API_KEY
-    });
-
-    const response = await fetch(
-        `https://api.geoapify.com/v1/geocode/autocomplete?${params}`
-    );
+    const response = await fetch(url);
 
     if (!response.ok) {
-        throw new Error(
-            `Geoapify geocoding failed: ${response.status}`
-        );
+        throw new Error(`Geoapify search error: ${response.status}`);
     }
 
     const data = await response.json();
 
-    return (data.results || []).map((place) => ({
-        name:
-            place.formatted ||
-            place.address_line1 ||
-            "Unknown location",
-
-        address:
-            place.formatted ||
-            place.address_line1 ||
-            "",
-
-        lat: Number(place.lat),
-        lng: Number(place.lon),
-
-        city:
-            place.city ||
-            place.county ||
-            "",
-
-        state:
-            place.state ||
-            "",
-
-        country:
-            place.country ||
-            "India"
-    }));
+    return data.results || [];
 }
 
 
-/* =========================================================
-   ROUTING
-========================================================= */
+// --------------------------------------------------
+// ROUTING
+// --------------------------------------------------
 
 async function getGeoapifyRoute(locations) {
 
-    if (!Array.isArray(locations) || locations.length < 2) {
+    if (!locations || locations.length < 2) {
         throw new Error("At least two locations are required.");
     }
 
-    if (
-        !GEOAPIFY_API_KEY ||
-        GEOAPIFY_API_KEY === "YOUR_NEW_GEOAPIFY_API_KEY"
-    ) {
-        throw new Error("Geoapify API key is not configured.");
-    }
-
     const waypoints = locations
-        .map((location) => {
-            return `${Number(location.lat)},${Number(location.lng)}`;
-        })
+        .map(location => `${location.lat},${location.lng}`)
         .join("|");
 
-    const params = new URLSearchParams({
-        waypoints: waypoints,
-        mode: "drive",
-        format: "geojson",
-        intermediate_waypoint_mode: "stopover",
-        apiKey: GEOAPIFY_API_KEY
-    });
+    const url =
+        `https://api.geoapify.com/v1/routing` +
+        `?waypoints=${encodeURIComponent(waypoints)}` +
+        `&mode=drive` +
+        `&format=geojson` +
+        `&apiKey=${GEOAPIFY_API_KEY}`;
 
-    const response = await fetch(
-        `https://api.geoapify.com/v1/routing?${params}`
-    );
+    const response = await fetch(url);
 
     if (!response.ok) {
-        throw new Error(
-            `Geoapify routing failed: ${response.status}`
-        );
+        throw new Error(`Geoapify routing error: ${response.status}`);
     }
 
-    const geojson = await response.json();
+    const data = await response.json();
 
-    let distanceMeters = 0;
-    let timeSeconds = 0;
+    let distance = 0;
+    let time = 0;
 
-    if (
-        geojson &&
-        geojson.properties &&
-        Array.isArray(geojson.properties.legs)
-    ) {
+    if (Array.isArray(data.features)) {
 
-        for (const leg of geojson.properties.legs) {
+        data.features.forEach(feature => {
 
-            if (typeof leg.distance === "number") {
-                distanceMeters += leg.distance;
-            }
+            const properties = feature.properties || {};
 
-            if (typeof leg.time === "number") {
-                timeSeconds += leg.time;
-            }
-        }
-    }
+            distance += Number(properties.distance || 0);
+            time += Number(properties.time || 0);
 
-    /*
-       Some Geoapify responses provide summary information.
-       Use it when available.
-    */
-
-    if (
-        geojson.properties &&
-        geojson.properties.distance !== undefined
-    ) {
-        distanceMeters =
-            Number(geojson.properties.distance) ||
-            distanceMeters;
-    }
-
-    if (
-        geojson.properties &&
-        geojson.properties.time !== undefined
-    ) {
-        timeSeconds =
-            Number(geojson.properties.time) ||
-            timeSeconds;
+        });
     }
 
     return {
-        geojson: geojson,
-        distance: distanceMeters,
-        time: timeSeconds
+        ...data,
+        distance,
+        time,
+        geojson: data
     };
 }
 
 
-/* =========================================================
-   FORMAT HELPERS
-========================================================= */
+// --------------------------------------------------
+// FORMAT DISTANCE
+// --------------------------------------------------
 
-function formatDistance(km) {
+function formatDistance(meters) {
 
-    const value = Number(km) || 0;
-
-    if (value < 1) {
-        return `${Math.round(value * 1000)} m`;
+    if (!meters) {
+        return "0 km";
     }
 
-    return `${value.toFixed(1)} km`;
+    const km = Number(meters) / 1000;
+
+    if (km < 10) {
+        return `${km.toFixed(1)} km`;
+    }
+
+    return `${Math.round(km)} km`;
 }
 
 
-function formatDuration(minutes) {
+// --------------------------------------------------
+// FORMAT TIME
+// --------------------------------------------------
 
-    const total = Math.max(
-        0,
-        Math.round(Number(minutes) || 0)
-    );
+function formatDuration(seconds) {
 
-    const hours = Math.floor(total / 60);
-    const mins = total % 60;
-
-    if (hours > 0) {
-        return `${hours} hr ${mins} min`;
+    if (!seconds) {
+        return "0 min";
     }
 
-    return `${mins} min`;
+    const minutes = Math.round(Number(seconds) / 60);
+
+    if (minutes < 60) {
+        return `${minutes} min`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    const remaining = minutes % 60;
+
+    if (remaining === 0) {
+        return `${hours} hr`;
+    }
+
+    return `${hours} hr ${remaining} min`;
 }
 
 
-/* =========================================================
-   EXPORT
-========================================================= */
-
-window.GEOAPIFY_API_KEY = GEOAPIFY_API_KEY;
-window.searchGeoapifyPlaces = searchGeoapifyPlaces;
-window.getGeoapifyRoute = getGeoapifyRoute;
-window.formatDistance = formatDistance;
-window.formatDuration = formatDuration;
+export {
+    searchGeoapifyPlaces,
+    getGeoapifyRoute,
+    formatDistance,
+    formatDuration
+};
