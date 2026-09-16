@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find a Ride | Smart Commute</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+
+<!-- =====================================================
+     TOP NAVIGATION
+     ===================================================== -->
+
+<header class="app-navbar">
+
+    <a href="dashboard.html" class="app-brand">
+
+        <div class="brand-icon">SC</div>
+
+        <div>
+            <strong>Smart Commute</strong>
+            <span>Hyperlocal Route Matching</span>
+        </div>
+
+    </a>
+
+
+    <div class="find-nav-right">
+
+        <a href="dashboard.html" class="back-dashboard">
+            ← Dashboard
+        </a>
+
+        <div class="app-user">
+
+            <div class="user-avatar" id="userAvatar">
+                U
+            </div>
+
+            <div class="user-info">
+
+                <strong id="dashboardUserName">
+                    User
+                </strong>
+
+                <span>Find a Ride</span>
+
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                Log out
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
+<main class="find-ride-main">
+
+
+    <!-- PAGE INTRO -->
+
+    <section class="find-ride-heading">
+
+        <div>
+
+            <span class="eyebrow">
+                FIND A RIDE
+            </span>
+
+            <h1>
+                Where are you<br>
+                travelling today?
+            </h1>
+
+            <p>
+                Enter your journey details and we'll look for
+                commuters travelling on similar routes and
+                at similar times.
+            </p>
+
+        </div>
+
+
+        <div class="journey-step">
+
+            <div class="step-number active">
+                01
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="step-number">
+                02
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="step-number">
+                03
+            </div>
+
+            <div class="step-labels">
+
+                <span>Journey</span>
+                <span>Matches</span>
+                <span>Request</span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         JOURNEY FORM
+         ================================================= -->
+
+    <section class="journey-layout">
+
+
+        <div class="journey-form-card">
+
+            <div class="card-heading">
+
+                <div class="card-icon">
+                    ⌖
+                </div>
+
+                <div>
+
+                    <h2>Journey details</h2>
+
+                    <p>
+                        Tell us where and when you want to travel.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form id="findRideForm">
+
+
+                <!-- PICKUP -->
+
+                <div class="input-group journey-input">
+
+                    <label for="pickup">
+                        Pickup location
+                    </label>
+
+                    <div class="location-input">
+
+                        <span class="location-dot pickup-dot">
+                            ●
+                        </span>
+
+                        <input
+                            type="text"
+                            id="pickup"
+                            name="pickup"
+                            placeholder="Enter pickup location"
+                            autocomplete="off"
+                            required
+                        >
+
+                    </div>
+
+                    <div
+                        id="pickupSuggestions"
+                        class="location-suggestions"
+                    ></div>
+
+                    <small class="input-hint">
+                        Example: College Road, Nashik
+                    </small>
+
+                </div>
+
+
+
+                <!-- DESTINATION -->
+
+                <div class="input-group journey-input">
+
+                    <label for="destination">
+                        Destination
+                    </label>
+
+                    <div class="location-input">
+
+                        <span class="location-dot destination-dot">
+                            ●
+                        </span>
+
+                        <input
+                            type="text"
+                            id="destination"
+                            name="destination"
+                            placeholder="Enter destination"
+                            autocomplete="off"
+                            required
+                        >
+
+                    </div>
+
+                    <div
+                        id="destinationSuggestions"
+                        class="location-suggestions"
+                    ></div>
+
+                    <small class="input-hint">
+                        Example: Gangapur Road, Nashik
+                    </small>
+
+                </div>
+
+
+
+                <!-- DATE + TIME -->
+
+                <div class="form-row journey-row">
+
+
+                    <div class="input-group">
+
+                        <label for="departureDate">
+                            Departure date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="departureDate"
+                            name="departureDate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="departureTime">
+                            Departure time
+                        </label>
+
+                        <input
+                            type="time"
+                            id="departureTime"
+                            name="departureTime"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SEATS -->
+
+                <div class="input-group">
+
+                    <label for="seatsNeeded">
+                        Seats needed
+                    </label>
+
+                    <div class="seat-selector">
+
+                        <button
+                            type="button"
+                            class="seat-btn"
+                            id="decreaseSeats"
+                        >
+                            −
+                        </button>
+
+                        <div class="seat-count">
+
+                            <strong id="seatCount">
+                                1
+                            </strong>
+
+                            <span>
+                                passenger
+                            </span>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="seat-btn"
+                            id="increaseSeats"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                    <input
+                        type="hidden"
+                        id="seatsNeeded"
+                        name="seatsNeeded"
+                        value="1"
+                    >
+
+                    <small class="input-hint">
+                        Select the number of seats you need.
+                    </small>
+
+                </div>
+
+
+
+                <!-- FORM MESSAGE -->
+
+                <div
+                    id="findRideMessage"
+                    class="form-message"
+                ></div>
+
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="journey-submit-btn"
+                >
+
+                    <span>
+                        Preview My Journey
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- =================================================
+             JOURNEY PREVIEW / MAP AREA
+             ================================================= -->
+
+        <div class="journey-preview-card">
+
+
+            <div class="preview-card-header">
+
+                <div>
+
+                    <span class="preview-label">
+                        JOURNEY PREVIEW
+                    </span>
+
+                    <h3>
+                        Your route
+                    </h3>
+
+                </div>
+
+                <div class="map-status">
+                    <span class="status-dot"></span>
+                    Map ready
+                </div>
+
+            </div>
+
+
+            <!-- MAP PLACEHOLDER -->
+
+            <div
+                class="journey-map"
+                id="journeyMap"
+            >
+
+                <div class="map-placeholder">
+
+                    <div class="map-placeholder-icon">
+                        ⌖
+                    </div>
+
+                    <strong>
+                        Your route will appear here
+                    </strong>
+
+                    <span>
+                        Enter pickup and destination
+                        to preview your journey.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROUTE SUMMARY -->
+
+            <div
+                class="route-summary"
+                id="routeSummary"
+            >
+
+                <div class="route-summary-row">
+
+                    <div class="summary-location">
+
+                        <span class="summary-dot start-summary"></span>
+
+                        <div>
+
+                            <small>
+                                PICKUP
+                            </small>
+
+                            <strong id="previewPickup">
+                                Not selected
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-route-line"></div>
+
+
+                <div class="route-summary-row">
+
+                    <div class="summary-location">
+
+                        <span class="summary-dot end-summary"></span>
+
+                        <div>
+
+                            <small>
+                                DESTINATION
+                            </small>
+
+                            <strong id="previewDestination">
+                                Not selected
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROUTE STATS -->
+
+            <div class="preview-stats">
+
+                <div>
+
+                    <span>Distance</span>
+
+                    <strong id="previewDistance">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Estimated time</span>
+
+                    <strong id="previewTime">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>Seats</span>
+
+                    <strong id="previewSeats">
+                        1
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         HOW MATCHING WORKS
+         ================================================= -->
+
+    <section class="matching-info">
+
+        <div class="matching-info-title">
+
+            <span class="eyebrow">
+                HOW IT WORKS
+            </span>
+
+            <h2>
+                We compare your journey,
+                not just your destination.
+            </h2>
+
+        </div>
+
+
+        <div class="matching-factors">
+
+
+            <div class="factor-card">
+
+                <div class="factor-number">
+                    01
+                </div>
+
+                <div>
+
+                    <strong>
+                        Route similarity
+                    </strong>
+
+                    <p>
+                        How closely the travel routes overlap.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor-card">
+
+                <div class="factor-number">
+                    02
+                </div>
+
+                <div>
+
+                    <strong>
+                        Pickup & destination
+                    </strong>
+
+                    <p>
+                        Distance between the important journey points.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor-card">
+
+                <div class="factor-number">
+                    03
+                </div>
+
+                <div>
+
+                    <strong>
+                        Time similarity
+                    </strong>
+
+                    <p>
+                        Whether commuters travel at similar times.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- INFORMATION NOTE -->
+
+    <section class="journey-note">
+
+        <div class="info-icon">
+            i
+        </div>
+
+        <div>
+
+            <strong>
+                Your journey details are used for matching.
+            </strong>
+
+            <p>
+                Vehicle information is not required when
+                finding a ride. Vehicle details are collected
+                only when a user chooses to offer a ride.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- =====================================================
+     PAGE SCRIPT
+     ===================================================== -->
+
+<script src="app.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* -----------------------------------------------
+       Authentication check
+       ----------------------------------------------- */
+
+    const currentUser =
+        JSON.parse(
+            localStorage.getItem("smartCommuteCurrentUser")
+        );
+
+
+    if (!currentUser) {
+
+        window.location.href = "login.html";
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------
+       Display user
+       ----------------------------------------------- */
+
+    const userName =
+        document.getElementById("dashboardUserName");
+
+    const userAvatar =
+        document.getElementById("userAvatar");
+
+
+    if (userName) {
+
+        userName.textContent =
+            currentUser.fullName;
+
+    }
+
+
+    if (userAvatar) {
+
+        userAvatar.textContent =
+            currentUser.fullName
+                .charAt(0)
+                .toUpperCase();
+
+    }
+
+
+
+    /* -----------------------------------------------
+       Default date
+       ----------------------------------------------- */
+
+    const dateInput =
+        document.getElementById("departureDate");
+
+
+    if (dateInput) {
+
+        const today =
+            new Date();
+
+        const year =
+            today.getFullYear();
+
+        const month =
+            String(today.getMonth() + 1)
+                .padStart(2, "0");
+
+        const day =
+            String(today.getDate())
+                .padStart(2, "0");
+
+
+        dateInput.min =
+            `${year}-${month}-${day}`;
+
+        dateInput.value =
+            `${year}-${month}-${day}`;
+
+    }
+
+
+
+    /* -----------------------------------------------
+       Seat selector
+       ----------------------------------------------- */
+
+    let seats = 1;
+
+
+    const seatCount =
+        document.getElementById("seatCount");
+
+    const hiddenSeats =
+        document.getElementById("seatsNeeded");
+
+    const previewSeats =
+        document.getElementById("previewSeats");
+
+
+    function updateSeats() {
+
+        seatCount.textContent =
+            seats;
+
+        hiddenSeats.value =
+            seats;
+
+        previewSeats.textContent =
+            seats;
+
+    }
+
+
+    document
+        .getElementById("decreaseSeats")
+        .addEventListener("click", function () {
+
+            if (seats > 1) {
+
+                seats--;
+
+                updateSeats();
+
+            }
+
+        });
+
+
+    document
+        .getElementById("increaseSeats")
+        .addEventListener("click", function () {
+
+            if (seats < 6) {
+
+                seats++;
+
+                updateSeats();
+
+            }
+
+        });
+
+
+
+    /* -----------------------------------------------
+       Live journey preview
+       ----------------------------------------------- */
+
+    const pickup =
+        document.getElementById("pickup");
+
+    const destination =
+        document.getElementById("destination");
+
+    const previewPickup =
+        document.getElementById("previewPickup");
+
+    const previewDestination =
+        document.getElementById("previewDestination");
+
+
+    pickup.addEventListener("input", function () {
+
+        previewPickup.textContent =
+            pickup.value.trim() ||
+            "Not selected";
+
+    });
+
+
+    destination.addEventListener("input", function () {
+
+        previewDestination.textContent =
+            destination.value.trim() ||
+            "Not selected";
+
+    });
+
+
+
+    /* -----------------------------------------------
+       Form submission
+       ----------------------------------------------- */
+
+    const form =
+        document.getElementById("findRideForm");
+
+
+    form.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+
+        const pickupValue =
+            pickup.value.trim();
+
+        const destinationValue =
+            destination.value.trim();
+
+        const dateValue =
+            dateInput.value;
+
+        const timeValue =
+            document.getElementById("departureTime").value;
+
+
+        if (!pickupValue ||
+            !destinationValue ||
+            !dateValue ||
+            !timeValue) {
+
+            showFindRideMessage(
+                "Please complete all journey details."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            pickupValue.toLowerCase() ===
+            destinationValue.toLowerCase()
+        ) {
+
+            showFindRideMessage(
+                "Pickup and destination cannot be the same."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Store the journey temporarily.
+         * This will later be replaced by Firebase/Firestore.
+         */
+
+        const journey = {
+
+            pickup: pickupValue,
+
+            destination: destinationValue,
+
+            departureDate: dateValue,
+
+            departureTime: timeValue,
+
+            seatsNeeded: seats,
+
+            createdBy: currentUser.id,
+
+            createdAt: new Date().toISOString()
+
+        };
+
+
+        localStorage.setItem(
+            "smartCommuteCurrentJourney",
+            JSON.stringify(journey)
+        );
+
+
+        showFindRideMessage(
+            "Journey details saved. Preparing your route...",
+            "success"
+        );
+
+
+        /*
+         * Next stage:
+         * route-preview.html
+         */
+
+        setTimeout(function () {
+
+            window.location.href =
+                "route-preview.html";
+
+        }, 700);
+
+    });
+
+
+});
+
+
+
+/* -----------------------------------------------------
+   Message helper
+   ----------------------------------------------------- */
+
+function showFindRideMessage(
+    message,
+    type = "error"
+) {
+
+    const element =
+        document.getElementById("findRideMessage");
+
+
+    if (!element) return;
+
+
+    element.textContent =
+        message;
+
+    element.className =
+        `form-message ${type}`;
+
+}
+
+</script>
+
+</body>
+</html>
