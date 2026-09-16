@@ -206,7 +206,87 @@
 </main>
 
 
-<script src="app.js"></script>
+<script type="module">
+
+import {
+    auth,
+    protectPage,
+    getUserProfile
+} from "./firebase-auth.js";
+
+
+protectPage();
+
+
+import {
+    onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+onAuthStateChanged(
+    auth,
+    async function (user) {
+
+        if (!user) return;
+
+
+        const profile =
+            await getUserProfile(
+                user.uid
+            );
+
+
+        if (!profile) return;
+
+
+        const nameElement =
+            document.getElementById(
+                "dashboardUserName"
+            );
+
+
+        const emailElement =
+            document.getElementById(
+                "dashboardEmail"
+            );
+
+
+        const avatarElement =
+            document.getElementById(
+                "userAvatar"
+            );
+
+
+        if (nameElement) {
+
+            nameElement.textContent =
+                profile.fullName;
+
+        }
+
+
+        if (emailElement) {
+
+            emailElement.textContent =
+                profile.email;
+
+        }
+
+
+        if (avatarElement) {
+
+            avatarElement.textContent =
+                profile.fullName
+                    .charAt(0)
+                    .toUpperCase();
+
+        }
+
+    }
+);
+
+</script>
 
 </body>
 </html>
